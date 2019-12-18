@@ -28,132 +28,132 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.UILayer {
-  protected createChildren(): void {
-    super.createChildren();
+    protected createChildren(): void {
+        super.createChildren();
 
-    egret.lifecycle.addLifecycleListener((context) => {
-      // custom lifecycle plugin
-    })
+        egret.lifecycle.addLifecycleListener((context) => {
+            // custom lifecycle plugin
+        })
 
-    egret.lifecycle.onPause = () => {
-      egret.ticker.pause();
+        egret.lifecycle.onPause = () => {
+            egret.ticker.pause();
+        }
+
+        egret.lifecycle.onResume = () => {
+            egret.ticker.resume();
+        }
+
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        let assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
+
+
+        this.runGame().catch(e => {
+            console.log(e);
+        })
     }
 
-    egret.lifecycle.onResume = () => {
-      egret.ticker.resume();
+    private async runGame() {
+        await this.loadResource()
+        this.createGameScene();
+        // 加载微信开放域资源
+        platform.openDataContext.postMessage({ command: 'loadRes' })
     }
 
-    //inject the custom material parser
-    //注入自定义的素材解析器
-    let assetAdapter = new AssetAdapter();
-    egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
-    egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-
-
-    this.runGame().catch(e => {
-      console.log(e);
-    })
-  }
-
-  private async runGame() {
-    await this.loadResource()
-    this.createGameScene();
-    // 加载微信开放域资源
-    platform.openDataContext.postMessage({command:'loadRes'})
-  }
-
-  private async loadResource() {
-    try {
-      const loadingView = new LoadingUI();
-      this.stage.addChild(loadingView);
-      await RES.loadConfig("resource/default.res.json", "resource/");
-      await this.loadTheme();
-      await RES.loadGroup("preload", 0, loadingView);
-      this.stage.removeChild(loadingView);
+    private async loadResource() {
+        try {
+            const loadingView = new LoadingUI();
+            this.stage.addChild(loadingView);
+            await RES.loadConfig("resource/default.res.json", "resource/");
+            await this.loadTheme();
+            await RES.loadGroup("preload", 0, loadingView);
+            this.stage.removeChild(loadingView);
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
-    catch (e) {
-      console.error(e);
+
+    private loadTheme() {
+        return new Promise((resolve, reject) => {
+            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
+            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+            let theme = new eui.Theme("resource/default.thm.json", this.stage);
+            theme.addEventListener(eui.UIEvent.COMPLETE, () => {
+                resolve();
+            }, this);
+
+        })
     }
-  }
-
-  private loadTheme() {
-    return new Promise((resolve, reject) => {
-      // load skin theme configuration file, you can manually modify the file. And replace the default skin.
-      //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
-      let theme = new eui.Theme("resource/default.thm.json", this.stage);
-      theme.addEventListener(eui.UIEvent.COMPLETE, () => {
-        resolve();
-      }, this);
-
-    })
-  }
 
 	/**
 	 * 创建场景界面
 	 * Create scene interface
 	 */
-  protected createGameScene(): void {
-    platform.scopeUserInfo()
-    const { stage } = this
-    const bg = new egret.Shape()
-    bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xf6dba4, 0xfcf0d6], [1, 1], [150, 50], new egret.Matrix())
-    bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
-    bg.graphics.endFill()
-    this.addChild(bg)
+    protected createGameScene(): void {
+        platform.scopeUserInfo()
+        const { stage } = this
+        const bg = new egret.Shape()
+        bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xf6dba4, 0xfcf0d6], [1, 1], [150, 50], new egret.Matrix())
+        bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
+        bg.graphics.endFill()
+        this.addChild(bg)
 
-    this.init()
-  }
+        this.init()
+    }
 
-  private gameStartPanel: GameStartPanel
-	private gamePlayingPanel: GamePlayingPanel
-	private gameEndPanel: GameEndPanel
+    private gameStartPanel: GameStartPanel
+    private gamePlayingPanel: GamePlayingPanel
+    private gameEndPanel: GameEndPanel
 
-	private init() {
-		this.gameStartPanel = new GameStartPanel()
-		this.gamePlayingPanel = new GamePlayingPanel()
-		this.gameEndPanel = new GameEndPanel()
-		this.start()
-	}
+    private init() {
+        this.gameStartPanel = new GameStartPanel()
+        this.gamePlayingPanel = new GamePlayingPanel()
+        this.gameEndPanel = new GameEndPanel()
+        this.start()
+    }
 
-	public start() {
-		this.addChild(this.gameStartPanel)
-    this.gameStartPanel.start()
-		this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
-		this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
-	}
+    public start() {
+        this.addChild(this.gameStartPanel)
+        this.gameStartPanel.start()
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
+    }
 
-	private gamePlaying1() {
-		this.gameStartPanel.end()
-		this.removeChild(this.gameStartPanel)
-		this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
-		this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
-		this.addChild(this.gamePlayingPanel)
-    this.gamePlayingPanel.start(1)
-		this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
-		this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
-	}
+    private gamePlaying1() {
+        this.gameStartPanel.end()
+        this.removeChild(this.gameStartPanel)
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
+        this.addChild(this.gamePlayingPanel)
+        this.gamePlayingPanel.start(1)
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
+    }
 
-	private gamePlaying2() {
-		this.gameStartPanel.end()
-		this.removeChild(this.gameStartPanel)
-		this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
-		this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
-		this.addChild(this.gamePlayingPanel)
-    this.gamePlayingPanel.start(2)
-		this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
-		this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
-	}
+    private gamePlaying2() {
+        this.gameStartPanel.end()
+        this.removeChild(this.gameStartPanel)
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this)
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this)
+        this.addChild(this.gamePlayingPanel)
+        this.gamePlayingPanel.start(2)
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
+    }
 
-	private gameEnd() {
-    this.gamePlayingPanel.end()
-    this.removeChild(this.gamePlayingPanel)
-		this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
-		this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
-    this.start()
-	}
+    private gameEnd() {
+        this.gamePlayingPanel.end()
+        this.removeChild(this.gamePlayingPanel)
+        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this)
+        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this)
+        this.start()
+    }
 
-	private gameRestart() {
-    console.log('game restart')
-	}
+    private gameRestart() {
+        console.log('game restart')
+    }
 }
 

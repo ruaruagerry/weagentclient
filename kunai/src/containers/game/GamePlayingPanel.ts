@@ -232,7 +232,7 @@ class GamePlayingPanel extends egret.Sprite {
         const { stage } = egret.MainContext.instance
         const rect = new egret.Shape()
         rect.graphics.beginFill(0x000000, 0)
-        rect.graphics.drawRect(0, stage.stageHeight - 290, stage.stageWidth, 300)
+        rect.graphics.drawRect(0, stage.stageHeight - 290, stage.stageWidth, 210)
         rect.graphics.endFill()
         this.addChild(rect)
         rect.touchEnabled = true
@@ -347,7 +347,7 @@ class GamePlayingPanel extends egret.Sprite {
         }
 
         egret.Tween.get(this.kunai)
-            .to({ x: stage.stageWidth + 100, y: stage.stageHeight + 10, rotation: 720 }, 700, egret.Ease.bounceOut)
+            .to({ x: stage.stageWidth + 100, y: stage.stageHeight + 100, rotation: 720 }, 700, egret.Ease.bounceOut)
             .call(func, this)
     }
 
@@ -454,7 +454,7 @@ class GamePlayingPanel extends egret.Sprite {
         })
         this.insertRotateNoAnimate.forEach((item: egret.Bitmap) => {
             item.rotation = Tools.generateRandom(-180, 180)
-            egret.Tween.get(item).to({ x: Tools.generateRandom(-this.stage.stageWidth, this.stage.stageWidth), y: this.stage.stageHeight - 90 + item.height * 2 }, 1000)
+            egret.Tween.get(item).to({ x: Tools.generateRandom(-this.stage.stageWidth, this.stage.stageWidth), y: this.stage.stageHeight + item.height * 2 }, 1000)
         })
 
         setTimeout(() => {

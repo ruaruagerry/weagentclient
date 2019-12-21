@@ -5195,7 +5195,7 @@ declare namespace eui.sys {
          * @param classStr 类名
          */
         $parseCode(codeText: string, classStr: string): {
-            new (): any;
+            new(): any;
         };
         /**
          * @private
@@ -5204,7 +5204,7 @@ declare namespace eui.sys {
          *
          */
         parse(text: string): {
-            new (): any;
+            new(): any;
         };
         /**
          * @private
@@ -13180,7 +13180,7 @@ declare namespace EXML {
      * @language zh_CN
      */
     function parse(text: string): {
-        new (): any;
+        new(): any;
     };
     /**
      * Load and parse an external EXML file for a class definition. You can declare the <code>class</code> property in the root

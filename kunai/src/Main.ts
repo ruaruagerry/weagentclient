@@ -28,6 +28,16 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.UILayer {
+    private gameStartPanel: GameStartPanel
+    private gamePlayingPanel: GamePlayingPanel
+    private gameEndPanel: GameEndPanel
+    private data2TabBar_arr: Array<MGTabBar.TabBarCell_Data> = null;
+    private tabbar: eui.TabBar;
+    private viewStack: eui.ViewStack;
+    private lastindex = 0;
+    private arrayCollection: eui.ArrayCollection;
+
+
     protected createChildren(): void {
         super.createChildren();
 
@@ -94,25 +104,104 @@ class Main extends eui.UILayer {
 	 */
     protected createGameScene(): void {
         platform.scopeUserInfo()
+        // 初始化背景
+        this.initBackground()
+        // 初始化所有界面
+        this.init()
+        // 创建tabbar
+        this.createTabbar()
+    }
+
+    private initBackground() {
         const { stage } = this
         const bg = new egret.Shape()
         bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xf6dba4, 0xfcf0d6], [1, 1], [150, 50], new egret.Matrix())
         bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
         bg.graphics.endFill()
         this.addChild(bg)
-
-        this.init()
     }
 
-    private gameStartPanel: GameStartPanel
-    private gamePlayingPanel: GamePlayingPanel
-    private gameEndPanel: GameEndPanel
-
     private init() {
+        this.initGame()
+    }
+
+    private initGame() {
         this.gameStartPanel = new GameStartPanel()
         this.gamePlayingPanel = new GamePlayingPanel()
         this.gameEndPanel = new GameEndPanel()
         this.start()
+    }
+
+    private createTabbar() {
+        let stageW = this.stage.stageWidth;
+        let stageH = this.stage.stageHeight;
+
+        this.tabbar = new eui.TabBar;
+        this.data2TabBar_arr = [
+            {
+                img_text: "分 红",
+                selected: false,
+                img_sel_res: "data_png",
+            },
+            {
+                img_text: "游 戏",
+                selected: true,
+                img_sel_res: "game_png",
+            },
+            {
+                img_text: "收 益",
+                selected: false,
+                img_sel_res: "wallet_png",
+            },
+            {
+                img_text: "我 的",
+                selected: false,
+                img_sel_res: "setup_png",
+            },
+        ];
+        this.lastindex = 1
+        this.arrayCollection = new eui.ArrayCollection(this.data2TabBar_arr);
+        this.tabbar.dataProvider = this.arrayCollection;
+        this.tabbar.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onBarItemTap, this);
+        this.tabbar.width = stageW;
+        this.tabbar.height = 90;
+        this.tabbar.y = stageH - 90;
+        this.addChild(this.tabbar);
+        this.tabbar.itemRenderer = MGTabBar.TabBarCell;
+
+        this.viewStack = new eui.ViewStack();
+        this.viewStack.width = stageW;
+        this.viewStack.height = stageH - 90;
+
+        for (var i: number = 0; i < 4; i++) {
+            var group: eui.Group = new eui.Group();
+            group.name = "Group" + i;
+
+            if (i == 1) {
+                group.addChild(this.gameStartPanel)
+            } else {
+                var btn: eui.Button = new eui.Button();
+                btn.label = "Button" + i;
+                group.addChild(btn);
+            }
+            this.viewStack.addChild(group);
+        }
+
+        this.viewStack.selectedIndex = this.lastindex
+        this.addChild(this.viewStack);
+    }
+
+    private onBarItemTap(e: eui.ItemTapEvent): void {
+        this.viewStack.selectedIndex = e.itemIndex;
+
+        let lastdata: MGTabBar.TabBarCell_Data = this.arrayCollection.getItemAt(this.lastindex);
+        this.lastindex = e.itemIndex;
+        lastdata.selected = false;
+
+        let data: MGTabBar.TabBarCell_Data = this.arrayCollection.getItemAt(e.itemIndex);
+        data.selected = true;
+
+        this.tabbar.dataProvider = new eui.ArrayCollection(this.data2TabBar_arr);
     }
 
     public start() {

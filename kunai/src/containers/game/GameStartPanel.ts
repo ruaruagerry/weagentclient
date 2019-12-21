@@ -10,7 +10,6 @@ class GameStartPanel extends egret.Sprite {
     private startBtn: Buttons
     private startPK: Buttons
     private PK: egret.Bitmap
-    private bottom: Bottom
     private skinMask: egret.Shape
     private skinDialog: SkinDialog
 
@@ -20,9 +19,9 @@ class GameStartPanel extends egret.Sprite {
     }
 
     public start() {
-        const { stage, startBtn, onTouchTap, startPK, img, logo, PK, bottom } = this
+        const { stage, startBtn, onTouchTap, startPK, img, logo, PK } = this
         img.width = stage.stageWidth
-        img.height = stage.stageHeight
+        img.height = stage.stageHeight - 90
         logo.x = stage.stageWidth / 2 - logo.width / 2
         logo.y = - logo.height
         egret.Tween.get(logo).to({ y: 60 }, 500, egret.Ease.bounceOut)
@@ -41,24 +40,6 @@ class GameStartPanel extends egret.Sprite {
             this.onTouchTap(2)
         }, this)
         egret.Tween.get(startPK).to({ x: stage.stageWidth / 2 - startPK.width / 2 }, 500, egret.Ease.bounceOut)
-        // startPK.addEventListener(egret.TouchEvent.TOUCH_BEGIN, () => {
-        //   PK.x = PK.x + 2
-        //   PK.y = PK.y + 2
-        // }, this)
-        // startPK.addEventListener(egret.TouchEvent.TOUCH_END, () => {
-        //   PK.x = PK.x - 2
-        //   PK.y = PK.y - 2
-        // }, this)
-        // startPK.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, () => {
-        //   PK.x = PK.x - 2
-        //   PK.y = PK.y - 2
-        // }, this)
-        // PK.x = stage.stageWidth
-        // egret.Tween.get(PK).to({ x: 105}, 500, egret.Ease.bounceOut)
-
-        bottom.y = stage.stageHeight
-        egret.Tween.get(bottom).to({ y: stage.stageHeight - bottom.height }, 500, egret.Ease.bounceOut)
-
     }
 
     private init() {
@@ -85,22 +66,6 @@ class GameStartPanel extends egret.Sprite {
         this.startPK = new Buttons()
         this.addChild(this.startPK)
         this.startPK.init(4, '疯狂模式')
-
-        // const pk: egret.Bitmap = new egret.Bitmap()
-        // pk.texture = RES.getRes('pk_png')
-        // pk.width = 94 * .5
-        // pk.height = 70 * .5
-        // pk.y = 486
-        // this.PK = pk
-        // this.addChild(this.PK)
-
-        // 生成底部
-        this.bottom = new Bottom()
-        this.addChild(this.bottom)
-        this.bottom.init()
-        this.bottom.addEventListener(Bottom.FRIENDS_RANK, this.friendsRank, this)
-        this.bottom.addEventListener(Bottom.SKIN, this.showSkinDialog, this)
-
 
         this.btnClose = new egret.Bitmap(RES.getRes('close_png'));
         this.btnClose.width = 25

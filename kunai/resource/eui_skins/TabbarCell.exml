@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="38" height="47" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="img_rect" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="1" left="0" right="0" top="0" bottom="0" strokeAlpha="0.5" fillColor="0xffffff"/>
+	<e:Image id="img_res" anchorOffsetX="0" anchorOffsetY="0" fillMode="scale" source="game_png" scaleX="0.4" scaleY="0.4" horizontalCenter="0" height="77.5" width="90" top="20"/>
+	<e:EditableText id="img_text" text="游 戏" anchorOffsetX="0" anchorOffsetY="0" height="22" fontFamily="SimHei" verticalAlign="middle" textAlign="center" textColor="0x000000" size="12" bottom="0" right="2" horizontalCenter="-0.5" width="35"/>
+</e:Skin>

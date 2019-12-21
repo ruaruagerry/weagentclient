@@ -10,7 +10,7 @@
 		"libs/egretad/bin/egretad.js"
 	],
 	"game": [
-		"bin-debug/containers/game/GameEndPanel.js",
+		"bin-debug/containers/game/Game.js",
 		"bin-debug/Main.js",
 		"bin-debug/components/Dialog.js",
 		"bin-debug/components/Msg.js",
@@ -19,6 +19,7 @@
 		"bin-debug/components/TimberMask.js",
 		"bin-debug/components/TimberMaskSprite.js",
 		"bin-debug/components/Buttons.js",
+		"bin-debug/containers/game/GameEndPanel.js",
 		"bin-debug/containers/game/GamePlayingPanel.js",
 		"bin-debug/containers/game/GameStartPanel.js",
 		"bin-debug/tools/AssetAdapter.js",

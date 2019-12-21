@@ -19,7 +19,8 @@ class GameStartPanel extends egret.Sprite {
     }
 
     public start() {
-        const { stage, startBtn, onTouchTap, startPK, img, logo, PK } = this
+        const { stage } = egret.MainContext.instance
+        const { startBtn, onTouchTap, startPK, img, logo, PK } = this
         img.width = stage.stageWidth
         img.height = stage.stageHeight - 90
         logo.x = stage.stageWidth / 2 - logo.width / 2
@@ -125,7 +126,7 @@ class GameStartPanel extends egret.Sprite {
             this.addChild(this.rankingListMask);
 
             //主要示例代码开始
-            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight);
+            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight - 90);
             this.addChild(this.bitmap);
             //简单实现，打开这关闭使用一个按钮。
             this.addChild(this.btnClose);
@@ -146,7 +147,7 @@ class GameStartPanel extends egret.Sprite {
 
         this.skinMask = new egret.Shape()
         this.skinMask.graphics.beginFill(0x000000, .2)
-        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight, 10)
+        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight - 90, 10)
         this.skinMask.graphics.endFill()
         this.skinMask.touchEnabled = true
         this.addChild(this.skinMask)
@@ -155,7 +156,7 @@ class GameStartPanel extends egret.Sprite {
         this.addChild(this.skinDialog)
 
         this.skinDialog.x = stage.stageWidth / 2 - this.skinDialog._width / 2
-        this.skinDialog.y = stage.stageHeight / 2 - this.skinDialog._height / 2
+        this.skinDialog.y = (stage.stageHeight - 90) / 2 - this.skinDialog._height / 2
         this.skinDialog.addEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this)
     }
 

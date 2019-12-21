@@ -80,7 +80,7 @@ class GamePlayingPanel extends egret.Sprite {
 
         const { stage } = egret.MainContext.instance
         const stageW = stage.stageWidth
-        const stageH = stage.stageHeight
+        const stageH = stage.stageHeight - 90
 
         this.bgimg = new egret.Bitmap()
         this.bgimg.x = 0
@@ -217,7 +217,7 @@ class GamePlayingPanel extends egret.Sprite {
         this.kunai = this.createBitmapByName('kunai_png')
         this.addChild(this.kunai)
         const stageW = stage.stageWidth
-        const stageH = stage.stageHeight
+        const stageH = stage.stageHeight - 90
         this.kunai.width = this.kunaiW
         this.kunai.height = this.kunaiH
         this.kunai.x = stageW / 2 - 10
@@ -232,7 +232,7 @@ class GamePlayingPanel extends egret.Sprite {
         const { stage } = egret.MainContext.instance
         const rect = new egret.Shape()
         rect.graphics.beginFill(0x000000, 0)
-        rect.graphics.drawRect(0, stage.stageHeight - 200, stage.stageWidth, 300)
+        rect.graphics.drawRect(0, stage.stageHeight - 290, stage.stageWidth, 300)
         rect.graphics.endFill()
         this.addChild(rect)
         rect.touchEnabled = true
@@ -242,7 +242,7 @@ class GamePlayingPanel extends egret.Sprite {
     private resetKunai() {
         const { stage } = egret.MainContext.instance
         const stageW = stage.stageWidth
-        const stageH = stage.stageHeight
+        const stageH = stage.stageHeight - 90
         this.kunai.width = 20
         this.kunai.height = 100
         this.kunai.rotation = 0
@@ -347,7 +347,7 @@ class GamePlayingPanel extends egret.Sprite {
         }
 
         egret.Tween.get(this.kunai)
-            .to({ x: stage.stageWidth + 100, y: stage.stageHeight + 100, rotation: 720 }, 700, egret.Ease.bounceOut)
+            .to({ x: stage.stageWidth + 100, y: stage.stageHeight + 10, rotation: 720 }, 700, egret.Ease.bounceOut)
             .call(func, this)
     }
 
@@ -383,13 +383,13 @@ class GamePlayingPanel extends egret.Sprite {
         kunai.width = 10
         kunai.height = 50
         kunai.x = 30
-        kunai.y = stage.stageHeight - 100
+        kunai.y = stage.stageHeight - 190
         this.addChild(kunai)
 
         this.kunaiNumTips = new egret.TextField()
         this.addChild(this.kunaiNumTips)
         this.kunaiNumTips.x = 50
-        this.kunaiNumTips.y = stage.stageHeight - 80
+        this.kunaiNumTips.y = stage.stageHeight - 170
         this.kunaiNumTips.textColor = 0xFFFFFF
         this.kunaiNumTips.textAlign = egret.HorizontalAlign.LEFT
         this.kunaiNumTips.size = 14
@@ -454,7 +454,7 @@ class GamePlayingPanel extends egret.Sprite {
         })
         this.insertRotateNoAnimate.forEach((item: egret.Bitmap) => {
             item.rotation = Tools.generateRandom(-180, 180)
-            egret.Tween.get(item).to({ x: Tools.generateRandom(-this.stage.stageWidth, this.stage.stageWidth), y: this.stage.stageHeight + item.height * 2 }, 1000)
+            egret.Tween.get(item).to({ x: Tools.generateRandom(-this.stage.stageWidth, this.stage.stageWidth), y: this.stage.stageHeight - 90 + item.height * 2 }, 1000)
         })
 
         setTimeout(() => {
@@ -514,7 +514,7 @@ class GamePlayingPanel extends egret.Sprite {
         this.dialog.setScores(this.scores.text)
         this.addChild(this.dialog)
         this.dialog.x = stage.stageWidth / 2 - this.dialog._width / 2
-        this.dialog.y = stage.stageHeight / 2 - this.dialog._height / 2
+        this.dialog.y = (stage.stageHeight - 90) / 2 - this.dialog._height / 2
         this.dialog.addEventListener(Dialog.GO_HOME, () => {
             this.dispatchEventWith(GamePlayingPanel.GAME_END)
         }, this)
@@ -584,7 +584,7 @@ class GamePlayingPanel extends egret.Sprite {
             let random = Math.floor(Math.random() * stageWidth * 2)
             random = Math.random() < .5 ? random * -1 : random
             egret.Tween.get(dou)
-                .to({ x: random, y: stageHeight }, 500, egret.Ease.sineOut)
+                .to({ x: random, y: stageHeight - 90 }, 500, egret.Ease.sineOut)
                 .call(() => {
                     this.removeChild(dou)
                 })
@@ -597,7 +597,7 @@ class GamePlayingPanel extends egret.Sprite {
         this.s1.width = 118 * .5
         this.s1.height = 107 * .5
         this.s1.x = stage.stageWidth - this.s1.width
-        this.s1.y = stage.stageHeight - 330
+        this.s1.y = stage.stageHeight - 420
         const s1y = this.s1.y
         this.addChild(this.s1)
         egret.Tween.get(this.s1, { loop: true }).to({ y: this.s1.y + 10 }, 1000).to({ y: s1y }, 1000)

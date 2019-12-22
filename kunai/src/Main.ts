@@ -109,7 +109,7 @@ class Main extends eui.UILayer {
     private initBackground() {
         const { stage } = this
         const bg = new egret.Shape()
-        bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xf6dba4, 0xfcf0d6], [1, 1], [150, 50], new egret.Matrix())
+        bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xffffff, 0xffffff], [1, 1], [150, 50], new egret.Matrix())
         bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
         bg.graphics.endFill()
         this.addChild(bg)

@@ -5,6 +5,17 @@ class Data extends egret.Sprite {
     }
 
     public init() {
+        // 创建场景
+        this.createScene()
+        // 加载数据
+        this.loadData()
+    }
+
+    private createScene() {
+
+    }
+
+    private loadData() {
         Http.get(API.ApiMoneyAdSee).then(res => {
             console.log("res:", res)
             return res;

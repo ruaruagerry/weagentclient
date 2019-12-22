@@ -28,7 +28,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.UILayer {
-    private game: Game;
     private data2TabBar_arr: Array<MGTabBar.TabBarCell_Data> = null;
     private tabbar: eui.TabBar;
     private viewStack: eui.ViewStack;
@@ -161,14 +160,26 @@ class Main extends eui.UILayer {
             var group: eui.Group = new eui.Group();
             group.name = "Group" + i;
 
-            if (i == 1) {
-                this.game = new Game()
-                group.addChild(this.game)
-            } else {
-                var btn: eui.Button = new eui.Button();
-                btn.label = "Button" + i;
-                group.addChild(btn);
+
+            switch (i) {
+                case 0:
+                    var data = new Data()
+                    group.addChild(data)
+                    break
+                case 1:
+                    var game = new Game()
+                    group.addChild(game)
+                    break
+                case 2:
+                    var setup = new Setup()
+                    group.addChild(setup)
+                    break
+                case 3:
+                    var wallet = new Wallet()
+                    group.addChild(wallet)
+                    break
             }
+
             this.viewStack.addChild(group);
         }
 

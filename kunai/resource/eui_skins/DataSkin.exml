@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="8016.67" height="10566.67" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect width="8010.33" height="10649.67" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xb7b7b7"/>
+	<e:Rect width="7565.01" height="4179" x="225.83" y="1283.49" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff"/>
+	<e:Rect width="2788.99" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xff5151" x="560.3" y="2275.66"/>
+	<e:Rect width="2788.99" height="577.32" fillColor="0xea0e0e" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="560.3" y="4655.34"/>
+	<e:EditableText id="data_yesterday" height="2383.34" text="0.00" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-2067.835" left="557" right="4692.67" verticalCenter="-1836.835"/>
+	<e:Label text="昨日全网收益" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xffffff" horizontalCenter="-2066.835" bottom="5324.67" left="646" right="4779.67"/>
+	<e:Rect width="2788.99" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="4670.37" y="2285.66" fillColor="0x518bff"/>
+	<e:Rect width="2788.99" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="4670.37" y="4665.34" fillColor="0x0d3be8"/>
+	<e:EditableText id="data_all" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="2039.165" left="4664" right="585.6700000000001" verticalCenter="-1836.835"/>
+	<e:Label text="历史全网收益" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" horizontalCenter="2040.165" bottom="5324.67" left="4753" right="672.6700000000001" textColor="0xffffff"/>
+	<e:Rect width="7288.67" height="54.67" x="357" y="2000.32" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xc1c1c1"/>
+	<e:Label text="广告收益" x="406.97" y="1283.49" anchorOffsetX="0" width="2140.67" anchorOffsetY="0" height="713.33" size="404" textColor="0x5365aa" verticalAlign="middle" textAlign="center" fontFamily="KaiTi"/>
+	<e:Rect width="7565.01" height="4179" x="235.83" y="5776.83" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF"/>
+	<e:Rect width="7288.67" height="54.67" x="367" y="6493.66" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xC1C1C1"/>
+	<e:Label text="今日实时数据" x="416.97" y="5776.83" anchorOffsetX="0" width="2890.67" anchorOffsetY="0" height="713.33" size="404" textColor="0x5365AA" verticalAlign="middle" textAlign="center" fontFamily="KaiTi"/>
+	<e:Label text="每日中午12点更新" x="3635.36" y="1366.83" anchorOffsetX="0" width="3824" anchorOffsetY="0" height="546.66" size="254" textColor="0x161414" verticalAlign="middle" textAlign="right"/>
+	<e:Rect width="7999.67" height="1074" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828e"/>
+	<e:Label text="分红详情" x="1954.79" y="310.67" anchorOffsetX="0" width="4274" anchorOffsetY="0" height="763.33" size="448" textAlign="center" verticalAlign="middle" fontFamily="SimHei"/>
+	<e:Rect width="1672.32" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="720.3" y="6769" fillColor="0x1d8207"/>
+	<e:Rect width="1672.32" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="720.3" y="9148.68" fillColor="0x45ad08"/>
+	<e:EditableText id="data_yesterday0" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-2476.335" left="707" right="5659.67" verticalCenter="2647.165"/>
+	<e:Label text="广告总数" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xFFFFFF" horizontalCenter="-2475.335" bottom="840.6700000000001" left="796" right="5746.67"/>
+	<e:Rect width="1605.65" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="3230.29" y="6779" fillColor="0x1D8207"/>
+	<e:Rect width="1605.65" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="3230.29" y="9158.68" fillColor="0x45AD08"/>
+	<e:EditableText id="data_yesterday1" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-10.835000000000036" left="3206" right="3227.67" verticalCenter="2647.165"/>
+	<e:Label text="在线总数" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xFFFFFF" horizontalCenter="-9.835000000000036" bottom="838.6700000000001" left="3295" right="3314.67"/>
+	<e:Rect width="1605.65" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="5723.62" y="6772.33" fillColor="0x1D8207"/>
+	<e:Rect width="1605.65" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="5723.62" y="9152.01" fillColor="0x45AD08"/>
+	<e:EditableText id="data_yesterday2" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="2472.165" left="5689" right="744.6700000000001" verticalCenter="2630.165"/>
+	<e:Label text="全网广告收益" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xFFFFFF" horizontalCenter="2473.165" bottom="857.6700000000001" left="5778" right="831.6700000000001"/>
+</e:Skin>

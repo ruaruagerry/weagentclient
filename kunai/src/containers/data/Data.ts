@@ -1,4 +1,4 @@
-class Data extends egret.Sprite {
+class Data extends eui.ItemRenderer {
     constructor() {
         super()
         this.init()
@@ -12,7 +12,14 @@ class Data extends egret.Sprite {
     }
 
     private createScene() {
+        this.skinName = "resource/eui_skins/DataSkin.exml";
 
+        const { stage } = egret.MainContext.instance
+
+        this.width = stage.stageWidth
+        this.height = stage.stageHeight
+        this.x = 0
+        this.y = 0
     }
 
     private loadData() {

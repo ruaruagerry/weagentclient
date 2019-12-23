@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin width="8016.67" height="10566.67" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect width="8010.33" height="10649.67" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xb7b7b7"/>
-	<e:Rect width="7565.01" height="4179" x="225.83" y="1283.49" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff"/>
-	<e:Rect width="2788.99" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xff5151" x="560.3" y="2275.66"/>
-	<e:Rect width="2788.99" height="577.32" fillColor="0xea0e0e" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="560.3" y="4655.34"/>
-	<e:EditableText id="data_yesterday" height="2383.34" text="0.00" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-2067.835" left="557" right="4692.67" verticalCenter="-1836.835"/>
-	<e:Label text="昨日全网收益" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xffffff" horizontalCenter="-2066.835" bottom="5324.67" left="646" right="4779.67"/>
-	<e:Rect width="2788.99" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="4670.37" y="2285.66" fillColor="0x518bff"/>
-	<e:Rect width="2788.99" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="4670.37" y="4665.34" fillColor="0x0d3be8"/>
-	<e:EditableText id="data_all" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="2039.165" left="4664" right="585.6700000000001" verticalCenter="-1836.835"/>
-	<e:Label text="历史全网收益" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" horizontalCenter="2040.165" bottom="5324.67" left="4753" right="672.6700000000001" textColor="0xffffff"/>
-	<e:Rect width="7288.67" height="54.67" x="357" y="2000.32" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xc1c1c1"/>
-	<e:Label text="广告收益" x="406.97" y="1283.49" anchorOffsetX="0" width="2140.67" anchorOffsetY="0" height="713.33" size="404" textColor="0x5365aa" verticalAlign="middle" textAlign="center" fontFamily="KaiTi"/>
-	<e:Rect width="7565.01" height="4179" x="235.83" y="5776.83" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF"/>
-	<e:Rect width="7288.67" height="54.67" x="367" y="6493.66" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xC1C1C1"/>
-	<e:Label text="今日实时数据" x="416.97" y="5776.83" anchorOffsetX="0" width="2890.67" anchorOffsetY="0" height="713.33" size="404" textColor="0x5365AA" verticalAlign="middle" textAlign="center" fontFamily="KaiTi"/>
-	<e:Label text="每日中午12点更新" x="3635.36" y="1366.83" anchorOffsetX="0" width="3824" anchorOffsetY="0" height="546.66" size="254" textColor="0x161414" verticalAlign="middle" textAlign="right"/>
-	<e:Rect width="7999.67" height="1074" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828e"/>
-	<e:Label text="分红详情" x="1954.79" y="310.67" anchorOffsetX="0" width="4274" anchorOffsetY="0" height="763.33" size="448" textAlign="center" verticalAlign="middle" fontFamily="SimHei"/>
-	<e:Rect width="1672.32" height="2386.66" anchorOffsetX="0" anchorOffsetY="0" x="720.3" y="6769" fillColor="0x1d8207"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xb7b7b7" left="0" top="0" verticalCenter="41.664999999999964" bottom="-83.32999999999993" horizontalCenter="-3.3350000000000364" right="6.670000000000073"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" horizontalCenter="0.16499999999996362" top="1283" right="225.67000000000007" left="226" verticalCenter="-1910.835" bottom="5104.67"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xff5151" top="2276" left="560" horizontalCenter="-2053.835" right="4667.67" verticalCenter="-1813.835" bottom="5903.67"/>
+	<e:Rect fillColor="0xea0e0e" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" top="4655" verticalCenter="-339.83500000000004" bottom="5334.67" left="560" horizontalCenter="-2053.835" right="4667.67"/>
+	<e:EditableText id="data_yesterday" text="0.00" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-2067.835" left="557" right="4692.67" verticalCenter="-1836.835" top="2255" bottom="5928.67"/>
+	<e:Label text="昨日全网收益" anchorOffsetX="0" anchorOffsetY="0" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xffffff" horizontalCenter="-2066.835" bottom="5324.67" left="646" right="4779.67" verticalCenter="-339.83500000000004" top="4645"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x518bff" top="2286" left="4670" horizontalCenter="2056.165" right="557.6700000000001" verticalCenter="-1803.835" bottom="5893.67"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" fillColor="0x0d3be8" left="4670" top="4665" verticalCenter="-329.83500000000004" bottom="5324.67" horizontalCenter="2056.165" right="557.6700000000001"/>
+	<e:EditableText id="data_all" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="2039.165" left="4664" right="585.6700000000001" verticalCenter="-1836.835" top="2255" bottom="5928.67"/>
+	<e:Label text="历史全网收益" anchorOffsetX="0" anchorOffsetY="0" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" horizontalCenter="2040.165" bottom="5324.67" left="4753" right="672.6700000000001" textColor="0xffffff" verticalCenter="-339.83500000000004" top="4645"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xc1c1c1" top="2000" horizontalCenter="-6.835000000000036" left="357" verticalCenter="-3255.835" bottom="8511.67" right="370.6700000000001"/>
+	<e:Label text="广告收益" anchorOffsetX="0" anchorOffsetY="0" size="404" textColor="0x5365aa" verticalAlign="middle" textAlign="center" fontFamily="KaiTi" top="1283" left="407" verticalCenter="-3643.835" horizontalCenter="-2530.835" right="5468.67" bottom="8570.67"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" left="236" top="5777" verticalCenter="2583.165" bottom="610.6700000000001" horizontalCenter="10.164999999999964" right="215.67000000000007"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xC1C1C1" verticalCenter="1238.165" top="6494" bottom="4017.67" left="367" horizontalCenter="3.1649999999999636" right="360.6700000000001"/>
+	<e:Label text="今日实时数据" anchorOffsetX="0" anchorOffsetY="0" size="404" textColor="0x5365AA" verticalAlign="middle" textAlign="center" fontFamily="KaiTi" left="417" top="5777" verticalCenter="850.165" bottom="4076.67" horizontalCenter="-2145.835" right="4708.67"/>
+	<e:Label text="每日中午12点更新" anchorOffsetX="0" anchorOffsetY="0" size="254" textColor="0x161414" verticalAlign="middle" textAlign="right" right="557.6700000000001" top="1367" verticalCenter="-3642.835" left="3635" horizontalCenter="1538.665" bottom="8652.67"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828e" top="0" horizontalCenter="-8.335000000000036" verticalCenter="-4746.335" left="0" bottom="9492.67" right="16.670000000000073"/>
+	<e:Label text="分红详情" anchorOffsetX="0" anchorOffsetY="0" size="448" textAlign="center" verticalAlign="middle" fontFamily="SimHei" top="311" verticalCenter="-4590.835" bottom="9492.67" left="1955" horizontalCenter="83.66499999999996" right="1787.67"/>
+	<e:Rect width="1672.32" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x1d8207" left="720" top="6769" verticalCenter="2679.165" bottom="1410.67"/>
 	<e:Rect width="1672.32" height="577.32" anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" x="720.3" y="9148.68" fillColor="0x45ad08"/>
 	<e:EditableText id="data_yesterday0" height="2383.34" text="0" anchorOffsetX="0" anchorOffsetY="0" size="576" verticalAlign="middle" textAlign="center" horizontalCenter="-2476.335" left="707" right="5659.67" verticalCenter="2647.165"/>
 	<e:Label text="广告总数" anchorOffsetX="0" anchorOffsetY="0" height="596.68" fontFamily="SimHei" size="226" textAlign="center" verticalAlign="middle" textColor="0xFFFFFF" horizontalCenter="-2475.335" bottom="840.6700000000001" left="796" right="5746.67"/>

@@ -18,8 +18,6 @@ class Data extends eui.ItemRenderer {
 
         this.width = stage.stageWidth
         this.height = stage.stageHeight - 90
-        // this.x = 0
-        // this.y = 0
     }
 
     private loadData() {

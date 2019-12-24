@@ -20,7 +20,7 @@ class GameStartPanel extends egret.Sprite {
 
     public start() {
         const { stage } = egret.MainContext.instance
-        const { startBtn, onTouchTap, startPK, img, logo, PK } = this
+        const { startBtn, onTouchTap, img, logo, PK } = this
         img.width = stage.stageWidth
         img.height = stage.stageHeight - 90
         logo.x = stage.stageWidth / 2 - logo.width / 2
@@ -34,13 +34,6 @@ class GameStartPanel extends egret.Sprite {
             this.onTouchTap(1)
         }, this)
         egret.Tween.get(startBtn).to({ x: stage.stageWidth / 2 - startBtn.width / 2 }, 500, egret.Ease.bounceOut)
-
-        startPK.x = stage.stageWidth
-        startPK.y = 500
-        startPK.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            this.onTouchTap(2)
-        }, this)
-        egret.Tween.get(startPK).to({ x: stage.stageWidth / 2 - startPK.width / 2 }, 500, egret.Ease.bounceOut)
     }
 
     private init() {
@@ -62,11 +55,7 @@ class GameStartPanel extends egret.Sprite {
 
         this.startBtn = new Buttons()
         this.addChild(this.startBtn)
-        this.startBtn.init(1, '单人闯关')
-
-        this.startPK = new Buttons()
-        this.addChild(this.startPK)
-        this.startPK.init(4, '疯狂模式')
+        this.startBtn.init(1, '开始游戏')
 
         this.btnClose = new egret.Bitmap(RES.getRes('close_png'));
         this.btnClose.width = 25

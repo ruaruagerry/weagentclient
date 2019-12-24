@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin width="360" height="640" xmlns:e="http://ns.egret.com/eui">
-	<e:Rect width="360" height="57" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828e"/>
-	<e:Label text="分红详情" x="99" y="22" anchorOffsetX="0" width="162" anchorOffsetY="0" height="35" verticalAlign="middle" textAlign="center" size="21" fontFamily="SimHei"/>
-	<e:Rect width="342.34" height="175" x="9" y="80" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff"/>
-	<e:Rect width="322" height="1" x="20" y="110" anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xc1c1c1"/>
-	<e:Label text="广告收益" x="20" y="82" anchorOffsetX="0" width="86" anchorOffsetY="0" height="28" textColor="0x5365aa" verticalAlign="middle" textAlign="left" size="15" fontFamily="KaiTi"/>
-	<e:Label text="每日中午12点更新" x="208" y="83" anchorOffsetX="0" width="134" anchorOffsetY="0" height="28" verticalAlign="middle" textAlign="right" size="12" fontFamily="KaiTi" textColor="0x000000"/>
-</e:Skin>

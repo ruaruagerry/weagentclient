@@ -8,7 +8,7 @@ class Data extends eui.ItemRenderer {
         // 创建场景
         this.createScene()
         // 加载数据
-        this.loadData()
+        // this.loadData()
     }
 
     private createScene() {
@@ -17,7 +17,7 @@ class Data extends eui.ItemRenderer {
         const { stage } = egret.MainContext.instance
 
         this.width = stage.stageWidth
-        this.height = stage.stageHeight
+        this.height = stage.stageHeight - 90
         this.x = 0
         this.y = 0
     }

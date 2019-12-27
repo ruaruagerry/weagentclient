@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-23 12:12:04
+ * @LastEditTime : 2019-12-27 16:59:46
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
+ */
 class Data extends eui.ItemRenderer {
     private data_yestarday_all: eui.Label = null // 昨日全网收益
     private data_history_all: eui.Label = null // 历史全网收益
@@ -27,24 +35,14 @@ class Data extends eui.ItemRenderer {
     }
 
     private loadData() {
-        this.data_yestarday_all.text = "1.00"
-        this.data_history_all.text = "2.00"
-        this.data_today_adnum.text = "3"
-        this.data_today_onlinenum.text = "4"
-        this.data_today_all.text = "5"
+        Http.get(API.ApiDataEntrance).then(res => {
+            var rsp: any = res
 
-        // Http.get(API.ApiMoneyAdSee).then(res => {
-        //     console.log("res:", res)
-        //     return res;
-        // })
-
-        // var param = {
-        //     getoutmoney: 10,
-        // }
-
-        // Http.post(API.ApiMoneyGetoutApply, param).then(res => {
-        //     console.log("fuck res:", res)
-        //     return res;
-        // })
+            this.data_yestarday_all.text = rsp.yestardayall
+            this.data_history_all.text = rsp.historyall
+            this.data_today_adnum.text = rsp.todayadnum
+            this.data_today_onlinenum.text = rsp.todayonlinenum
+            this.data_today_all.text = rsp.todayall
+        })
     }
 }

@@ -1,3 +1,12 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-23 12:12:04
+ * @LastEditTime : 2019-12-27 16:46:39
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \weagentclient\kunai\src\api\api.ts
+ */
+
 const rootUrl = "http://127.0.0.1:3003"
 
 module API {
@@ -20,4 +29,7 @@ module API {
     export var ApiMoneyEntrance = rootUrl + "/money/entrance"
     export var ApiMoneyGetoutRecord = rootUrl + "/money/getout/record"
     export var ApiMoneyGetoutApply = rootUrl + "/money/getout/apply"
+
+    /* ----------------- data ---------------- */
+    export var ApiDataEntrance = rootUrl + "/data/entrance"
 }

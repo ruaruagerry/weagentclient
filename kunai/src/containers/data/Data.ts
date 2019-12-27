@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-23 12:12:04
- * @LastEditTime : 2019-12-27 16:59:46
+ * @LastEditTime : 2019-12-27 17:09:20
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
@@ -18,7 +18,7 @@ class Data extends eui.ItemRenderer {
         this.init()
     }
 
-    public init() {
+    private init() {
         // 创建场景
         this.createScene()
         // 加载数据

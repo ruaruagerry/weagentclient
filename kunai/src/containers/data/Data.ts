@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-23 12:12:04
- * @LastEditTime : 2019-12-27 17:09:20
+ * @LastEditTime : 2019-12-27 17:36:53
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
@@ -36,6 +36,7 @@ class Data extends eui.ItemRenderer {
 
     private loadData() {
         Http.get(API.ApiDataEntrance).then(res => {
+            // unknown转any
             var rsp: any = res
 
             this.data_yestarday_all.text = rsp.yestardayall

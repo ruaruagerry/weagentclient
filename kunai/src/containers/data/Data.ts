@@ -6,6 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
  */
+
 class Data extends eui.ItemRenderer {
     private data_yestarday_all: eui.Label = null // 昨日全网收益
     private data_history_all: eui.Label = null // 历史全网收益

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="622" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828E" height="57" left="0" right="-1.670000000000016" horizontalCenter="0.835000000000008" top="0"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xB7B7B7" top="57" verticalCenter="29.16500000000002" bottom="-1.330000000000041" left="0" horizontalCenter="0.835000000000008" right="-1.670000000000016"/>
+	<e:Label text="收益详情" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="21" fontFamily="SimHei" height="35" top="22" left="99" right="97.32999999999998" horizontalCenter="0.835000000000008"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" left="9" horizontalCenter="1" right="7" top="108" height="250"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xC1C1C1" height="1" top="159" left="20" horizontalCenter="2" right="16"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xC1C1C1" height="1" horizontalCenter="2" left="20" right="16" top="295"/>
+	<e:Label text="钱包" anchorOffsetX="0" anchorOffsetY="0" textColor="0x5365AA" verticalAlign="middle" textAlign="left" size="25" fontFamily="KaiTi" width="59" height="37" top="118" left="25"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xC1C1C1" height="112" width="1" top="175" left="135"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xC1C1C1" height="112" width="1" right="135" top="175"/>
+	<e:Label id="total" text="0.00" anchorOffsetX="0" width="88" anchorOffsetY="0" height="85" size="19" textColor="0x000000" verticalAlign="middle" textAlign="center" top="175" left="25"/>
+	<e:Label id="money" text="0.00" anchorOffsetX="0" width="97" anchorOffsetY="0" height="85" size="19" textColor="0x000000" verticalAlign="middle" textAlign="center" horizontalCenter="4" top="175"/>
+	<e:Label id="getouttotal" text="0.00" anchorOffsetX="0" width="86" anchorOffsetY="0" height="85" size="19" textColor="0x000000" verticalAlign="middle" textAlign="center" right="25" top="175"/>
+	<e:Label text="总收益(元)" anchorOffsetX="0" width="88" anchorOffsetY="0" height="19" size="13" textColor="0x000000" verticalAlign="middle" textAlign="center" left="25" top="267" fontFamily="SimHei"/>
+	<e:Label text="当前账户余额(元)" anchorOffsetX="0" width="104" anchorOffsetY="0" height="19" size="13" textColor="0x000000" verticalAlign="middle" textAlign="center" horizontalCenter="4" top="267" fontFamily="SimHei"/>
+	<e:Label text="总提现金额(元)" anchorOffsetX="0" width="98" anchorOffsetY="0" height="18" size="13" textColor="0x000000" verticalAlign="middle" textAlign="center" right="23" top="267" fontFamily="SimHei"/>
+	<e:Label id="remainsee" text="0" anchorOffsetX="0" width="41" anchorOffsetY="0" height="33" size="15" textColor="0x000000" verticalAlign="middle" textAlign="center" right="77" top="312"/>
+	<e:Label text="当天剩余有收益广告次数：" anchorOffsetX="0" width="195" anchorOffsetY="0" height="35" size="15" textColor="0x000000" verticalAlign="middle" textAlign="center" left="47" fontFamily="SimHei" top="312"/>
+	<e:Button label="提现记录" anchorOffsetX="0" width="160" enabled="true" bottom="159" left="25"/>
+	<e:Button label="收益记录" anchorOffsetX="0" width="160" right="25" bottom="159"/>
+	<e:Button label="提现" anchorOffsetX="0" enabled="true" bottom="86" horizontalCenter="0" left="20" right="20"/>
+</e:Skin>

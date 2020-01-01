@@ -171,12 +171,12 @@ class Main extends eui.UILayer {
                     group.addChild(game)
                     break
                 case 2:
-                    var setup = new Setup()
-                    group.addChild(setup)
-                    break
-                case 3:
                     var wallet = new Wallet()
                     group.addChild(wallet)
+                    break
+                case 3:
+                    var setup = new Setup()
+                    group.addChild(setup)
                     break
             }
 

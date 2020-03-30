@@ -37,6 +37,10 @@ class Data extends eui.ItemRenderer {
 
     private loadData() {
         Http.get(API.ApiDataEntrance).then(res => {
+            if (res == undefined) {
+                return
+            }
+
             // unknown转any
             var rsp: any = res
 

@@ -27,6 +27,10 @@ class Wallet extends eui.ItemRenderer {
 
     private loadData() {
         Http.get(API.ApiMoneyEntrance).then(res => {
+            if (res == undefined) {
+                return
+            }
+
             // unknown转any
             var rsp: any = res
 

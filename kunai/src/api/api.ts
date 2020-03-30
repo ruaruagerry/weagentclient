@@ -32,4 +32,10 @@ module API {
 
     /* ----------------- data ---------------- */
     export var ApiDataEntrance = rootUrl + "/data/entrance"
+
+    /* ----------------- game ---------------- */
+    export var ApiGameRebirthUse = rootUrl + "/game/rebirth/use"
+    export var ApiGameScoreUpdate = rootUrl + "/game/score/update"
+    export var ApiGameScoreRank = rootUrl + "/game/score/rank"
+
 }

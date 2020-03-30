@@ -7,7 +7,6 @@ module MGTabBar {
         public constructor() {
             super();
             this.skinName = "resource/eui_skins/TabbarCell.exml";
-
         }
         protected createChildren(): void {
             super.createChildren();

@@ -37,6 +37,12 @@ class GamePlayingPanel extends egret.Sprite {
     // 默认第1关
     private level: number = 1
 
+    // 排行榜
+    private rank: Rank
+    private rankimage: eui.Image
+    private rankmyitem: RankItem
+    private isShowRank: boolean = false
+
     public constructor() {
         super()
         this.initGame()
@@ -173,6 +179,16 @@ class GamePlayingPanel extends egret.Sprite {
 	 * 射击动作
 	 */
     private shoot(e: egret.TouchEvent) {
+        console.log("click")
+
+        if (this.isShowRank) {
+            this.isShowRank = false
+            this.removeChild(this.rank)
+            this.removeChild(this.rankimage)
+            this.removeChild(this.rankmyitem)
+            return
+        }
+
         if (this.isShooting || this.kunaiNum <= 0) return
         this.isShooting = true
         this.kunaiNum -= 1
@@ -232,7 +248,7 @@ class GamePlayingPanel extends egret.Sprite {
         const { stage } = egret.MainContext.instance
         const rect = new egret.Shape()
         rect.graphics.beginFill(0x000000, 0)
-        rect.graphics.drawRect(0, stage.stageHeight - 290, stage.stageWidth, 210)
+        rect.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
         rect.graphics.endFill()
         this.addChild(rect)
         rect.touchEnabled = true
@@ -593,7 +609,7 @@ class GamePlayingPanel extends egret.Sprite {
 
     private share() {
         const { stage } = egret.MainContext.instance
-        this.s1 = this.createBitmapByName('s1_png')
+        this.s1 = this.createBitmapByName('rank_png')
         this.s1.width = 118 * .5
         this.s1.height = 107 * .5
         this.s1.x = stage.stageWidth - this.s1.width
@@ -603,7 +619,8 @@ class GamePlayingPanel extends egret.Sprite {
         egret.Tween.get(this.s1, { loop: true }).to({ y: this.s1.y + 10 }, 1000).to({ y: s1y }, 1000)
         this.s1.touchEnabled = true
         this.s1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            platform.share(this.removeRotateKunai(3))
+            // platform.share(this.removeRotateKunai(3))
+            this.showRank()
         }, this)
 
         // this.s2 = this.createBitmapByName('s2_png')
@@ -614,6 +631,45 @@ class GamePlayingPanel extends egret.Sprite {
         // const s2y = this.s2.y
         // this.addChild(this.s2)
         // egret.Tween.get(this.s2, { loop: true }).to({ y: this.s2.y - 10 }, 1000).to({ y: s2y }, 1000)
+    }
+
+    // 显示排行榜
+    private showRank() {
+        Http.get(API.ApiGameScoreRank).then(res => {
+            if (res == undefined) {
+                return
+            }
+            // unknown转any
+            var rsp: any = res
+
+            // 排行榜界面加上
+            this.rank = new Rank()
+            this.rank.x = 52
+            this.rank.y = 150
+            this.rank.horizontalCenter = 0
+            this.rank.height = 300
+            this.addChild(this.rank)
+            this.rank.bindData(rsp.players)
+
+            this.rankimage = new eui.Image()
+            this.rankimage.source = "rank_banner_png"
+            this.rankimage.width = 268
+            this.rankimage.height = 100
+            this.rankimage.x = this.rank.dataList.x + 14
+            this.rankimage.y = this.rank.y - this.rankimage.height
+            this.addChild(this.rankimage)
+
+            this.rankmyitem = new RankItem()
+            this.rankmyitem.setData(rsp.myrank + 1, "portrait", "nick", rsp.score)
+            this.rankmyitem.x = this.rank.dataList.x + 13
+            this.rankmyitem.y = this.rank.y + this.rank.height + 2
+            this.rankmyitem.width = 268
+            this.rankmyitem.height -= 10
+            this.rankmyitem.setRectColor(0x45828e)
+            this.addChild(this.rankmyitem)
+
+            this.isShowRank = true
+        })
     }
 
     // 复活

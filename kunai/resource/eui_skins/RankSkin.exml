@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="skins.RankSkin" minWidth="20" minHeight="20" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="295" height="244">
+    <!--<e:HScrollBar id="horizontalScrollBar" width="100%" autoVisibility="true" bottom="0" autoVisibility="false"  visible="false"/>-->
+    <e:VScrollBar id="verticalScrollBar" autoVisibility="false" height="100%" locked="false" visible="false"/>
+	<e:List id="dataList" anchorOffsetX="0" anchorOffsetY="0" width="295" height="244" x="52" y="184.19">
+		<e:layout>
+		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:List>
+</e:Skin>

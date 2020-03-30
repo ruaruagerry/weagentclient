@@ -90,7 +90,6 @@ class Main extends eui.UILayer {
             theme.addEventListener(eui.UIEvent.COMPLETE, () => {
                 resolve();
             }, this);
-
         })
     }
 

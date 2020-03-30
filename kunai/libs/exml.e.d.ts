@@ -31,6 +31,10 @@ declare module skins{
 	}
 }
 declare module skins{
+	class RankSkin extends eui.Skin{
+	}
+}
+declare module skins{
 	class ScrollerSkin extends eui.Skin{
 	}
 }

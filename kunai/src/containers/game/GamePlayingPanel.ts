@@ -248,7 +248,7 @@ class GamePlayingPanel extends egret.Sprite {
         const { stage } = egret.MainContext.instance
         const rect = new egret.Shape()
         rect.graphics.beginFill(0x000000, 0)
-        rect.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
+        rect.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight - 90)
         rect.graphics.endFill()
         this.addChild(rect)
         rect.touchEnabled = true
@@ -635,6 +635,10 @@ class GamePlayingPanel extends egret.Sprite {
 
     // 显示排行榜
     private showRank() {
+        if (this.isShowRank) {
+            return
+        }
+
         Http.get(API.ApiGameScoreRank).then(res => {
             if (res == undefined) {
                 return

@@ -35,7 +35,7 @@ class Data extends eui.ItemRenderer {
         this.height = stage.stageHeight - 90
     }
 
-    private loadData() {
+    public loadData() {
         Http.get(API.ApiDataEntrance).then(res => {
             if (res == undefined) {
                 return

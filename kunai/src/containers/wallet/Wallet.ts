@@ -25,7 +25,7 @@ class Wallet extends eui.ItemRenderer {
         this.height = stage.stageHeight - 90
     }
 
-    private loadData() {
+    public loadData() {
         Http.get(API.ApiMoneyEntrance).then(res => {
             if (res == undefined) {
                 return

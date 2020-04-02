@@ -33,6 +33,11 @@ class Main extends eui.UILayer {
     private viewStack: eui.ViewStack;
     private lastindex = 0;
     private arrayCollection: eui.ArrayCollection;
+    private event_TabbarEnter: string = "tabbar_enter"
+    private data: Data = null
+    private game: Game = null
+    private wallet: Wallet = null
+    private setup: Setup = null
 
     protected createChildren(): void {
         super.createChildren();
@@ -156,30 +161,24 @@ class Main extends eui.UILayer {
         this.viewStack.height = stageH - 90;
 
         for (var i: number = 0; i < 4; i++) {
-            var group: eui.Group = new eui.Group();
-            group.name = "Group" + i;
-
-
             switch (i) {
                 case 0:
-                    var data = new Data()
-                    group.addChild(data)
+                    this.data = new Data()
+                    this.viewStack.addChild(this.data)
                     break
                 case 1:
-                    var game = new Game()
-                    group.addChild(game)
+                    this.game = new Game()
+                    this.viewStack.addChild(this.game)
                     break
                 case 2:
-                    var wallet = new Wallet()
-                    group.addChild(wallet)
+                    this.wallet = new Wallet()
+                    this.viewStack.addChild(this.wallet)
                     break
                 case 3:
-                    var setup = new Setup()
-                    group.addChild(setup)
+                    this.setup = new Setup()
+                    this.viewStack.addChild(this.setup)
                     break
             }
-
-            this.viewStack.addChild(group);
         }
 
         this.viewStack.selectedIndex = this.lastindex
@@ -197,6 +196,18 @@ class Main extends eui.UILayer {
         data.selected = true;
 
         this.tabbar.dataProvider = new eui.ArrayCollection(this.data2TabBar_arr);
+
+        switch (e.itemIndex) {
+            case 0:
+                this.data.loadData()
+                break
+            case 2:
+                this.wallet.loadData()
+                break
+            case 3:
+                this.setup.loadData()
+                break
+        }
     }
 }
 

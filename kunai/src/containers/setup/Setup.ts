@@ -29,7 +29,7 @@ class Setup extends eui.ItemRenderer {
         this.height = stage.stageHeight - 90
     }
 
-    private loadData() {
+    public loadData() {
         // Http.get(API.ApiDataEntrance).then(res => {
         //     // unknown转any
         //     var rsp: any = res

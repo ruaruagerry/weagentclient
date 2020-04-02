@@ -42,6 +42,7 @@ class GamePlayingPanel extends egret.Sprite {
     private rankimage: eui.Image
     private rankmyitem: RankItem
     private isShowRank: boolean = false
+    private isUpdareAd: boolean = false
 
     public constructor() {
         super()
@@ -179,8 +180,6 @@ class GamePlayingPanel extends egret.Sprite {
 	 * 射击动作
 	 */
     private shoot(e: egret.TouchEvent) {
-        console.log("click")
-
         if (this.isShowRank) {
             this.isShowRank = false
             this.removeChild(this.rank)
@@ -619,18 +618,22 @@ class GamePlayingPanel extends egret.Sprite {
         egret.Tween.get(this.s1, { loop: true }).to({ y: this.s1.y + 10 }, 1000).to({ y: s1y }, 1000)
         this.s1.touchEnabled = true
         this.s1.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            // platform.share(this.removeRotateKunai(3))
             this.showRank()
         }, this)
 
-        // this.s2 = this.createBitmapByName('s2_png')
-        // this.s2.width = 119 * .5
-        // this.s2.height = 106 * .5
-        // this.s2.x = stage.stageWidth - this.s2.width
-        // this.s2.y = stage.stageHeight - 250
-        // const s2y = this.s2.y
-        // this.addChild(this.s2)
-        // egret.Tween.get(this.s2, { loop: true }).to({ y: this.s2.y - 10 }, 1000).to({ y: s2y }, 1000)
+        this.s2 = this.createBitmapByName('ad_png')
+        this.s2.width = 70 * .5
+        this.s2.height = 70 * .5
+        this.s2.x = stage.stageWidth - (this.s2.width + 15)
+        this.s2.y = stage.stageHeight - 250
+        const s2y = this.s2.y
+        this.addChild(this.s2)
+        egret.Tween.get(this.s2, { loop: true }).to({ y: this.s2.y - 10 }, 1000).to({ y: s2y }, 1000)
+        this.s2.touchEnabled = true
+        this.s2.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            // todo 看广告回调成功后
+            this.adSee()
+        }, this)
     }
 
     // 显示排行榜
@@ -674,6 +677,17 @@ class GamePlayingPanel extends egret.Sprite {
 
             this.isShowRank = true
         })
+    }
+
+    // 看广告成功上报
+    private adSee() {
+        if (this.isUpdareAd) {
+            return
+        }
+
+        this.isUpdareAd = true
+        Http.get(API.ApiMoneyAdSee)
+        this.isUpdareAd = false
     }
 
     // 复活

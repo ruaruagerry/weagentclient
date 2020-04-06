@@ -17,7 +17,7 @@
 	<e:Label text="总提现金额(元)" anchorOffsetX="0" width="98" anchorOffsetY="0" height="18" size="13" textColor="0x000000" verticalAlign="middle" textAlign="center" right="23" top="267" fontFamily="SimHei"/>
 	<e:Label id="remainsee" text="0" anchorOffsetX="0" width="41" anchorOffsetY="0" height="33" size="15" textColor="0x000000" verticalAlign="middle" textAlign="center" right="77" top="312"/>
 	<e:Label text="当天剩余有收益广告次数：" anchorOffsetX="0" width="195" anchorOffsetY="0" height="35" size="15" textColor="0x000000" verticalAlign="middle" textAlign="center" left="47" fontFamily="SimHei" top="312"/>
-	<e:Button label="提现记录" anchorOffsetX="0" width="160" enabled="true" bottom="159" left="25"/>
+	<e:Button id="recordbtn" label="提现记录" anchorOffsetX="0" width="160" enabled="true" bottom="159" left="25"/>
 	<e:Button label="收益记录" anchorOffsetX="0" width="160" right="25" bottom="159"/>
 	<e:Button label="提现" anchorOffsetX="0" enabled="true" bottom="86" horizontalCenter="0" left="20" right="20"/>
 </e:Skin>

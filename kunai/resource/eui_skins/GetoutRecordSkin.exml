@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="624.67" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" top="0" verticalCenter="0.16500000000002046" bottom="-0.3300000000000409" left="0" horizontalCenter="0" right="0"/>
+	<e:Rect height="64" fillColor="0xe25d5d" anchorOffsetX="0" anchorOffsetY="0" top="76" left="-1" horizontalCenter="-0.5" right="0"/>
+	<e:Rect height="76" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xedc4c4" top="0" left="-1" horizontalCenter="-0.5" right="0"/>
+	<e:Label text="申请日期" anchorOffsetY="0" height="64.67" verticalAlign="middle" textAlign="center" size="17" anchorOffsetX="0" width="157.33" bold="true" top="74" left="1"/>
+	<e:Label text="状态" anchorOffsetY="0" height="64.67" verticalAlign="middle" textAlign="center" size="17" anchorOffsetX="0" width="91.32" bold="true" right="2" top="74"/>
+	<e:Label text="金额" anchorOffsetY="0" height="64.67" verticalAlign="middle" textAlign="center" size="17" anchorOffsetX="0" width="104.65" bold="true" horizontalCenter="34.5" top="74"/>
+	<e:Label text="提现记录" anchorOffsetX="0" width="135" anchorOffsetY="0" height="43" verticalAlign="middle" textAlign="center" horizontalCenter="0.5" top="17"/>
+	<e:Image id="back" width="31" height="31" anchorOffsetX="0" anchorOffsetY="0" source="back_png" top="23" left="16"/>
+
+	<e:List id="dataList" anchorOffsetX="0" anchorOffsetY="0" width="358" height="486.67" y="140" x="0"/>
+    <!-- <e:List id="dataList" anchorOffsetX="0" anchorOffsetY="0" width="295" height="244" x="52" y="184.19">
+		<e:layout>
+		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:List> -->
+</e:Skin>

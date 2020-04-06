@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="428" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect width="428" height="100" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:Label id="date" text="1" anchorOffsetX="0" width="115" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="17" left="22" top="16" verticalCenter="0" bottom="16"/>
+	<e:Label id="money" text="2" anchorOffsetX="0" width="75" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="17" horizontalCenter="25.5" top="15" verticalCenter="-0.5" bottom="16"/>
+	<e:Label id="status" text="3" anchorOffsetX="0" width="75" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="17" right="25" top="16" verticalCenter="0.5" bottom="15"/>
+</e:Skin>

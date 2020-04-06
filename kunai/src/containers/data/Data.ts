@@ -8,6 +8,8 @@
  */
 
 class Data extends eui.ItemRenderer {
+    // private loading: Loading = new Loading()
+
     private data_yestarday_all: eui.Label = null // 昨日全网收益
     private data_history_all: eui.Label = null // 历史全网收益
     private data_today_adnum: eui.Label = null // 今日实时看广告次数
@@ -33,10 +35,13 @@ class Data extends eui.ItemRenderer {
 
         this.width = stage.stageWidth
         this.height = stage.stageHeight - 90
+
+        // 加载loading
+        this.addChild(Loading.mc1)
     }
 
     public loadData() {
-        Http.get(API.ApiDataEntrance).then(res => {
+        Http.get(this, API.ApiDataEntrance).then(res => {
             if (res == undefined) {
                 return
             }

@@ -55,7 +55,7 @@ class AdRecord extends eui.ItemRenderer {
 
         this.loading = true
         var data = { start: this.startindex, end: this.endindex }
-        Http.post(API.ApiMoneyAdRecord, data).then(res => {
+        Http.post(this, API.ApiMoneyAdRecord, data).then(res => {
             if (res == undefined) {
                 return
             }

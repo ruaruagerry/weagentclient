@@ -41,7 +41,7 @@ class Wallet extends eui.ItemRenderer {
     }
 
     public loadData() {
-        Http.get(API.ApiMoneyEntrance).then(res => {
+        Http.get(this, API.ApiMoneyEntrance).then(res => {
             if (res == undefined) {
                 return
             }

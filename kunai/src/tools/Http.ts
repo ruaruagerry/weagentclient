@@ -68,15 +68,16 @@ class Http {
         return response;
     };
 
-    public static get(linkurl: string, data: Object = null) {
-        return this.request(linkurl, data, egret.HttpMethod.GET)
+    public static get(obj: any, linkurl: string, data: Object = null) {
+        return this.request(obj, linkurl, data, egret.HttpMethod.GET)
     }
 
-    public static post(linkurl: string, data: Object) {
-        return this.request(linkurl, data, egret.HttpMethod.POST)
+    public static post(obj: any, linkurl: string, data: Object) {
+        return this.request(obj, linkurl, data, egret.HttpMethod.POST)
     }
 
-    public static request(linkurl: string, data: Object, type: string = egret.HttpMethod.POST) {
+    public static request(obj: any, linkurl: string, data: Object, type: string = egret.HttpMethod.POST) {
+        Loading.showLoading(obj)
         return new Promise((resolve, reject) => {
             var request = new egret.HttpRequest();
             request.responseType = egret.HttpResponseType.TEXT;
@@ -102,6 +103,7 @@ class Http {
 
 
             function onComplete(event: egret.Event) {
+                Loading.hidLoading(obj)
                 var request = <egret.HttpRequest>event.currentTarget;
                 var Datas = JSON.parse(request.response);
                 if (this.responseInterceptor && typeof this.responseInterceptor === 'function') {

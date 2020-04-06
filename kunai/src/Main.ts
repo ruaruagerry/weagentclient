@@ -104,6 +104,8 @@ class Main extends eui.UILayer {
 	 */
     protected createGameScene(): void {
         platform.scopeUserInfo()
+        // 加载loading模块
+        Loading.init()
         // 初始化背景
         this.initBackground()
         // 创建tabbar

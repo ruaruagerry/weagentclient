@@ -54,7 +54,7 @@ class GetoutRecord extends eui.ItemRenderer {
 
         this.loading = true
         var data = { start: this.startindex, end: this.endindex }
-        Http.post(API.ApiMoneyGetoutRecord, data).then(res => {
+        Http.post(this, API.ApiMoneyGetoutRecord, data).then(res => {
             if (res == undefined) {
                 return
             }

@@ -642,7 +642,7 @@ class GamePlayingPanel extends egret.Sprite {
             return
         }
 
-        Http.get(API.ApiGameScoreRank).then(res => {
+        Http.get(this, API.ApiGameScoreRank).then(res => {
             if (res == undefined) {
                 return
             }
@@ -686,7 +686,7 @@ class GamePlayingPanel extends egret.Sprite {
         }
 
         this.isUpdareAd = true
-        Http.get(API.ApiMoneyAdSee)
+        Http.get(this, API.ApiMoneyAdSee)
         this.isUpdareAd = false
     }
 

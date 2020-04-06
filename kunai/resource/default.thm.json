@@ -16,6 +16,8 @@
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
+		"resource/eui_skins/AdRecordItemSkin.exml",
+		"resource/eui_skins/AdRecordSkin.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CheckBoxSkin.exml",
 		"resource/eui_skins/DataSkin.exml",

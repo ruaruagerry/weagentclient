@@ -26,6 +26,7 @@
 		"bin-debug/containers/game/GamePlayingPanel.js",
 		"bin-debug/containers/game/GameStartPanel.js",
 		"bin-debug/containers/setup/Setup.js",
+		"bin-debug/containers/wallet/AdRecord.js",
 		"bin-debug/containers/wallet/GetoutRecord.js",
 		"bin-debug/containers/wallet/Wallet.js",
 		"bin-debug/tools/AssetAdapter.js",

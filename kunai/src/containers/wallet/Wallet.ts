@@ -5,7 +5,10 @@ class Wallet extends eui.ItemRenderer {
     private remainsee: eui.Label = null // 剩余观看次数
 
     private getoutrecord: GetoutRecord = null
-    private recordbtn: eui.Button = null // 收益记录按钮
+    private getoutrecordbtn: eui.Button = null // 提现记录按钮
+
+    private adrecord: AdRecord = null
+    private adrecordbtn: eui.Button = null // 收益记录按钮
 
     constructor() {
         super()
@@ -28,8 +31,12 @@ class Wallet extends eui.ItemRenderer {
         this.height = stage.stageHeight - 90
 
         // 增加按钮事件
-        this.recordbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        this.getoutrecordbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.onGetoutRecord()
+        }, this)
+
+        this.adrecordbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onAdRecord()
         }, this)
     }
 
@@ -52,5 +59,10 @@ class Wallet extends eui.ItemRenderer {
     private onGetoutRecord() {
         this.getoutrecord = new GetoutRecord()
         this.addChild(this.getoutrecord)
+    }
+
+    private onAdRecord() {
+        this.adrecord = new AdRecord()
+        this.addChild(this.adrecord)
     }
 }

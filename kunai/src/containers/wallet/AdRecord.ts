@@ -1,4 +1,4 @@
-class GetoutRecord extends eui.ItemRenderer {
+class AdRecord extends eui.ItemRenderer {
     private dataList: eui.List
     private rspdata: Array<any> = new Array<any>()
     private scroller: eui.Scroller
@@ -21,8 +21,9 @@ class GetoutRecord extends eui.ItemRenderer {
     }
 
     private createScene() {
-        this.skinName = "resource/eui_skins/GetoutRecordSkin.exml"
-        this.dataList.itemRenderer = GetoutRecordItem
+        this.skinName = "resource/eui_skins/AdRecordSkin.exml"
+        this.dataList.itemRenderer = AdRecordItem
+
 
         const { stage } = egret.MainContext.instance
         this.width = stage.stageWidth
@@ -54,21 +55,21 @@ class GetoutRecord extends eui.ItemRenderer {
 
         this.loading = true
         var data = { start: this.startindex, end: this.endindex }
-        Http.post(API.ApiMoneyGetoutRecord, data).then(res => {
+        Http.post(API.ApiMoneyAdRecord, data).then(res => {
             if (res == undefined) {
                 return
             }
 
             // unknown转any
             var rsp: any = res
-            for (let v of rsp.getoutrecords) {
+            for (let v of rsp.adrecords) {
                 this.rspdata.push(v)
             }
-            this.bindData(rsp.getoutrecords)
-            this.startindex = rsp.getoutrecords.length
+            this.bindData(this.rspdata)
+            this.startindex = this.rspdata.length
             this.endindex = this.startindex + 5
 
-            if (rsp.getoutrecords.length < 5) {
+            if (rsp.adrecords.length < 5) {
                 this.stopload = true
             }
 
@@ -94,14 +95,14 @@ class GetoutRecord extends eui.ItemRenderer {
     }
 }
 
-class GetoutRecordItem extends eui.ItemRenderer {
+class AdRecordItem extends eui.ItemRenderer {
     private date: eui.Label = null;
+    private earning: eui.Label = null;
     private money: eui.Label = null;
-    private status: eui.Label = null;
 
     public constructor() {
         super();
-        this.skinName = "resource/eui_skins/GetoutRecordItemSkin.exml";
+        this.skinName = "resource/eui_skins/AdRecordItemSkin.exml";
     }
 
     protected createChildren(): void {
@@ -114,7 +115,7 @@ class GetoutRecordItem extends eui.ItemRenderer {
 
     private loadData(): void {
         this.date.text = this.data.createtime;
-        this.money.text = this.data.getoutmoney
-        this.status.text = this.data.status;
+        this.earning.text = this.data.earning
+        this.money.text = this.data.money;
     }
 }

@@ -23,6 +23,7 @@
 		"resource/eui_skins/DataSkin.exml",
 		"resource/eui_skins/GetoutRecordItemSkin.exml",
 		"resource/eui_skins/GetoutRecordSkin.exml",
+		"resource/eui_skins/GetoutSkin.exml",
 		"resource/eui_skins/HScrollBarSkin.exml",
 		"resource/eui_skins/HSliderSkin.exml",
 		"resource/eui_skins/ItemRendererSkin.exml",

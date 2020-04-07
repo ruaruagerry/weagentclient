@@ -10,6 +10,10 @@ class Wallet extends eui.ItemRenderer {
     private adrecord: AdRecord = null
     private adrecordbtn: eui.Button = null // 收益记录按钮
 
+    private getout: Getout = null
+    private getoutbtn: eui.Button = null
+
+
     constructor() {
         super()
         this.init()
@@ -38,6 +42,10 @@ class Wallet extends eui.ItemRenderer {
         this.adrecordbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.onAdRecord()
         }, this)
+
+        this.getoutbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onGetout()
+        }, this)
     }
 
     public loadData() {
@@ -64,5 +72,11 @@ class Wallet extends eui.ItemRenderer {
     private onAdRecord() {
         this.adrecord = new AdRecord()
         this.addChild(this.adrecord)
+    }
+
+    private onGetout() {
+        this.getout = new Getout()
+        this.getout.loadData(this.money.text)
+        this.addChild(this.getout)
     }
 }

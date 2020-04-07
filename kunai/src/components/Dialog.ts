@@ -94,7 +94,7 @@ class Dialog extends egret.Sprite {
         adBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, async () => {
             let remainnum = this.rebirthnum - 1
             if (remainnum >= 0) {
-                await Http.get(API.ApiGameRebirthUse).then(res => {
+                await Http.get(this, API.ApiGameRebirthUse).then(res => {
                     if (res == undefined) {
                         return
                     }
@@ -140,7 +140,7 @@ class Dialog extends egret.Sprite {
     public async setScores(text: string) {
         // 加上await把异步的变成同步的
         let data = { score: Number(text) }
-        await Http.post(API.ApiGameScoreUpdate, data).then(res => {
+        await Http.post(this, API.ApiGameScoreUpdate, data).then(res => {
             if (res == undefined) {
                 return
             }

@@ -118,6 +118,7 @@ class Http {
                         resolve(Datas.data);
                         break;
                     default:
+                        Msg.showMsg(obj, Datas.msg)
                         reject(Datas);
                         break;
                 }
@@ -139,10 +140,10 @@ class Http {
                     request.open(linkurl, type);
                     request.send(data);
                 } else {
-                    console.log("温馨提示", "网络出错！");
+                    Loading.hidLoading(obj)
+                    Msg.showMsg(obj, "温馨提示, 网络出错！");
                     return reject(event);
                 }
-
             }
         }).catch(err => {
             console.error(err);

@@ -700,9 +700,7 @@ class GamePlayingPanel extends egret.Sprite {
 
     // 没有复活机会
     private noChance() {
-        const msg: Msg = new Msg()
-        this.addChild(msg)
-        msg.init('一天只有三次复活机会哦')
+        Msg.showMsg(this, '一天只有三次复活机会哦')
     }
 
     private masks() {

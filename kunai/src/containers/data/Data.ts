@@ -35,9 +35,6 @@ class Data extends eui.ItemRenderer {
 
         this.width = stage.stageWidth
         this.height = stage.stageHeight - 90
-
-        // 加载loading
-        this.addChild(Loading.mc1)
     }
 
     public loadData() {

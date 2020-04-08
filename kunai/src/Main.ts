@@ -110,6 +110,8 @@ class Main extends eui.UILayer {
         this.initBackground()
         // 创建tabbar
         this.createTabbar()
+        // 加载Msg弹窗模块
+        Msg.init()
     }
 
     private initBackground() {

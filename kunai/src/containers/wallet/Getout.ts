@@ -59,15 +59,20 @@ class Getout extends eui.ItemRenderer {
             return
         }
 
-        var curLabel = this.chosenbtns[this.chosenIdx].label.replace("元", "")
+        var getoutmoney = Number(this.chosenbtns[this.chosenIdx].label.replace("元", ""))
+        var money = Number(this.money.text)
+        if (getoutmoney > money) {
+            Msg.showMsg(this, "余额不足")
+            return
+        }
 
-        let data = { getoutmoney: Number(curLabel) }
+        let data = { getoutmoney: getoutmoney }
         Http.post(this, API.ApiMoneyGetoutApply, data).then(res => {
             if (res == undefined) {
                 return
             }
 
-            console.log("提现成功")
+            Msg.showMsg(this, "提现成功")
         })
     }
 

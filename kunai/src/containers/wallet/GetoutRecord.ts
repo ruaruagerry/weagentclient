@@ -64,8 +64,8 @@ class GetoutRecord extends eui.ItemRenderer {
             for (let v of rsp.getoutrecords) {
                 this.rspdata.push(v)
             }
-            this.bindData(rsp.getoutrecords)
-            this.startindex = rsp.getoutrecords.length
+            this.bindData(this.rspdata)
+            this.startindex = this.rspdata.length
             this.endindex = this.startindex + 5
 
             if (rsp.getoutrecords.length < 5) {

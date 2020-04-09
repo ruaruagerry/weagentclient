@@ -69,10 +69,9 @@ class Getout extends eui.ItemRenderer {
         let data = { getoutmoney: getoutmoney }
         Http.post(this, API.ApiMoneyGetoutApply, data).then(res => {
             if (res == undefined) {
+                Msg.showMsg(this, "提现成功")
                 return
             }
-
-            Msg.showMsg(this, "提现成功")
         })
     }
 

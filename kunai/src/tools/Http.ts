@@ -119,7 +119,6 @@ class Http {
                         break;
                     default:
                         Msg.showMsg(obj, Datas.msg)
-                        reject(Datas);
                         break;
                 }
             }

@@ -20,6 +20,7 @@ class Wallet extends eui.ItemRenderer {
     }
 
     private init() {
+        /* 客户端的金币全部都以元为单位 */
         // 创建场景
         this.createScene()
         // 加载数据

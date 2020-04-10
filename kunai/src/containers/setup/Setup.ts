@@ -8,6 +8,15 @@
  */
 
 class Setup extends eui.ItemRenderer {
+    private realbtn: eui.Rect = null
+    private real: Real = null
+
+    private phone: Phone = null
+    private phonebtn: eui.Rect = null
+
+    private setupbtn: eui.Rect = null
+
+
     constructor() {
         super()
         this.init()
@@ -27,6 +36,15 @@ class Setup extends eui.ItemRenderer {
 
         this.width = stage.stageWidth
         this.height = stage.stageHeight - 90
+
+        // 增加按钮事件
+        this.realbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onReal()
+        }, this)
+
+        this.phonebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onPhone()
+        }, this)
     }
 
     public loadData() {
@@ -34,5 +52,15 @@ class Setup extends eui.ItemRenderer {
         //     // unknown转any
         //     var rsp: any = res
         // })
+    }
+
+    private onReal(): void {
+        this.real = new Real()
+        this.addChild(this.real)
+    }
+
+    private onPhone(): void {
+        this.phone = new Phone()
+        this.addChild(this.phone)
     }
 }

@@ -8,27 +8,27 @@
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xc1c1c1" height="1" top="138" left="20" horizontalCenter="1.835000000000008" right="16.329999999999984"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" strokeColor="0x444444" fillColor="0xC1C1C1" height="1" left="20" horizontalCenter="1.835000000000008" right="16.329999999999984" bottom="269.66999999999996"/>
 	<e:Label text="广告收益" anchorOffsetX="0" anchorOffsetY="0" textColor="0x5365aa" verticalAlign="middle" textAlign="left" size="15" fontFamily="KaiTi" width="86" height="28" left="20" top="110"/>
-	<e:Label text="每日凌晨12点更新" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="right" size="12" fontFamily="NSimSun" textColor="0x000000" width="134" height="28" right="16.329999999999984" top="111"/>
+	<e:Label text="每日中午12点更新" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="right" size="12" fontFamily="NSimSun" textColor="0x000000" width="134" height="28" right="16.329999999999984" top="111"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xff5151" width="127" height="84" left="35" top="154"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" width="127" height="84" fillColor="0x2869ed" right="32.329999999999984" top="153"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xff5151" fillAlpha="0.62" width="127" height="26" top="237" left="35"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillAlpha="0.62" width="127" height="26" fillColor="0x153fd6" right="32.329999999999984" top="237"/>
 	<e:Label id="data_yestarday_all" text="0.00" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" width="128" height="85" left="35" top="153"/>
-	<e:Label text="昨日全网收益" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="SimHei" width="128" height="27" left="35" top="236"/>
-	<e:Label text="历史全网收益" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="SimHei" width="128" height="25" right="31.329999999999984" top="237"/>
+	<e:Label text="昨日全网收益(元)" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="SimHei" width="128" height="27" left="35" top="236"/>
+	<e:Label text="历史全网收益(元)" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="SimHei" width="128" height="25" right="31.329999999999984" top="237"/>
 	<e:Label id="data_history_all" text="0" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" width="128" height="85" right="32.329999999999984" top="153"/>
 	<e:Label text="今日实时数据" anchorOffsetX="0" anchorOffsetY="0" textColor="0x5365AA" verticalAlign="middle" textAlign="left" size="15" fontFamily="KaiTi" width="118" height="28" left="20" bottom="271.66999999999996"/>
 	<e:Label text="每日凌晨12点重新计算" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="right" size="12" fontFamily="NSimSun" textColor="0x000000" width="160" height="28" right="16.329999999999984" bottom="271.66999999999996"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x1d8207" width="83" height="119" bottom="137.66999999999996" left="31"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45ad08" fillAlpha="0.62" width="83" height="24" bottom="113.66999999999996" left="31"/>
 	<e:Label id="data_today_adnum" text="0" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="20" fontFamily="Microsoft YaHei" width="81" height="118" bottom="138.66999999999996" left="32"/>
-	<e:Label text="广告总数" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="Microsoft YaHei" width="81" height="24" bottom="113.66999999999996" left="32"/>
+	<e:Label text="广告总数" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="10" fontFamily="Microsoft YaHei" width="81" height="24" bottom="113.66999999999996" left="32"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x1D8207" width="83" height="119" horizontalCenter="2.335000000000008" bottom="136.66999999999996"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45AD08" fillAlpha="0.62" width="83" height="24" horizontalCenter="2.335000000000008" bottom="112.66999999999996"/>
 	<e:Label id="data_today_onlinenum" text="0" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="20" fontFamily="Microsoft YaHei" width="81" height="118" horizontalCenter="2.335000000000008" bottom="137.66999999999996"/>
-	<e:Label text="在线总数" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="Microsoft YaHei" width="81" height="24" horizontalCenter="3.335000000000008" bottom="112.66999999999996"/>
+	<e:Label text="在线总数" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="10" fontFamily="Microsoft YaHei" width="81" height="24" horizontalCenter="3.335000000000008" bottom="112.66999999999996"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x1D8207" width="83" height="119" right="28.329999999999984" bottom="137.66999999999996"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45AD08" fillAlpha="0.62" width="83" height="24" right="28.329999999999984" bottom="113.66999999999996"/>
 	<e:Label id="data_today_all" text="0" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="20" fontFamily="Microsoft YaHei" width="81" height="118" right="29.329999999999984" bottom="138.66999999999996"/>
-	<e:Label text="全网广告收益" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="12" fontFamily="Microsoft YaHei" width="81" height="24" right="28.329999999999984" bottom="113.66999999999996"/>
+	<e:Label text="全网广告收益(元)" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="10" fontFamily="Microsoft YaHei" width="81" height="24" right="28.329999999999984" bottom="113.66999999999996"/>
 </e:Skin>

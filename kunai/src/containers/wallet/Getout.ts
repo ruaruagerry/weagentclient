@@ -6,7 +6,7 @@ class Getout extends eui.ItemRenderer {
     private five: eui.Button
     private ten: eui.Button
     private twenty: eui.Button
-    private back: eui.Button
+    private back: eui.Image
     private money: eui.Label
     private getoutbtn: eui.Button
 

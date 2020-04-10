@@ -6,15 +6,15 @@
 	<e:Label text="ID:" size="18" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="39" anchorOffsetY="0" height="28" fontFamily="Arial" top="39" left="125"/>
 	<e:Label id="nickname" text="" size="18" textAlign="left" verticalAlign="middle" anchorOffsetX="0" width="86" anchorOffsetY="0" height="31" fontFamily="Arial" top="69" left="133"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xd8d8d8" verticalCenter="75.5" bottom="-18" left="0" horizontalCenter="0" right="0" height="507"/>
-	<e:Rect height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" horizontalCenter="0" left="12" right="12" verticalCenter="-134"/>
+	<e:Rect id="realbtn" height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" horizontalCenter="0" left="12" right="12" verticalCenter="-134" enabled="true"/>
 	<e:Image width="44" height="43" anchorOffsetX="0" anchorOffsetY="0" mask="{realcheckMask}" left="32" verticalCenter="-134.5" source="realcheck_png"/>
 	<e:Label text="实名认证" anchorOffsetX="0" width="84" anchorOffsetY="0" height="33" textColor="0x000000" size="14" verticalAlign="middle" textAlign="center" fontFamily="Microsoft YaHei" left="91" verticalCenter="-133.5"/>
 	<e:Image width="28" height="28" source="arrow_forward_png" anchorOffsetX="0" anchorOffsetY="0" right="25" verticalCenter="-134"/>
-	<e:Rect height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" horizontalCenter="0" verticalCenter="-59" left="12" right="12"/>
+	<e:Rect id="phonebtn" height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" horizontalCenter="0" verticalCenter="-59" left="12" right="12" enabled="true"/>
 	<e:Image width="44" height="43" anchorOffsetX="0" anchorOffsetY="0" mask="{bindphoneMask}" left="32" verticalCenter="-59.5" source="phone_png"/>
 	<e:Label text="手机绑定" anchorOffsetX="0" width="84" anchorOffsetY="0" height="33" textColor="0x000000" size="14" verticalAlign="middle" textAlign="center" fontFamily="Microsoft YaHei" left="91" verticalCenter="-58.5"/>
 	<e:Image width="28" height="28" source="arrow_forward_png" anchorOffsetX="0" anchorOffsetY="0" right="25" verticalCenter="-59"/>
-	<e:Rect height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" horizontalCenter="0" verticalCenter="16" left="12" right="12"/>
+	<e:Rect id="setupbtn" height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" horizontalCenter="0" verticalCenter="16" left="12" right="12" enabled="true"/>
 	<e:Image width="44" height="43" anchorOffsetX="0" anchorOffsetY="0" mask="{setupMask}" left="32" verticalCenter="14.5" source="settings_png"/>
 	<e:Label text="设置" anchorOffsetX="0" width="84" anchorOffsetY="0" height="33" textColor="0x000000" size="14" verticalAlign="middle" textAlign="center" fontFamily="Microsoft YaHei" left="91" verticalCenter="15.5"/>
 	<e:Image width="28" height="28" source="arrow_forward_png" anchorOffsetX="0" anchorOffsetY="0" right="25" verticalCenter="15"/>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="622" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xD8D8D8" top="121" verticalCenter="60.5" bottom="0" left="0" horizontalCenter="0" right="0"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828E" height="121" left="0" right="-2" horizontalCenter="1" top="0"/>
+	<e:Rect height="217.33" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" top="151" left="34" horizontalCenter="0.5" right="33"/>
+	<e:Label text="实名认证" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="21" fontFamily="SimHei" height="35" top="44" left="99" right="97" horizontalCenter="1"/>
+	<e:Image id="back" width="31" height="31" anchorOffsetX="0" anchorOffsetY="0" source="back_png" top="46" left="19"/>
+	<e:TextInput id="realnick" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="姓名" enabled="true" top="186" horizontalCenter="0.5" left="63" right="62"/>
+	<e:TextInput id="cardcode" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="身份证" enabled="true" top="288" left="63" horizontalCenter="0.5" right="62"/>
+	<e:Button id="realbtn" label="提交" verticalCenter="117" horizontalCenter="0"/>
+</e:Skin>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="622" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xD8D8D8" top="121" verticalCenter="60.5" bottom="0" left="0" horizontalCenter="0" right="0"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828E" height="121" left="0" right="-2" horizontalCenter="1" top="0"/>
+	<e:Rect height="217.33" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xFFFFFF" top="151" left="34" horizontalCenter="0.5" right="33"/>
+	<e:Label text="手机绑定" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="21" fontFamily="SimHei" height="35" top="44" left="99" right="97" horizontalCenter="1"/>
+	<e:Image id="back" width="31" height="31" anchorOffsetX="0" anchorOffsetY="0" source="back_png" top="46" left="19"/>
+	<e:TextInput id="phone" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="手机号码" enabled="true" top="186" horizontalCenter="0.5" left="63" right="62"/>
+	<e:TextInput id="code" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="验证码" enabled="true" left="63" x="10" width="120" verticalCenter="0"/>
+	<e:Button id="bindbtn" label="提交" verticalCenter="117" horizontalCenter="-79"/>
+	<e:Button id="modifybindbtn" label="修改" verticalCenter="117" horizontalCenter="70"/>
+	<e:Button id="getcodebtn" label="获取" verticalCenter="0.5" anchorOffsetX="0" width="73" anchorOffsetY="0" height="33" right="73"/>
+	<e:Label id="tip" text="" x="66" y="234.67" anchorOffsetX="0" width="114" anchorOffsetY="0" height="27" fontFamily="KaiTi" textColor="0x000000" verticalAlign="middle" textAlign="left" size="16"/>
+</e:Skin>

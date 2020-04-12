@@ -28,6 +28,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.UILayer {
+    public static MainLogin: string = "MainLogin"
     private login: Login
     private data2TabBar_arr: Array<MGTabBar.TabBarCell_Data> = null;
     private tabbar: eui.TabBar;
@@ -113,6 +114,8 @@ class Main extends eui.UILayer {
         this.createLogin()
         // 加载Msg弹窗模块
         Msg.init()
+        // 监听事件
+        this.addEventListener(Main.MainLogin, this.onBack, this)
     }
 
     private initBackground() {
@@ -225,6 +228,16 @@ class Main extends eui.UILayer {
         // 登陆
         this.createTabbar()
         this.removeChild(this.login)
+        this.removeEventListener(Login.LoginSuccess, () => { }, this)
+    }
+
+    private onBack() {
+        // 移除所有小弟
+        this.removeChildren()
+        // 初始化背景
+        this.initBackground()
+        // 初始化登陆界面
+        this.createLogin()
     }
 }
 

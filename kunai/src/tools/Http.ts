@@ -117,6 +117,14 @@ class Http {
                         }
                         resolve(Datas.data);
                         break;
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                        // token错误处理
+                        obj.dispatchEventWith(Main.MainLogin, true)
+                        Msg.showMsg(obj, Datas.msg)
+                        break
                     default:
                         Msg.showMsg(obj, Datas.msg)
                         break;

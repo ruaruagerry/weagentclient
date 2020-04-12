@@ -52,7 +52,16 @@ class Setup extends eui.ItemRenderer {
     public loadData(obj: any) {
         this.nickname.text = obj.nickname
         this.id.text = obj.id
-        this.portrait = RES.getRes(obj.portrait)
+        // 加载头像
+        const imgLoader = new egret.ImageLoader()
+        imgLoader.load(obj.avatarurl)
+        imgLoader.once(egret.Event.COMPLETE, (e: egret.Event) => {
+            if (e.currentTarget.data) {
+                const texture = new egret.Texture()
+                texture.bitmapData = e.currentTarget.data
+                this.portrait.texture = texture
+            }
+        }, this)
     }
 
     private onReal(): void {

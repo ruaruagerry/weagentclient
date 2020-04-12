@@ -1,12 +1,16 @@
 class Phone extends eui.ItemRenderer {
+    public static BackPhone: string = "backphone"
+
     private back: eui.Image
 
     private phone: eui.TextInput
     private code: eui.TextInput
     private getcodebtn: eui.Button
     private bindbtn: eui.Button
-    private modifybindbtn: eui.Button
     private tip: eui.Label
+
+    private modifybindbtn: eui.Button
+    private modifybind: ModifyPhone
 
     constructor() {
         super()
@@ -28,6 +32,9 @@ class Phone extends eui.ItemRenderer {
         this.width = stage.stageWidth
         this.height = stage.stageHeight - 90;
 
+        // 增加自定义事件
+        this.addEventListener(Phone.BackPhone, this.onBackPhone, this)
+
         // 增加按钮事件
         this.back.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.delete()
@@ -39,6 +46,10 @@ class Phone extends eui.ItemRenderer {
 
         this.getcodebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.getCode()
+        }, this)
+
+        this.modifybindbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onModifyBind()
         }, this)
     }
 
@@ -137,5 +148,16 @@ class Phone extends eui.ItemRenderer {
         function onTimerComplete(): void {
             this.getcodebtn.label = "获取"
         }
+    }
+
+    private onModifyBind() {
+        this.modifybind = new ModifyPhone()
+        this.modifybind.init(this.phone.text)
+        this.addChild(this.modifybind)
+    }
+
+    private onBackPhone(evt: egret.Event) {
+        console.log("backbackback")
+        this.phone.text = evt.data
     }
 }

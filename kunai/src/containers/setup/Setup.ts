@@ -8,6 +8,10 @@
  */
 
 class Setup extends eui.ItemRenderer {
+    private portrait: eui.Image
+    private id: eui.Label
+    private nickname: eui.Label
+
     private realbtn: eui.Rect = null
     private real: Real = null
 
@@ -25,8 +29,6 @@ class Setup extends eui.ItemRenderer {
     private init() {
         // 创建场景
         this.createScene()
-        // 加载数据
-        this.loadData()
     }
 
     private createScene() {
@@ -47,11 +49,10 @@ class Setup extends eui.ItemRenderer {
         }, this)
     }
 
-    public loadData() {
-        // Http.get(API.ApiDataEntrance).then(res => {
-        //     // unknown转any
-        //     var rsp: any = res
-        // })
+    public loadData(obj: any) {
+        this.nickname.text = obj.nickname
+        this.id.text = obj.id
+        this.portrait = RES.getRes(obj.portrait)
     }
 
     private onReal(): void {

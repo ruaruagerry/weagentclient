@@ -70,3 +70,5 @@ class Buttons extends egret.Sprite {
         }, this)
     }
 }
+
+

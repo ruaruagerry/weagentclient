@@ -11,12 +11,14 @@ const rootUrl = "http://127.0.0.1:3003"
 
 module API {
     /* ----------------- auth ---------------- */
-    export var ApiAuthLogin = rootUrl + "/auth/login"
+    export var ApiAuthWxLogin = rootUrl + "/auth/wxlogin"
+    export var ApiAuthTestLogin = rootUrl + "/auth/testlogin"
 
     /* ----------------- phone ---------------- */
     export var ApiPhoneEntrance = rootUrl + "/phone/entrance"
     export var ApiPhoneGetCode = rootUrl + "/phone/getcode"
     export var ApiPhoneBind = rootUrl + "/phone/bind"
+    export var ApiPhoneModifyBind = rootUrl + "/phone/modifybind"
 
     /* ----------------- setup ---------------- */
     export var ApiSetupRealGet = rootUrl + "/setup/real/get"

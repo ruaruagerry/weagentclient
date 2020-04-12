@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="622" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image anchorOffsetX="0" anchorOffsetY="0" source="1_jpg" top="0" verticalCenter="0.5" bottom="-1" left="0" horizontalCenter="-1" right="2"/>
+	<e:Image width="197.33" height="106.67" anchorOffsetX="0" anchorOffsetY="0" source="2_jpg" top="92" horizontalCenter="-1.5"/>
+	<e:Button id="wxloginbtn" label="微信登陆" anchorOffsetX="0" width="238.67" anchorOffsetY="0" height="68.66" enabled="true" horizontalCenter="0.5" bottom="152">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="btn_bg_green_png" source.down="btn_bg_grey_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:TextInput id="account" width="186.66" height="48.78" anchorOffsetX="0" anchorOffsetY="0" enabled="true" prompt="账号" verticalCenter="-4.5" horizontalCenter="-3.5"/>
+</e:Skin>

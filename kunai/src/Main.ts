@@ -28,16 +28,17 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends eui.UILayer {
+    private login: Login
     private data2TabBar_arr: Array<MGTabBar.TabBarCell_Data> = null;
     private tabbar: eui.TabBar;
     private viewStack: eui.ViewStack;
     private lastindex = 0;
     private arrayCollection: eui.ArrayCollection;
-    private event_TabbarEnter: string = "tabbar_enter"
     private data: Data = null
     private game: Game = null
     private wallet: Wallet = null
     private setup: Setup = null
+    private userinfo: any
 
     protected createChildren(): void {
         super.createChildren();
@@ -108,19 +109,26 @@ class Main extends eui.UILayer {
         Loading.init()
         // 初始化背景
         this.initBackground()
-        // 创建tabbar
-        this.createTabbar()
+        // 初始化登陆界面
+        this.createLogin()
         // 加载Msg弹窗模块
         Msg.init()
     }
 
     private initBackground() {
         const { stage } = this
+
         const bg = new egret.Shape()
         bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xffffff, 0xffffff], [1, 1], [150, 50], new egret.Matrix())
         bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight)
         bg.graphics.endFill()
         this.addChild(bg)
+    }
+
+    private createLogin() {
+        this.login = new Login()
+        this.addChild(this.login)
+        this.addEventListener(Login.LoginSuccess, this.onLogin, this)
     }
 
     private createTabbar() {
@@ -181,6 +189,7 @@ class Main extends eui.UILayer {
                 case 3:
                     this.setup = new Setup()
                     this.viewStack.addChild(this.setup)
+                    this.setup.loadData(this.userinfo)
                     break
             }
         }
@@ -208,10 +217,14 @@ class Main extends eui.UILayer {
             case 2:
                 this.wallet.loadData()
                 break
-            case 3:
-                this.setup.loadData()
-                break
         }
+    }
+
+    private onLogin(evt: egret.Event) {
+        this.userinfo = evt.data
+        // 登陆
+        this.createTabbar()
+        this.removeChild(this.login)
     }
 }
 

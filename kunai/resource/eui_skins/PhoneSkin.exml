@@ -8,7 +8,7 @@
 	<e:TextInput id="phone" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="手机号码" enabled="true" top="186" horizontalCenter="0.5" left="63" right="62"/>
 	<e:TextInput id="code" height="46" anchorOffsetX="0" anchorOffsetY="0" prompt="验证码" enabled="true" left="63" x="10" width="120" verticalCenter="0"/>
 	<e:Button id="bindbtn" label="提交" verticalCenter="117" horizontalCenter="-79"/>
-	<e:Button id="modifybindbtn" label="修改" verticalCenter="117" horizontalCenter="70"/>
+	<e:Button id="modifybindbtn" label="修改" verticalCenter="117" horizontalCenter="82"/>
 	<e:Button id="getcodebtn" label="获取" verticalCenter="0.5" anchorOffsetX="0" width="73" anchorOffsetY="0" height="33" right="73"/>
 	<e:Label id="tip" text="" x="66" y="234.67" anchorOffsetX="0" width="114" anchorOffsetY="0" height="27" fontFamily="KaiTi" textColor="0x000000" verticalAlign="middle" textAlign="left" size="16"/>
 </e:Skin>

@@ -3,7 +3,7 @@
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828E" height="161" left="0" right="0" horizontalCenter="0" top="-28" verticalCenter="-258.5"/>
     <e:Image id="portrait" width="80" height="80"  anchorOffsetX="0" anchorOffsetY="0" x="35" y="29" source="timber_png" mask="{portraitMask}"/>
 	<e:Rect id="portraitMask" width="80" height="80" fillColor="0x0000FF" ellipseWidth="200" ellipseHeight="200" anchorOffsetX="0" anchorOffsetY="0" top="29" left="35"/>
-	<e:Label text="ID:" size="18" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="39" anchorOffsetY="0" height="28" fontFamily="Arial" top="39" left="125"/>
+	<e:Label id="id" text="ID:" size="18" textAlign="center" verticalAlign="middle" anchorOffsetX="0" width="39" anchorOffsetY="0" height="28" fontFamily="Arial" top="39" left="125"/>
 	<e:Label id="nickname" text="" size="18" textAlign="left" verticalAlign="middle" anchorOffsetX="0" width="86" anchorOffsetY="0" height="31" fontFamily="Arial" top="69" left="133"/>
 	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xd8d8d8" verticalCenter="75.5" bottom="-18" left="0" horizontalCenter="0" right="0" height="507"/>
 	<e:Rect id="realbtn" height="56" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" horizontalCenter="0" left="12" right="12" verticalCenter="-134" enabled="true"/>

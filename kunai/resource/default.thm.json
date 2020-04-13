@@ -29,6 +29,7 @@
 		"resource/eui_skins/ItemRendererSkin.exml",
 		"resource/eui_skins/ItemSkin.exml",
 		"resource/eui_skins/LoginSkin.exml",
+		"resource/eui_skins/LogoutSkin.exml",
 		"resource/eui_skins/ModifyPhoneSkin.exml",
 		"resource/eui_skins/PanelSkin.exml",
 		"resource/eui_skins/PhoneSkin.exml",

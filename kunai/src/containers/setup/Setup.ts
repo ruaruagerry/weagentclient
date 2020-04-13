@@ -11,6 +11,7 @@ class Setup extends eui.ItemRenderer {
     private portrait: eui.Image
     private id: eui.Label
     private nickname: eui.Label
+    private latestversion: string
 
     private realbtn: eui.Rect = null
     private real: Real = null
@@ -18,6 +19,7 @@ class Setup extends eui.ItemRenderer {
     private phone: Phone = null
     private phonebtn: eui.Rect = null
 
+    private logout: Logout = null
     private setupbtn: eui.Rect = null
 
 
@@ -47,14 +49,18 @@ class Setup extends eui.ItemRenderer {
         this.phonebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.onPhone()
         }, this)
+
+        this.setupbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+            this.onLogout()
+        }, this)
     }
 
-    public loadData(obj: any) {
-        this.nickname.text = obj.nickname
-        this.id.text = obj.id
+    public loadData(userinfo: any, clientinfo: any) {
+        this.nickname.text = userinfo.nickname
+        this.id.text = userinfo.id
         // 加载头像
         const imgLoader = new egret.ImageLoader()
-        imgLoader.load(obj.avatarurl)
+        imgLoader.load(userinfo.avatarurl)
         imgLoader.once(egret.Event.COMPLETE, (e: egret.Event) => {
             if (e.currentTarget.data) {
                 const texture = new egret.Texture()
@@ -62,6 +68,8 @@ class Setup extends eui.ItemRenderer {
                 this.portrait.texture = texture
             }
         }, this)
+
+        this.latestversion = clientinfo.latestversion
     }
 
     private onReal(): void {
@@ -72,5 +80,11 @@ class Setup extends eui.ItemRenderer {
     private onPhone(): void {
         this.phone = new Phone()
         this.addChild(this.phone)
+    }
+
+    private onLogout(): void {
+        this.logout = new Logout()
+        this.addChild(this.logout)
+        this.logout.loadData(this.latestversion)
     }
 }

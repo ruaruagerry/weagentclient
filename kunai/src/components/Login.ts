@@ -52,6 +52,6 @@ class Login extends eui.ItemRenderer {
     private loadRsp(rsp: any): void {
         egret.localStorage.setItem("Session", rsp.token)
         // 登陆成功，通知事件
-        this.dispatchEventWith(Login.LoginSuccess, true, rsp.userinfo)
+        this.dispatchEventWith(Login.LoginSuccess, true, rsp)
     }
 }

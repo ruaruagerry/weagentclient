@@ -10,7 +10,7 @@
 		"libs/egretad/bin/egretad.js"
 	],
 	"game": [
-		"bin-debug/containers/game/GamePlayingPanel.js",
+		"bin-debug/containers/game/GameStartPanel.js",
 		"bin-debug/Main.js",
 		"bin-debug/components/Buttons.js",
 		"bin-debug/components/Dialog.js",
@@ -25,8 +25,9 @@
 		"bin-debug/containers/data/Data.js",
 		"bin-debug/containers/game/Game.js",
 		"bin-debug/containers/game/GameEndPanel.js",
+		"bin-debug/containers/game/GamePlayingPanel.js",
 		"bin-debug/api/api.js",
-		"bin-debug/containers/game/GameStartPanel.js",
+		"bin-debug/containers/setup/Logout.js",
 		"bin-debug/containers/setup/ModifyPhone.js",
 		"bin-debug/containers/setup/Phone.js",
 		"bin-debug/containers/setup/Real.js",

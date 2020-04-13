@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="358" height="622" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0xD8D8D8" verticalCenter="4" bottom="-7" left="0" horizontalCenter="0" right="0" top="1"/>
+	<e:Rect anchorOffsetX="0" anchorOffsetY="0" fillColor="0x45828E" height="121" left="0" right="-2" horizontalCenter="1" top="0"/>
+	<e:Label text="设置" anchorOffsetX="0" anchorOffsetY="0" verticalAlign="middle" textAlign="center" size="21" fontFamily="SimHei" height="35" top="44" left="99" right="97" horizontalCenter="1"/>
+	<e:Image id="back" width="31" height="31" anchorOffsetX="0" anchorOffsetY="0" source="back_png" top="46" left="19"/>
+	<e:Rect height="74.66" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xffffff" top="153" horizontalCenter="1.5" left="45" right="42"/>
+	<e:Label text="当前版本" verticalAlign="middle" textAlign="center" textColor="0x000000" size="18" top="181" left="66"/>
+	<e:Label id="version" text="1.0.1" verticalAlign="middle" textAlign="center" textColor="0x000000" size="18" anchorOffsetX="0" width="129.34" anchorOffsetY="0" height="31.34" top="175" right="68"/>
+	<e:Button id="logoutbtn" label="退出" horizontalCenter="-1" verticalCenter="-30"/>
+</e:Skin>

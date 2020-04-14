@@ -8,6 +8,8 @@
 * Http.request
 */
 class Http {
+    public static token: string
+
     public static utf8_decode(utftext) { // utf-8解码
         var string = '';
         let i = 0;
@@ -83,7 +85,7 @@ class Http {
             request.responseType = egret.HttpResponseType.TEXT;
             // request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            request.setRequestHeader("Session", egret.localStorage.getItem("Session") || '');
+            request.setRequestHeader("Session", Http.token || '');
             if (this.requestInterceptor && typeof this.requestInterceptor === 'function') {
                 request = this.requestInterceptor(request)
             }

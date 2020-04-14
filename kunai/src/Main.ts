@@ -72,8 +72,6 @@ class Main extends eui.UILayer {
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
-        // 加载微信开放域资源
-        platform.openDataContext.postMessage({ command: 'loadRes' })
     }
 
     private async loadResource() {
@@ -106,7 +104,6 @@ class Main extends eui.UILayer {
 	 * Create scene interface
 	 */
     protected createGameScene(): void {
-        platform.scopeUserInfo()
         // 加载loading模块
         Loading.init()
         // 初始化背景

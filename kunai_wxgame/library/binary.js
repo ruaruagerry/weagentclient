@@ -5,7 +5,7 @@ const WXFS = wx.getFileSystemManager();
 
 class BinaryProcessor {
 
-    onLoadStart (host, resource) {
+    onLoadStart(host, resource) {
 
         const {
             root,
@@ -48,20 +48,26 @@ class BinaryProcessor {
                     });
                 }
             } else {
-                const content = WXFS.readFileSync(xhrURL);
-                resolve(content);
+                //const content = WXFS.readFileSync(xhrURL);
+                //resolve(content);
+                try {
+                    const content = WXFS.readFileSync(xhrURL);
+                    resolve(content);
+                } catch (e) {
+                    resolve(null);
+                }
             }
         });
     }
 
-    onRemoveStart (host, resource) {
+    onRemoveStart(host, resource) {
         return Promise.resolve();
     }
 }
 
 let wxSystemInfo;
 
-function needReadFile () {
+function needReadFile() {
     if (!wxSystemInfo) {
         wxSystemInfo = wx.getSystemInfoSync();
     }
@@ -70,20 +76,21 @@ function needReadFile () {
     return (sdkVersion <= '2.2.3') && (platform == 'iOS');
 }
 
-function loadBinary (xhrURL) {
+function loadBinary(xhrURL) {
     return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "arraybuffer"
-        xhr.onload = () => {
-            resolve(xhr.response);
-        }
-        xhr.onerror = (e) => {
-            const error = new RES.ResourceManagerError(1001, xhrURL);
-            console.error(e);
-            reject(error);
-        }
-        xhr.open("get", xhrURL);
-        xhr.send();
+        wx.request({
+            url: xhrURL,
+            method: 'get',
+            responseType: 'arraybuffer',
+            success: function success(_ref) {
+                resolve(_ref.data)
+            },
+            fail: function fail(_ref2) {
+                const error = new RES.ResourceManagerError(1001, xhrURL);
+                console.error('load binary error',xhrURL);
+                reject(error)
+            }
+        });
     });
 
 }
@@ -92,7 +99,7 @@ function loadBinary (xhrURL) {
  * 由于微信小游戏限制只有50M的资源可以本地存储，
  * 所以开发者应根据URL进行判断，将特定资源进行本地缓存
  */
-function needCache (url) {
+function needCache(url) {
     if (url.indexOf("miniGame/resource/") >= 0) {
         return true;
     } else {

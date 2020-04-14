@@ -81,7 +81,7 @@ class Dialog extends egret.Sprite {
         shareBtn.scaleX = .5
         shareBtn.scaleY = .5
         shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            platform.share()
+
         }, this)
 
         adBtn = new Buttons()
@@ -108,7 +108,10 @@ class Dialog extends egret.Sprite {
             }
         }, this)
 
-        const data = await platform.getUserInfo()
+        const data = {
+            nickName: '悠悠丶',
+            avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKT3CKZgvyic14bBOYKpbaS2PvaS7t1ar4295xuV4w8xArEF8kuxWpzFicgADibw2c2XdWjasfzvDib5Q/132'
+        }
         console.log(111, data)
         const that = this
         const url = data.avatarUrl

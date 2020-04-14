@@ -96,7 +96,7 @@ class GamePlayingPanel extends egret.Sprite {
         this.bgimg.height = stageH
         this.addChild(this.bgimg)
 
-        const skin = await platform.getData('skin') || 1
+        const skin = "1"
         this.skin = parseInt(skin)
 
         if (this.skin === 1) {
@@ -542,14 +542,6 @@ class GamePlayingPanel extends egret.Sprite {
         this.dialog.addEventListener(Dialog.NOCHANCE, () => {
             this.noChance()
         }, this)
-
-        // 上传到云
-        const obj = {
-            key: 'score',
-            value: this.scores.text
-        }
-        platform.setUserCloudStorage(obj)
-
     }
 
     private closeDialog() {

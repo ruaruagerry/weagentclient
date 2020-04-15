@@ -1,6 +1,5 @@
 class Login extends eui.ItemRenderer {
     public static LoginSuccess: string
-
     private wxloginbtn: eui.Button
     private testloginbtn: eui.Button
     private account: eui.TextInput
@@ -13,6 +12,8 @@ class Login extends eui.ItemRenderer {
     private init() {
         // 创建场景
         this.createScene()
+        // 创建微信透明按钮
+        this.createWxbtn()
     }
 
     private createScene() {
@@ -23,53 +24,62 @@ class Login extends eui.ItemRenderer {
         this.width = stage.stageWidth
         this.height = stage.stageHeight
 
-        this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this)
+        // this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this)
         this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this)
     }
 
-    private onWxLogin() {
-        let sysInfo = wx.getSystemInfoSync();
-        let button = wx.createUserInfoButton({
-            type: "text",
-            text: "微信登录",
-            style: {
-                left: sysInfo.windowWidth / 2 - 50,
-                top: sysInfo.windowHeight / 2 - 30,
-                width: 100,
-                height: 60,
-                backgroundColor: "#c7a976",
-                color: "#5c5941",
-                borderColor: "#5c5941",
-                textAlign: "center",
-                fontSize: 16,
-                borderWidth: 4,
-                borderRadius: 4,
-                lineHeight: 60,
-            }
-        });
-        button.onTap(function (res) {
-            if (res) {
-                console.log("res:", res)
-                button.destroy();
-                var data = {
-                    account: this.account.text,
-                }
-                Http.post(this, API.ApiAuthWxLogin, data).then((res) => {
-                    // unknown转any
-                    var rsp: any = res
-                    this.loadRsp(rsp)
-                })
-            }
-            else {
-                wx.showModal({
-                    title: "温馨提示",
-                    content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
-                    showCancel: false,
+    private createWxbtn() {
+        let that = this
+
+        wx.login({
+            success: function (e) {
+                const wxbtn = wx.createUserInfoButton({
+                    type: "text",
+                    text: "111",
+                    style: {
+                        left: this.left,
+                        top: this.top,
+                        width: this.width,
+                        height: this.height,
+                        lineHeight: 0,
+                        backgroundColor: "",//透明
+                        color: "#ffffff",
+                    }
+                });
+                wxbtn.onTap(function (res) {
+                    if (res) {
+                        wxbtn.destroy();
+                        var data = {
+                            code: e.code,
+                            encrypteddata: res.encrypteddata,
+                            iv: res.iv,
+                        }
+                        Http.post(that, API.ApiAuthWxLogin, data).then((res) => {
+                            // unknown转any
+                            var rsp: any = res
+                            that.loadRsp(rsp)
+                        })
+                    }
+                    else {
+                        wx.showModal({
+                            title: "温馨提示",
+                            content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
+                            showCancel: false,
+                        });
+                    }
                 });
             }
-        });
-        button.show();
+        })
     }
+
+    // private onWxLogin() {
+    //     var timer: egret.Timer = new egret.Timer(500, 1);
+    //     timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, onTimerComplete, this);
+    //     timer.start();
+    //     function onTimerComplete(): void {
+    //         console.log("???")
+    //     }
+    // }
 
     private onTestLogin(): void {
         var data = {

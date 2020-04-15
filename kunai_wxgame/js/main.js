@@ -44,6 +44,1142 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 /**
+ * 游戏开始界面
+ */
+var GameStartPanel = (function (_super) {
+    __extends(GameStartPanel, _super);
+    function GameStartPanel() {
+        var _this = _super.call(this) || this;
+        _this.isdisplay = false;
+        _this.init();
+        return _this;
+    }
+    GameStartPanel.prototype.start = function () {
+        var _this = this;
+        var stage = egret.MainContext.instance.stage;
+        var _a = this, startBtn = _a.startBtn, onTouchTap = _a.onTouchTap, img = _a.img, logo = _a.logo, PK = _a.PK;
+        img.width = stage.stageWidth;
+        img.height = stage.stageHeight - 90;
+        logo.x = stage.stageWidth / 2 - logo.width / 2;
+        logo.y = -logo.height;
+        egret.Tween.get(logo).to({ y: 60 }, 500, egret.Ease.bounceOut);
+        startBtn.x = -startBtn.width;
+        startBtn.y = 400;
+        startBtn.touchEnabled = true;
+        startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.onTouchTap(1);
+        }, this);
+        egret.Tween.get(startBtn).to({ x: stage.stageWidth / 2 - startBtn.width / 2 }, 500, egret.Ease.bounceOut);
+    };
+    GameStartPanel.prototype.init = function () {
+        var _this = this;
+        var stage = egret.MainContext.instance.stage;
+        var img = new egret.Bitmap();
+        img.texture = RES.getRes('1_jpg');
+        img.x = 0;
+        img.y = 0;
+        img.alpha = .6;
+        this.img = img;
+        this.addChildAt(this.img, 0);
+        var logo = new egret.Bitmap();
+        logo.texture = RES.getRes('logo_png');
+        logo.width = 751 * .4;
+        logo.height = 599 * .4;
+        this.logo = logo;
+        this.addChild(this.logo);
+        this.startBtn = new Buttons();
+        this.addChild(this.startBtn);
+        this.startBtn.init(1, '开始游戏');
+        this.btnClose = new egret.Bitmap(RES.getRes('close_png'));
+        this.btnClose.width = 25;
+        this.btnClose.height = 25;
+        this.btnClose.x = stage.stageWidth * 4 / 5 + 30;
+        this.btnClose.y = 65;
+        this.btnClose.touchEnabled = true;
+        this.btnClose.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.friendsRank();
+            _this.removeChild(_this.btnClose);
+        }, this);
+    };
+    GameStartPanel.prototype.onTouchTap = function (mode) {
+        if (mode === void 0) { mode = 1; }
+        // mode1：简单
+        // mode2：疯狂
+        if (mode === 1) {
+            this.dispatchEventWith(GameStartPanel.GAME_START_1);
+        }
+        else if (mode === 2) {
+            this.dispatchEventWith(GameStartPanel.GAME_START_2);
+        }
+    };
+    GameStartPanel.prototype.end = function () {
+        var _a = this, startBtn = _a.startBtn, onTouchTap = _a.onTouchTap;
+        startBtn.$touchEnabled = false;
+        if (startBtn.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
+            startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
+        }
+    };
+    GameStartPanel.prototype.friendsRank = function () {
+        var platform = window.platform;
+        if (this.isdisplay) {
+            this.bitmap.parent && this.bitmap.parent.removeChild(this.bitmap);
+            this.rankingListMask.parent && this.rankingListMask.parent.removeChild(this.rankingListMask);
+            this.isdisplay = false;
+            platform.openDataContext.postMessage({
+                isDisplay: this.isdisplay,
+                text: 'hello',
+                year: (new Date()).getFullYear(),
+                command: "close"
+            });
+        }
+        else {
+            //处理遮罩，避免开放数据域事件影响主域。
+            this.rankingListMask = new egret.Shape();
+            this.rankingListMask.graphics.beginFill(0x000000, 1);
+            this.rankingListMask.graphics.drawRect(0, 0, this.stage.width, this.stage.height);
+            this.rankingListMask.graphics.endFill();
+            this.rankingListMask.alpha = 0.5;
+            this.rankingListMask.touchEnabled = true;
+            this.addChild(this.rankingListMask);
+            //主要示例代码开始
+            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight - 90);
+            this.addChild(this.bitmap);
+            //简单实现，打开这关闭使用一个按钮。
+            this.addChild(this.btnClose);
+            //主域向子域发送自定义消息
+            platform.openDataContext.postMessage({
+                isDisplay: this.isdisplay,
+                text: 'hello',
+                year: (new Date()).getFullYear(),
+                command: "open"
+            });
+            //主要示例代码结束
+            this.isdisplay = true;
+        }
+    };
+    GameStartPanel.prototype.showSkinDialog = function () {
+        var stage = egret.MainContext.instance.stage;
+        this.skinMask = new egret.Shape();
+        this.skinMask.graphics.beginFill(0x000000, .2);
+        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight - 90, 10);
+        this.skinMask.graphics.endFill();
+        this.skinMask.touchEnabled = true;
+        this.addChild(this.skinMask);
+        this.skinDialog = new SkinDialog();
+        this.addChild(this.skinDialog);
+        this.skinDialog.x = stage.stageWidth / 2 - this.skinDialog._width / 2;
+        this.skinDialog.y = (stage.stageHeight - 90) / 2 - this.skinDialog._height / 2;
+        this.skinDialog.addEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
+    };
+    GameStartPanel.prototype.hideSkinDialog = function () {
+        this.removeChild(this.skinMask);
+        this.removeChild(this.skinDialog);
+        this.skinDialog.removeEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
+    };
+    GameStartPanel.GAME_START_1 = 'gamestart1';
+    GameStartPanel.GAME_START_2 = 'gamestart2';
+    return GameStartPanel;
+}(egret.Sprite));
+__reflect(GameStartPanel.prototype, "GameStartPanel");
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright (c) 2014-present, Egret Technology.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
+var Main = (function (_super) {
+    __extends(Main, _super);
+    function Main() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.data2TabBar_arr = null;
+        _this.lastindex = 0;
+        _this.data = null;
+        _this.game = null;
+        _this.wallet = null;
+        _this.setup = null;
+        return _this;
+    }
+    Main.prototype.createChildren = function () {
+        _super.prototype.createChildren.call(this);
+        egret.lifecycle.addLifecycleListener(function (context) {
+            // custom lifecycle plugin
+        });
+        egret.lifecycle.onPause = function () {
+            egret.ticker.pause();
+        };
+        egret.lifecycle.onResume = function () {
+            egret.ticker.resume();
+        };
+        //inject the custom material parser
+        //注入自定义的素材解析器
+        var assetAdapter = new AssetAdapter();
+        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
+        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
+        this.runGame().catch(function (e) {
+            console.log(e);
+        });
+    };
+    Main.prototype.runGame = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadResource()];
+                    case 1:
+                        _a.sent();
+                        this.createGameScene();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Main.prototype.loadResource = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var loadingView, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        loadingView = new LoadingUI();
+                        this.stage.addChild(loadingView);
+                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadTheme()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
+                    case 3:
+                        _a.sent();
+                        this.stage.removeChild(loadingView);
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_1 = _a.sent();
+                        console.error(e_1);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Main.prototype.loadTheme = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
+            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
+            var theme = new eui.Theme("resource/default.thm.json", _this.stage);
+            theme.addEventListener(eui.UIEvent.COMPLETE, function () {
+                resolve();
+            }, _this);
+        });
+    };
+    /**
+     * 创建场景界面
+     * Create scene interface
+     */
+    Main.prototype.createGameScene = function () {
+        // 加载loading模块
+        Loading.init();
+        // 初始化背景
+        this.initBackground();
+        // 初始化登陆界面
+        this.createLogin();
+        // 加载Msg弹窗模块
+        Msg.init();
+        // 监听事件
+        this.addEventListener(Main.MainLogin, this.onBack, this);
+    };
+    Main.prototype.initBackground = function () {
+        var stage = this.stage;
+        var bg = new egret.Shape();
+        bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xffffff, 0xffffff], [1, 1], [150, 50], new egret.Matrix());
+        bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+        bg.graphics.endFill();
+        this.addChild(bg);
+    };
+    Main.prototype.createLogin = function () {
+        this.login = new Login();
+        this.addChild(this.login);
+        this.addEventListener(Login.LoginSuccess, this.onLogin, this);
+    };
+    Main.prototype.createTabbar = function () {
+        var stageW = this.stage.stageWidth;
+        var stageH = this.stage.stageHeight;
+        this.tabbar = new eui.TabBar;
+        this.data2TabBar_arr = [
+            {
+                img_text: "分 红",
+                selected: false,
+                img_sel_res: "data_png",
+            },
+            {
+                img_text: "游 戏",
+                selected: true,
+                img_sel_res: "game_png",
+            },
+            {
+                img_text: "收 益",
+                selected: false,
+                img_sel_res: "wallet_png",
+            },
+            {
+                img_text: "我 的",
+                selected: false,
+                img_sel_res: "setup_png",
+            },
+        ];
+        this.lastindex = 1;
+        this.arrayCollection = new eui.ArrayCollection(this.data2TabBar_arr);
+        this.tabbar.dataProvider = this.arrayCollection;
+        this.tabbar.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onBarItemTap, this);
+        this.tabbar.width = stageW;
+        this.tabbar.height = 90;
+        this.tabbar.y = stageH - 90;
+        this.addChild(this.tabbar);
+        this.tabbar.itemRenderer = MGTabBar.TabBarCell;
+        this.viewStack = new eui.ViewStack();
+        this.viewStack.width = stageW;
+        this.viewStack.height = stageH - 90;
+        for (var i = 0; i < 4; i++) {
+            switch (i) {
+                case 0:
+                    this.data = new Data();
+                    this.viewStack.addChild(this.data);
+                    break;
+                case 1:
+                    this.game = new Game();
+                    this.viewStack.addChild(this.game);
+                    break;
+                case 2:
+                    this.wallet = new Wallet();
+                    this.viewStack.addChild(this.wallet);
+                    break;
+                case 3:
+                    this.setup = new Setup();
+                    this.viewStack.addChild(this.setup);
+                    this.setup.loadData(this.userinfo, this.clientinfo);
+                    break;
+            }
+        }
+        this.viewStack.selectedIndex = this.lastindex;
+        this.addChild(this.viewStack);
+    };
+    Main.prototype.onBarItemTap = function (e) {
+        this.viewStack.selectedIndex = e.itemIndex;
+        var lastdata = this.arrayCollection.getItemAt(this.lastindex);
+        this.lastindex = e.itemIndex;
+        lastdata.selected = false;
+        var data = this.arrayCollection.getItemAt(e.itemIndex);
+        data.selected = true;
+        this.tabbar.dataProvider = new eui.ArrayCollection(this.data2TabBar_arr);
+        switch (e.itemIndex) {
+            case 0:
+                this.data.loadData();
+                break;
+            case 2:
+                this.wallet.loadData();
+                break;
+        }
+    };
+    Main.prototype.onLogin = function (evt) {
+        this.userinfo = evt.data.userinfo;
+        this.clientinfo = evt.data.clientinfo;
+        // 登陆
+        this.createTabbar();
+        this.removeChild(this.login);
+        this.removeEventListener(Login.LoginSuccess, function () { }, this);
+    };
+    Main.prototype.onBack = function () {
+        // 移除所有小弟
+        this.removeChildren();
+        // 初始化背景
+        this.initBackground();
+        // 初始化登陆界面
+        this.createLogin();
+    };
+    Main.MainLogin = "MainLogin";
+    return Main;
+}(eui.UILayer));
+__reflect(Main.prototype, "Main");
+/**
+ * 创建不同颜色的button
+ */
+var Buttons = (function (_super) {
+    __extends(Buttons, _super);
+    function Buttons() {
+        return _super.call(this) || this;
+    }
+    Buttons.prototype.init = function (type, text, size, width, height) {
+        var _this = this;
+        if (type === void 0) { type = 1; }
+        if (size === void 0) { size = 24; }
+        if (width === void 0) { width = 180; }
+        if (height === void 0) { height = 64; }
+        this.img = new egret.Bitmap();
+        this.txt = new egret.TextField();
+        this.width = width;
+        this.height = height;
+        if (type === 1) {
+            this.img.texture = RES.getRes('btn_bg_green_png');
+            this.txt.strokeColor = 0x42a605;
+        }
+        else if (type === 2) {
+            this.img.texture = RES.getRes('btn_bg_blue_png');
+            this.txt.strokeColor = 0x2582c3;
+        }
+        else if (type === 3) {
+            this.img.texture = RES.getRes('btn_bg_purple_png');
+            this.txt.strokeColor = 0x810fb5;
+        }
+        else if (type === 4) {
+            this.img.texture = RES.getRes('btn_bg_pink_png');
+            this.txt.strokeColor = 0xc30835;
+        }
+        else if (type === 5) {
+            this.img.texture = RES.getRes('btn_bg_brown_png');
+            this.txt.strokeColor = 0x8e4926;
+        }
+        else {
+            this.img.texture = RES.getRes('btn_bg_grey_png');
+            this.txt.strokeColor = 0x656565;
+        }
+        this.img.scale9Grid = new egret.Rectangle(10, 10, 14, 103);
+        this.img.width = width;
+        this.img.height = height;
+        this.addChild(this.img);
+        this.txt.size = size;
+        this.txt.textColor = 0xffffff;
+        this.txt.text = text;
+        this.txt.stroke = 1;
+        this.txt.x = this.img.width / 2 - this.txt.width / 2;
+        this.txt.y = this.img.height / 2 - this.txt.height / 2;
+        this.addChild(this.txt);
+        this.img.touchEnabled = true;
+        this.img.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function () {
+            _this.img.x = _this.img.x + 2;
+            _this.img.y = _this.img.y + 2;
+            _this.txt.x = _this.txt.x + 2;
+            _this.txt.y = _this.txt.y + 2;
+        }, this);
+        this.img.addEventListener(egret.TouchEvent.TOUCH_END, function () {
+            _this.img.x = _this.img.x - 2;
+            _this.img.y = _this.img.y - 2;
+            _this.txt.x = _this.txt.x - 2;
+            _this.txt.y = _this.txt.y - 2;
+        }, this);
+        this.img.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, function () {
+            _this.img.x = _this.img.x - 2;
+            _this.img.y = _this.img.y - 2;
+            _this.txt.x = _this.txt.x - 2;
+            _this.txt.y = _this.txt.y - 2;
+        }, this);
+    };
+    return Buttons;
+}(egret.Sprite));
+__reflect(Buttons.prototype, "Buttons");
+/**
+ * 游戏结束弹窗
+ */
+var Dialog = (function (_super) {
+    __extends(Dialog, _super);
+    function Dialog() {
+        var _this = _super.call(this) || this;
+        _this._width = 280;
+        _this._height = 400;
+        _this.GAME_RESTART = 'gamerestart';
+        _this.GAME_SHARE = 'gameshare';
+        _this.GAME_AD = 'gamead';
+        _this.init();
+        return _this;
+    }
+    Dialog.prototype.init = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var _a, maskBlack, homeBtn, restartBtn, shareBtn, adBtn, data, that, url, imgLoader, nickname;
+            return __generator(this, function (_b) {
+                _a = this, maskBlack = _a.maskBlack, homeBtn = _a.homeBtn, restartBtn = _a.restartBtn, shareBtn = _a.shareBtn, adBtn = _a.adBtn;
+                maskBlack = new egret.Shape();
+                maskBlack.graphics.beginFill(0x000000, .8);
+                maskBlack.graphics.drawRoundRect(0, 0, this._width, this._height, 10);
+                this.addChild(maskBlack);
+                this.score = '0';
+                this.tip = new egret.TextField();
+                this.tip.y = 15;
+                this.tip.textColor = 0xffffff;
+                this.tip.size = 18;
+                this.tip.x = this._width / 2 - this.tip.width / 2;
+                this.addChild(this.tip);
+                this.rebirthnum = 0;
+                this.tipre = new egret.TextField();
+                this.tipre.y = 38;
+                this.tipre.textColor = 0xffffff;
+                this.tipre.size = 18;
+                this.tipre.x = this._width / 2 - this.tipre.width / 2;
+                this.addChild(this.tipre);
+                homeBtn = new Buttons();
+                homeBtn.init(3, '回到首页');
+                homeBtn.scaleX = .5;
+                homeBtn.scaleY = .5;
+                this.addChild(homeBtn);
+                homeBtn.x = 30;
+                homeBtn.y = 300;
+                homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                    _this.dispatchEventWith(Dialog.GO_HOME);
+                }, this);
+                restartBtn = new Buttons();
+                restartBtn.init(1, '再玩一次');
+                this.addChild(restartBtn);
+                restartBtn.x = 160;
+                restartBtn.y = 300;
+                restartBtn.scaleX = .5;
+                restartBtn.scaleY = .5;
+                restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                    _this.dispatchEventWith(Dialog.RESTART);
+                }, this);
+                shareBtn = new Buttons();
+                shareBtn.init(2, '炫耀战绩');
+                this.addChild(shareBtn);
+                shareBtn.x = 30;
+                shareBtn.y = 350;
+                shareBtn.scaleX = .5;
+                shareBtn.scaleY = .5;
+                shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                }, this);
+                adBtn = new Buttons();
+                adBtn.init(4, '免费复活');
+                this.addChild(adBtn);
+                adBtn.x = 160;
+                adBtn.y = 350;
+                adBtn.scaleX = .5;
+                adBtn.scaleY = .5;
+                adBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { return __awaiter(_this, void 0, void 0, function () {
+                    var _this = this;
+                    var remainnum;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                remainnum = this.rebirthnum - 1;
+                                if (!(remainnum >= 0)) return [3 /*break*/, 2];
+                                return [4 /*yield*/, Http.get(this, API.ApiGameRebirthUse).then(function (res) {
+                                        if (res == undefined) {
+                                            return;
+                                        }
+                                        // unknown转any
+                                        var rsp = res;
+                                        that.dispatchEventWith(Dialog.REBIRTH);
+                                        _this.rebirthnum = rsp.num;
+                                    })];
+                            case 1:
+                                _a.sent();
+                                return [3 /*break*/, 3];
+                            case 2:
+                                that.dispatchEventWith(Dialog.NOCHANCE);
+                                _a.label = 3;
+                            case 3: return [2 /*return*/];
+                        }
+                    });
+                }); }, this);
+                data = {
+                    nickName: '悠悠丶',
+                    avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKT3CKZgvyic14bBOYKpbaS2PvaS7t1ar4295xuV4w8xArEF8kuxWpzFicgADibw2c2XdWjasfzvDib5Q/132'
+                };
+                console.log(111, data);
+                that = this;
+                url = data.avatarUrl;
+                imgLoader = new egret.ImageLoader();
+                imgLoader.crossOrigin = '';
+                imgLoader.load(url);
+                imgLoader.once(egret.Event.COMPLETE, function (e) {
+                    if (e.currentTarget.data) {
+                        var texture = new egret.Texture();
+                        texture.bitmapData = e.currentTarget.data;
+                        var img = new egret.Bitmap(texture);
+                        img.width = 100;
+                        img.height = 100;
+                        that.addChild(img);
+                        img.x = that._width / 2 - img.width / 2;
+                        img.y = 100;
+                    }
+                }, this);
+                nickname = new egret.TextField();
+                nickname.size = 14;
+                nickname.textColor = 0xffffff;
+                nickname.text = data.nickName;
+                nickname.x = this._width / 2 - nickname.width / 2;
+                nickname.y = 220;
+                this.addChild(nickname);
+                return [2 /*return*/];
+            });
+        });
+    };
+    Dialog.prototype.setScores = function (text) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        data = { score: Number(text) };
+                        return [4 /*yield*/, Http.post(this, API.ApiGameScoreUpdate, data).then(function (res) {
+                                if (res == undefined) {
+                                    return;
+                                }
+                                // unknown转any
+                                var rsp = res;
+                                _this.score = text;
+                                _this.tip.text = "\u672C\u6B21\u5F97\u5206\uFF1A" + _this.score;
+                                _this.tip.x = _this._width / 2 - _this.tip.width / 2;
+                                _this.rebirthnum = rsp.num;
+                                _this.tipre.text = "\u5269\u4F59\u590D\u6D3B\u6B21\u6570\uFF1A" + _this.rebirthnum;
+                                _this.tipre.x = _this._width / 2 - _this.tipre.width / 2;
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Dialog.GO_HOME = 'gohome';
+    Dialog.RESTART = 'restart';
+    Dialog.SHARE_WX = 'sharewx';
+    Dialog.VIEW_AD = 'viewad';
+    Dialog.REBIRTH = 'rebirth';
+    Dialog.NOCHANCE = 'nochance';
+    return Dialog;
+}(egret.Sprite));
+__reflect(Dialog.prototype, "Dialog");
+// var mc1 = new egret.MovieClip(mcFactory.generateMovieClipData("loading"));
+var Loading = (function () {
+    function Loading() {
+    }
+    Loading.init = function () {
+        // 构建loading弹窗
+        var data = RES.getRes("loading_json");
+        var txtr = RES.getRes("loading_png");
+        var mcFactory = new egret.MovieClipDataFactory(data, txtr);
+        Loading.mc1 = new egret.MovieClip(mcFactory.generateMovieClipData("loading"));
+    };
+    Loading.showLoading = function (obj) {
+        obj.addChild(Loading.mc1);
+        obj.touchChildren = false;
+        Loading.mc1.x = (obj.width - Loading.mc1.width) / 2;
+        Loading.mc1.y = (obj.height - Loading.mc1.height) / 2;
+        Loading.mc1.gotoAndPlay(1, -1);
+    };
+    Loading.hidLoading = function (obj) {
+        obj.touchChildren = true;
+        obj.removeChild(Loading.mc1);
+    };
+    return Loading;
+}());
+__reflect(Loading.prototype, "Loading");
+var Login = (function (_super) {
+    __extends(Login, _super);
+    function Login() {
+        var _this = _super.call(this) || this;
+        _this.init();
+        return _this;
+    }
+    Login.prototype.init = function () {
+        // 创建场景
+        this.createScene();
+    };
+    Login.prototype.createScene = function () {
+        this.skinName = "resource/eui_skins/LoginSkin.exml";
+        var stage = egret.MainContext.instance.stage;
+        this.width = stage.stageWidth;
+        this.height = stage.stageHeight;
+        this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this);
+        this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this);
+    };
+    Login.prototype.onWxLogin = function () {
+        var sysInfo = wx.getSystemInfoSync();
+        var button = wx.createUserInfoButton({
+            type: "text",
+            text: "微信登录",
+            style: {
+                left: sysInfo.windowWidth / 2 - 50,
+                top: sysInfo.windowHeight / 2 - 30,
+                width: 100,
+                height: 60,
+                backgroundColor: "#c7a976",
+                color: "#5c5941",
+                borderColor: "#5c5941",
+                textAlign: "center",
+                fontSize: 16,
+                borderWidth: 4,
+                borderRadius: 4,
+                lineHeight: 60,
+            }
+        });
+        button.onTap(function (res) {
+            var _this = this;
+            if (res) {
+                console.log("res:", res);
+                button.destroy();
+                var data = {
+                    account: this.account.text,
+                };
+                Http.post(this, API.ApiAuthWxLogin, data).then(function (res) {
+                    // unknown转any
+                    var rsp = res;
+                    _this.loadRsp(rsp);
+                });
+            }
+            else {
+                wx.showModal({
+                    title: "温馨提示",
+                    content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
+                    showCancel: false,
+                });
+            }
+        });
+        button.show();
+    };
+    Login.prototype.onTestLogin = function () {
+        var _this = this;
+        var data = {
+            account: this.account.text,
+        };
+        Http.post(this, API.ApiAuthTestLogin, data).then(function (res) {
+            // unknown转any
+            var rsp = res;
+            _this.loadRsp(rsp);
+        });
+    };
+    Login.prototype.loadRsp = function (rsp) {
+        Http.token = rsp.token;
+        // 登陆成功，通知事件
+        this.dispatchEventWith(Login.LoginSuccess, true, rsp);
+    };
+    return Login;
+}(eui.ItemRenderer));
+__reflect(Login.prototype, "Login");
+/**
+ * 统一提示
+ */
+var Msg = (function (_super) {
+    __extends(Msg, _super);
+    function Msg() {
+        return _super.call(this) || this;
+    }
+    Msg.init = function () {
+        Msg.shape = new egret.Shape();
+        Msg.showtext = new egret.TextField();
+        Msg.showtext.size = 14;
+        Msg.showtext.textColor = 0xffffff;
+    };
+    Msg.showMsg = function (obj, txt) {
+        Msg.shape.graphics.beginFill(0x000000, .6);
+        Msg.shape.graphics.drawRect(0, -100, obj.width, 100);
+        Msg.shape.graphics.endFill();
+        obj.addChild(Msg.shape);
+        egret.Tween.get(Msg.shape).to({ y: 100 }, 100, egret.Ease.bounceOut).call(function () {
+            setTimeout(function () {
+                obj.removeChild(Msg.shape);
+            }, 3000);
+        }, this);
+        Msg.showtext.text = txt;
+        Msg.showtext.x = obj.width / 2 - Msg.showtext.width / 2;
+        Msg.showtext.y = -100 / 2 - Msg.showtext.height / 2;
+        obj.addChild(Msg.showtext);
+        egret.Tween.get(Msg.showtext).to({ y: 100 / 2 - Msg.showtext.height / 2 }, 100, egret.Ease.bounceOut).call(function () {
+            setTimeout(function () {
+                obj.removeChild(Msg.showtext);
+            }, 3000);
+        }, this);
+    };
+    return Msg;
+}(egret.Sprite));
+__reflect(Msg.prototype, "Msg");
+/** * 滑动列表 * 使用虚拟布局、自定义项呈现器 * 不需要初始化item只需要添加皮肤 * */
+var Rank = (function (_super) {
+    __extends(Rank, _super);
+    function Rank() {
+        var _this = _super.call(this) || this;
+        _this.skinName = "resource/eui_skins/RankSkin.exml";
+        _this.initItemRenderer(RankItem);
+        _this.viewport = _this.dataList;
+        return _this;
+    }
+    /** * 通过SkinName 初始化item皮肤 * @param itemSkin item皮肤 */
+    Rank.prototype.initItemSkin = function (itemSkin) {
+        this.dataList.itemRendererSkinName = itemSkin;
+    };
+    /** * 通过itemRenderer 初始化item皮肤 *  @param itemRenderer 所有item都要继承 eui.ItemRenderer */
+    Rank.prototype.initItemRenderer = function (itemRenderer) {
+        this.dataList.itemRenderer = itemRenderer;
+    };
+    /** 进行数据绑定 */
+    Rank.prototype.bindData = function (data) {
+        var arrCollection = new eui.ArrayCollection(data);
+        this.dataList.dataProvider = arrCollection;
+    };
+    return Rank;
+}(eui.Scroller));
+__reflect(Rank.prototype, "Rank", ["eui.UIComponent", "egret.DisplayObject"]);
+var RankItem = (function (_super) {
+    __extends(RankItem, _super);
+    function RankItem() {
+        var _this = _super.call(this) || this;
+        _this.rank_ranknum = null;
+        _this.rank_score = null;
+        _this.rank_portrait = null;
+        _this.rank_nick = null;
+        _this.rank_rect = null;
+        _this.skinName = "resource/eui_skins/ItemSkin.exml";
+        return _this;
+    }
+    RankItem.prototype.createChildren = function () {
+        _super.prototype.createChildren.call(this);
+    };
+    RankItem.prototype.dataChanged = function () {
+        this.loadData();
+    };
+    RankItem.prototype.loadData = function () {
+        // this.rank_ranknum.text = this.data.index;
+        this.rank_ranknum.text = String(this.itemIndex + 1);
+        this.rank_score.text = this.data.score;
+        this.rank_portrait.source = RES.getRes(this.data.portrait);
+        this.rank_nick.text = this.data.nick;
+    };
+    RankItem.prototype.setRectColor = function (fillcolor) {
+        this.rank_rect.fillColor = fillcolor;
+        this.rank_rect.height = this.height;
+    };
+    RankItem.prototype.setData = function (ranknum, portrait, nick, score) {
+        this.rank_ranknum.text = String(ranknum);
+        this.rank_score.text = String(score);
+        this.rank_portrait.source = RES.getRes(portrait);
+        this.rank_nick.text = nick;
+    };
+    return RankItem;
+}(eui.ItemRenderer));
+__reflect(RankItem.prototype, "RankItem");
+/**
+ * 皮肤切换窗口
+ */
+var SkinDialog = (function (_super) {
+    __extends(SkinDialog, _super);
+    function SkinDialog() {
+        var _this = _super.call(this) || this;
+        _this._width = 300;
+        _this._height = 400;
+        _this.init();
+        return _this;
+    }
+    SkinDialog.prototype.init = function () {
+        var _this = this;
+        var shape = new egret.Shape();
+        shape.graphics.beginFill(0x000000, .8);
+        shape.graphics.drawRoundRect(0, 0, this._width, this._height, 10);
+        shape.graphics.endFill();
+        this.addChild(shape);
+        var closeBtn = new egret.Bitmap(RES.getRes('close_png'));
+        closeBtn.width = 25;
+        closeBtn.height = 25;
+        closeBtn.x = this._width - 13;
+        closeBtn.y = -13;
+        this.addChild(closeBtn);
+        closeBtn.touchEnabled = true;
+        closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.dispatchEventWith(SkinDialog.CLOSE_SKIN);
+        }, this);
+        var title = new egret.TextField();
+        title.textColor = 0xffffff;
+        title.size = 24;
+        title.text = '皮肤选择';
+        title.x = this._width / 2 - title.width / 2;
+        title.y = 20;
+        this.addChild(title);
+        var skinList = [{ text: '默认皮肤', value: 1 }, { text: '无限月读', value: 2 }];
+        skinList.forEach(function (item, index) {
+            var text = new egret.TextField();
+            text.textColor = 0xffffff;
+            text.size = 16;
+            text.y = 40 * index + 70;
+            text.x = 20;
+            text.text = item.text;
+            text.touchEnabled = true;
+            text.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+                _this.dispatchEventWith(SkinDialog.CLOSE_SKIN);
+            }, _this);
+            _this.addChild(text);
+        });
+    };
+    SkinDialog.CLOSE_SKIN = 'closeskin';
+    return SkinDialog;
+}(egret.Sprite));
+__reflect(SkinDialog.prototype, "SkinDialog");
+var MGTabBar;
+(function (MGTabBar) {
+    var TabBarCell = (function (_super) {
+        __extends(TabBarCell, _super);
+        function TabBarCell() {
+            var _this = _super.call(this) || this;
+            _this.img_res = null;
+            _this.img_text = null;
+            _this.img_rect = null;
+            _this.skinName = "resource/eui_skins/TabbarCell.exml";
+            return _this;
+        }
+        TabBarCell.prototype.createChildren = function () {
+            _super.prototype.createChildren.call(this);
+        };
+        TabBarCell.prototype.dataChanged = function () {
+            this.loadData();
+        };
+        TabBarCell.prototype.loadData = function () {
+            var $dataModel = this.data;
+            var $selected = $dataModel.selected;
+            // console.log("index:" + this.itemIndex + ", select:", $selected)
+            this.img_text.text = $dataModel.img_text;
+            this.img_res.source = RES.getRes($dataModel.img_sel_res);
+            if ($selected) {
+                this.img_rect.fillColor = 0x878787;
+            }
+        };
+        return TabBarCell;
+    }(eui.ItemRenderer));
+    MGTabBar.TabBarCell = TabBarCell;
+    __reflect(TabBarCell.prototype, "MGTabBar.TabBarCell");
+})(MGTabBar || (MGTabBar = {}));
+/**
+ * 用弧形遮罩制作不同的木桩形状，用于制作结束动画
+ */
+var TimberMask = (function (_super) {
+    __extends(TimberMask, _super);
+    function TimberMask() {
+        var _this = _super.call(this) || this;
+        _this.ary = [];
+        return _this;
+    }
+    TimberMask.prototype.init = function (skin) {
+        var randomAry = [0, 360];
+        randomAry.push(Tools.generateRandom(10, 350));
+        randomAry.push(Tools.generateRandom(10, 350));
+        randomAry.push(Tools.generateRandom(10, 350));
+        randomAry.sort(function (a, b) {
+            return a - b;
+        });
+        for (var i = 0; i < randomAry.length - 1; i++) {
+            var r = 100;
+            var next = i + 1;
+            var startAngle = randomAry[i];
+            var endAngle = next > randomAry.length ? 360 : randomAry[next];
+            var m = new TimberMaskSprite();
+            m.createMask(r, startAngle, endAngle, skin);
+            this.addChild(m);
+            this.ary.push(m);
+        }
+    };
+    TimberMask.prototype.startAnimation = function () {
+        var _this = this;
+        var stage = egret.MainContext.instance.stage;
+        this.ary.forEach(function (item) {
+            item.rotation = Tools.generateRandom(30, 90);
+            item.x = item.x + Tools.generateRandom(30, 90);
+            item.y = item.y + Tools.generateRandom(30, 90);
+            egret.Tween.get(item).to({ rotation: Tools.generateRandom(30, 90), y: stage.stageHeight, x: Tools.generateRandom(-stage.stageWidth * 2, stage.stageWidth * 2) }, 1000).call(function () {
+                item.parent.removeChild(item);
+            }, _this);
+        });
+    };
+    return TimberMask;
+}(egret.Sprite));
+__reflect(TimberMask.prototype, "TimberMask");
+/**
+ * 不同的木桩弧形遮罩
+ */
+var TimberMaskSprite = (function (_super) {
+    __extends(TimberMaskSprite, _super);
+    function TimberMaskSprite() {
+        return _super.call(this) || this;
+    }
+    TimberMaskSprite.prototype.createMask = function (r, startAngle, endAngle, skin) {
+        var img = skin === 1 ? 'timber_png' : 'eye_png';
+        var t = new egret.Bitmap(RES.getRes(img));
+        t.width = r * 2;
+        t.height = r * 2;
+        this.addChild(t);
+        var m = new egret.Shape();
+        m.graphics.beginFill(0x000000);
+        m.graphics.moveTo(r, r);
+        m.graphics.lineTo(r * 2, r);
+        m.graphics.drawArc(r, r, r, startAngle * Math.PI / 180, endAngle * Math.PI / 180);
+        m.graphics.lineTo(r, r);
+        m.graphics.endFill();
+        this.addChild(m);
+        t.mask = m;
+    };
+    return TimberMaskSprite;
+}(egret.Sprite));
+__reflect(TimberMaskSprite.prototype, "TimberMaskSprite");
+/*
+ * @Author: your name
+ * @Date: 2019-12-23 12:12:04
+ * @LastEditTime : 2019-12-27 17:36:53
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
+ */
+var Data = (function (_super) {
+    __extends(Data, _super);
+    function Data() {
+        var _this = _super.call(this) || this;
+        // private loading: Loading = new Loading()
+        _this.data_yestarday_all = null; // 昨日全网收益
+        _this.data_history_all = null; // 历史全网收益
+        _this.data_today_adnum = null; // 今日实时看广告次数
+        _this.data_today_onlinenum = null; // 今日实时在线人数
+        _this.data_today_all = null; // 今日总收益
+        _this.init();
+        return _this;
+    }
+    Data.prototype.init = function () {
+        // 创建场景
+        this.createScene();
+        // 加载数据
+        this.loadData();
+    };
+    Data.prototype.createScene = function () {
+        this.skinName = "resource/eui_skins/DataSkin.exml";
+        var stage = egret.MainContext.instance.stage;
+        this.width = stage.stageWidth;
+        this.height = stage.stageHeight - 90;
+    };
+    Data.prototype.loadData = function () {
+        var _this = this;
+        Http.get(this, API.ApiDataEntrance).then(function (res) {
+            if (res == undefined) {
+                return;
+            }
+            // unknown转any
+            var rsp = res;
+            _this.data_yestarday_all.text = rsp.yestardayall;
+            _this.data_history_all.text = rsp.historyall;
+            _this.data_today_adnum.text = rsp.todayadnum;
+            _this.data_today_onlinenum.text = rsp.todayonlinenum;
+            _this.data_today_all.text = rsp.todayall;
+        });
+    };
+    return Data;
+}(eui.ItemRenderer));
+__reflect(Data.prototype, "Data");
+var Game = (function (_super) {
+    __extends(Game, _super);
+    function Game() {
+        var _this = _super.call(this) || this;
+        _this.init();
+        _this.start();
+        return _this;
+    }
+    Game.prototype.init = function () {
+        this.gameStartPanel = new GameStartPanel();
+        this.gamePlayingPanel = new GamePlayingPanel();
+        this.gameEndPanel = new GameEndPanel();
+        this.gameStartPanel.start();
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
+    };
+    Game.prototype.start = function () {
+        this.addChild(this.gameStartPanel);
+        this.gameStartPanel.start();
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
+        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
+    };
+    Game.prototype.gamePlaying1 = function () {
+        this.gameStartPanel.end();
+        this.removeChild(this.gameStartPanel);
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
+        this.addChild(this.gamePlayingPanel);
+        this.gamePlayingPanel.start(1);
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
+    };
+    Game.prototype.gamePlaying2 = function () {
+        this.gameStartPanel.end();
+        this.removeChild(this.gameStartPanel);
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
+        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
+        this.addChild(this.gamePlayingPanel);
+        this.gamePlayingPanel.start(2);
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
+        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
+    };
+    Game.prototype.gameEnd = function () {
+        this.gamePlayingPanel.end();
+        this.removeChild(this.gamePlayingPanel);
+        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
+        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
+        this.start();
+    };
+    Game.prototype.gameRestart = function () {
+        console.log('game restart');
+    };
+    return Game;
+}(egret.Sprite));
+__reflect(Game.prototype, "Game");
+/**
+ * 游戏结束画面，未用到
+ */
+var GameEndPanel = (function (_super) {
+    __extends(GameEndPanel, _super);
+    function GameEndPanel() {
+        var _this = _super.call(this) || this;
+        _this.init();
+        return _this;
+    }
+    GameEndPanel.prototype.start = function () {
+        var _a = this, restartBtn = _a.restartBtn, onTouchTap = _a.onTouchTap;
+        restartBtn.touchEnabled = true;
+        restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
+    };
+    GameEndPanel.prototype.init = function () {
+        this.restartBtn = new egret.TextField();
+        this.restartBtn.text = '重新开始';
+        this.restartBtn.x = 450 / 2 - this.restartBtn.width;
+        this.restartBtn.y = 400;
+        this.addChild(this.restartBtn);
+    };
+    GameEndPanel.prototype.onTouchTap = function () {
+        this.dispatchEventWith(GameEndPanel.GAME_RESTART);
+    };
+    GameEndPanel.prototype.end = function () {
+        var _a = this, restartBtn = _a.restartBtn, onTouchTap = _a.onTouchTap;
+        restartBtn.$touchEnabled = false;
+        if (restartBtn.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
+            restartBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
+        }
+    };
+    GameEndPanel.GAME_RESTART = 'gamerestart';
+    return GameEndPanel;
+}(egret.Sprite));
+__reflect(GameEndPanel.prototype, "GameEndPanel");
+/**
  * 游戏进行中的界面
  */
 var GamePlayingPanel = (function (_super) {
@@ -703,971 +1839,6 @@ var GamePlayingPanel = (function (_super) {
     return GamePlayingPanel;
 }(egret.Sprite));
 __reflect(GamePlayingPanel.prototype, "GamePlayingPanel");
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
-var Main = (function (_super) {
-    __extends(Main, _super);
-    function Main() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.data2TabBar_arr = null;
-        _this.lastindex = 0;
-        _this.data = null;
-        _this.game = null;
-        _this.wallet = null;
-        _this.setup = null;
-        return _this;
-    }
-    Main.prototype.createChildren = function () {
-        _super.prototype.createChildren.call(this);
-        egret.lifecycle.addLifecycleListener(function (context) {
-            // custom lifecycle plugin
-        });
-        egret.lifecycle.onPause = function () {
-            egret.ticker.pause();
-        };
-        egret.lifecycle.onResume = function () {
-            egret.ticker.resume();
-        };
-        //inject the custom material parser
-        //注入自定义的素材解析器
-        var assetAdapter = new AssetAdapter();
-        egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
-        egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-        this.runGame().catch(function (e) {
-            console.log(e);
-        });
-    };
-    Main.prototype.runGame = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.loadResource()];
-                    case 1:
-                        _a.sent();
-                        this.createGameScene();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Main.prototype.loadResource = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        loadingView = new LoadingUI();
-                        this.stage.addChild(loadingView);
-                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadTheme()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
-                    case 3:
-                        _a.sent();
-                        this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 5];
-                    case 4:
-                        e_1 = _a.sent();
-                        console.error(e_1);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Main.prototype.loadTheme = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
-            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
-            var theme = new eui.Theme("resource/default.thm.json", _this.stage);
-            theme.addEventListener(eui.UIEvent.COMPLETE, function () {
-                resolve();
-            }, _this);
-        });
-    };
-    /**
-     * 创建场景界面
-     * Create scene interface
-     */
-    Main.prototype.createGameScene = function () {
-        // 加载loading模块
-        Loading.init();
-        // 初始化背景
-        this.initBackground();
-        // 初始化登陆界面
-        this.createLogin();
-        // 加载Msg弹窗模块
-        Msg.init();
-        // 监听事件
-        this.addEventListener(Main.MainLogin, this.onBack, this);
-    };
-    Main.prototype.initBackground = function () {
-        var stage = this.stage;
-        var bg = new egret.Shape();
-        bg.graphics.beginGradientFill(egret.GradientType.RADIAL, [0xffffff, 0xffffff], [1, 1], [150, 50], new egret.Matrix());
-        bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-        bg.graphics.endFill();
-        this.addChild(bg);
-    };
-    Main.prototype.createLogin = function () {
-        this.login = new Login();
-        this.addChild(this.login);
-        this.addEventListener(Login.LoginSuccess, this.onLogin, this);
-    };
-    Main.prototype.createTabbar = function () {
-        var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
-        this.tabbar = new eui.TabBar;
-        this.data2TabBar_arr = [
-            {
-                img_text: "分 红",
-                selected: false,
-                img_sel_res: "data_png",
-            },
-            {
-                img_text: "游 戏",
-                selected: true,
-                img_sel_res: "game_png",
-            },
-            {
-                img_text: "收 益",
-                selected: false,
-                img_sel_res: "wallet_png",
-            },
-            {
-                img_text: "我 的",
-                selected: false,
-                img_sel_res: "setup_png",
-            },
-        ];
-        this.lastindex = 1;
-        this.arrayCollection = new eui.ArrayCollection(this.data2TabBar_arr);
-        this.tabbar.dataProvider = this.arrayCollection;
-        this.tabbar.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onBarItemTap, this);
-        this.tabbar.width = stageW;
-        this.tabbar.height = 90;
-        this.tabbar.y = stageH - 90;
-        this.addChild(this.tabbar);
-        this.tabbar.itemRenderer = MGTabBar.TabBarCell;
-        this.viewStack = new eui.ViewStack();
-        this.viewStack.width = stageW;
-        this.viewStack.height = stageH - 90;
-        for (var i = 0; i < 4; i++) {
-            switch (i) {
-                case 0:
-                    this.data = new Data();
-                    this.viewStack.addChild(this.data);
-                    break;
-                case 1:
-                    this.game = new Game();
-                    this.viewStack.addChild(this.game);
-                    break;
-                case 2:
-                    this.wallet = new Wallet();
-                    this.viewStack.addChild(this.wallet);
-                    break;
-                case 3:
-                    this.setup = new Setup();
-                    this.viewStack.addChild(this.setup);
-                    this.setup.loadData(this.userinfo, this.clientinfo);
-                    break;
-            }
-        }
-        this.viewStack.selectedIndex = this.lastindex;
-        this.addChild(this.viewStack);
-    };
-    Main.prototype.onBarItemTap = function (e) {
-        this.viewStack.selectedIndex = e.itemIndex;
-        var lastdata = this.arrayCollection.getItemAt(this.lastindex);
-        this.lastindex = e.itemIndex;
-        lastdata.selected = false;
-        var data = this.arrayCollection.getItemAt(e.itemIndex);
-        data.selected = true;
-        this.tabbar.dataProvider = new eui.ArrayCollection(this.data2TabBar_arr);
-        switch (e.itemIndex) {
-            case 0:
-                this.data.loadData();
-                break;
-            case 2:
-                this.wallet.loadData();
-                break;
-        }
-    };
-    Main.prototype.onLogin = function (evt) {
-        this.userinfo = evt.data.userinfo;
-        this.clientinfo = evt.data.clientinfo;
-        // 登陆
-        this.createTabbar();
-        this.removeChild(this.login);
-        this.removeEventListener(Login.LoginSuccess, function () { }, this);
-    };
-    Main.prototype.onBack = function () {
-        // 移除所有小弟
-        this.removeChildren();
-        // 初始化背景
-        this.initBackground();
-        // 初始化登陆界面
-        this.createLogin();
-    };
-    Main.MainLogin = "MainLogin";
-    return Main;
-}(eui.UILayer));
-__reflect(Main.prototype, "Main");
-/**
- * 创建不同颜色的button
- */
-var Buttons = (function (_super) {
-    __extends(Buttons, _super);
-    function Buttons() {
-        return _super.call(this) || this;
-    }
-    Buttons.prototype.init = function (type, text, size, width, height) {
-        var _this = this;
-        if (type === void 0) { type = 1; }
-        if (size === void 0) { size = 24; }
-        if (width === void 0) { width = 180; }
-        if (height === void 0) { height = 64; }
-        this.img = new egret.Bitmap();
-        this.txt = new egret.TextField();
-        this.width = width;
-        this.height = height;
-        if (type === 1) {
-            this.img.texture = RES.getRes('btn_bg_green_png');
-            this.txt.strokeColor = 0x42a605;
-        }
-        else if (type === 2) {
-            this.img.texture = RES.getRes('btn_bg_blue_png');
-            this.txt.strokeColor = 0x2582c3;
-        }
-        else if (type === 3) {
-            this.img.texture = RES.getRes('btn_bg_purple_png');
-            this.txt.strokeColor = 0x810fb5;
-        }
-        else if (type === 4) {
-            this.img.texture = RES.getRes('btn_bg_pink_png');
-            this.txt.strokeColor = 0xc30835;
-        }
-        else if (type === 5) {
-            this.img.texture = RES.getRes('btn_bg_brown_png');
-            this.txt.strokeColor = 0x8e4926;
-        }
-        else {
-            this.img.texture = RES.getRes('btn_bg_grey_png');
-            this.txt.strokeColor = 0x656565;
-        }
-        this.img.scale9Grid = new egret.Rectangle(10, 10, 14, 103);
-        this.img.width = width;
-        this.img.height = height;
-        this.addChild(this.img);
-        this.txt.size = size;
-        this.txt.textColor = 0xffffff;
-        this.txt.text = text;
-        this.txt.stroke = 1;
-        this.txt.x = this.img.width / 2 - this.txt.width / 2;
-        this.txt.y = this.img.height / 2 - this.txt.height / 2;
-        this.addChild(this.txt);
-        this.img.touchEnabled = true;
-        this.img.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function () {
-            _this.img.x = _this.img.x + 2;
-            _this.img.y = _this.img.y + 2;
-            _this.txt.x = _this.txt.x + 2;
-            _this.txt.y = _this.txt.y + 2;
-        }, this);
-        this.img.addEventListener(egret.TouchEvent.TOUCH_END, function () {
-            _this.img.x = _this.img.x - 2;
-            _this.img.y = _this.img.y - 2;
-            _this.txt.x = _this.txt.x - 2;
-            _this.txt.y = _this.txt.y - 2;
-        }, this);
-        this.img.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, function () {
-            _this.img.x = _this.img.x - 2;
-            _this.img.y = _this.img.y - 2;
-            _this.txt.x = _this.txt.x - 2;
-            _this.txt.y = _this.txt.y - 2;
-        }, this);
-    };
-    return Buttons;
-}(egret.Sprite));
-__reflect(Buttons.prototype, "Buttons");
-/**
- * 游戏结束弹窗
- */
-var Dialog = (function (_super) {
-    __extends(Dialog, _super);
-    function Dialog() {
-        var _this = _super.call(this) || this;
-        _this._width = 280;
-        _this._height = 400;
-        _this.GAME_RESTART = 'gamerestart';
-        _this.GAME_SHARE = 'gameshare';
-        _this.GAME_AD = 'gamead';
-        _this.init();
-        return _this;
-    }
-    Dialog.prototype.init = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var _a, maskBlack, homeBtn, restartBtn, shareBtn, adBtn, data, that, url, imgLoader, nickname;
-            return __generator(this, function (_b) {
-                _a = this, maskBlack = _a.maskBlack, homeBtn = _a.homeBtn, restartBtn = _a.restartBtn, shareBtn = _a.shareBtn, adBtn = _a.adBtn;
-                maskBlack = new egret.Shape();
-                maskBlack.graphics.beginFill(0x000000, .8);
-                maskBlack.graphics.drawRoundRect(0, 0, this._width, this._height, 10);
-                this.addChild(maskBlack);
-                this.score = '0';
-                this.tip = new egret.TextField();
-                this.tip.y = 15;
-                this.tip.textColor = 0xffffff;
-                this.tip.size = 18;
-                this.tip.x = this._width / 2 - this.tip.width / 2;
-                this.addChild(this.tip);
-                this.rebirthnum = 0;
-                this.tipre = new egret.TextField();
-                this.tipre.y = 38;
-                this.tipre.textColor = 0xffffff;
-                this.tipre.size = 18;
-                this.tipre.x = this._width / 2 - this.tipre.width / 2;
-                this.addChild(this.tipre);
-                homeBtn = new Buttons();
-                homeBtn.init(3, '回到首页');
-                homeBtn.scaleX = .5;
-                homeBtn.scaleY = .5;
-                this.addChild(homeBtn);
-                homeBtn.x = 30;
-                homeBtn.y = 300;
-                homeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                    _this.dispatchEventWith(Dialog.GO_HOME);
-                }, this);
-                restartBtn = new Buttons();
-                restartBtn.init(1, '再玩一次');
-                this.addChild(restartBtn);
-                restartBtn.x = 160;
-                restartBtn.y = 300;
-                restartBtn.scaleX = .5;
-                restartBtn.scaleY = .5;
-                restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                    _this.dispatchEventWith(Dialog.RESTART);
-                }, this);
-                shareBtn = new Buttons();
-                shareBtn.init(2, '炫耀战绩');
-                this.addChild(shareBtn);
-                shareBtn.x = 30;
-                shareBtn.y = 350;
-                shareBtn.scaleX = .5;
-                shareBtn.scaleY = .5;
-                shareBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                }, this);
-                adBtn = new Buttons();
-                adBtn.init(4, '免费复活');
-                this.addChild(adBtn);
-                adBtn.x = 160;
-                adBtn.y = 350;
-                adBtn.scaleX = .5;
-                adBtn.scaleY = .5;
-                adBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () { return __awaiter(_this, void 0, void 0, function () {
-                    var _this = this;
-                    var remainnum;
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                remainnum = this.rebirthnum - 1;
-                                if (!(remainnum >= 0)) return [3 /*break*/, 2];
-                                return [4 /*yield*/, Http.get(this, API.ApiGameRebirthUse).then(function (res) {
-                                        if (res == undefined) {
-                                            return;
-                                        }
-                                        // unknown转any
-                                        var rsp = res;
-                                        that.dispatchEventWith(Dialog.REBIRTH);
-                                        _this.rebirthnum = rsp.num;
-                                    })];
-                            case 1:
-                                _a.sent();
-                                return [3 /*break*/, 3];
-                            case 2:
-                                that.dispatchEventWith(Dialog.NOCHANCE);
-                                _a.label = 3;
-                            case 3: return [2 /*return*/];
-                        }
-                    });
-                }); }, this);
-                data = {
-                    nickName: '悠悠丶',
-                    avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKT3CKZgvyic14bBOYKpbaS2PvaS7t1ar4295xuV4w8xArEF8kuxWpzFicgADibw2c2XdWjasfzvDib5Q/132'
-                };
-                console.log(111, data);
-                that = this;
-                url = data.avatarUrl;
-                imgLoader = new egret.ImageLoader();
-                imgLoader.crossOrigin = '';
-                imgLoader.load(url);
-                imgLoader.once(egret.Event.COMPLETE, function (e) {
-                    if (e.currentTarget.data) {
-                        var texture = new egret.Texture();
-                        texture.bitmapData = e.currentTarget.data;
-                        var img = new egret.Bitmap(texture);
-                        img.width = 100;
-                        img.height = 100;
-                        that.addChild(img);
-                        img.x = that._width / 2 - img.width / 2;
-                        img.y = 100;
-                    }
-                }, this);
-                nickname = new egret.TextField();
-                nickname.size = 14;
-                nickname.textColor = 0xffffff;
-                nickname.text = data.nickName;
-                nickname.x = this._width / 2 - nickname.width / 2;
-                nickname.y = 220;
-                this.addChild(nickname);
-                return [2 /*return*/];
-            });
-        });
-    };
-    Dialog.prototype.setScores = function (text) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var data;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        data = { score: Number(text) };
-                        return [4 /*yield*/, Http.post(this, API.ApiGameScoreUpdate, data).then(function (res) {
-                                if (res == undefined) {
-                                    return;
-                                }
-                                // unknown转any
-                                var rsp = res;
-                                _this.score = text;
-                                _this.tip.text = "\u672C\u6B21\u5F97\u5206\uFF1A" + _this.score;
-                                _this.tip.x = _this._width / 2 - _this.tip.width / 2;
-                                _this.rebirthnum = rsp.num;
-                                _this.tipre.text = "\u5269\u4F59\u590D\u6D3B\u6B21\u6570\uFF1A" + _this.rebirthnum;
-                                _this.tipre.x = _this._width / 2 - _this.tipre.width / 2;
-                            })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Dialog.GO_HOME = 'gohome';
-    Dialog.RESTART = 'restart';
-    Dialog.SHARE_WX = 'sharewx';
-    Dialog.VIEW_AD = 'viewad';
-    Dialog.REBIRTH = 'rebirth';
-    Dialog.NOCHANCE = 'nochance';
-    return Dialog;
-}(egret.Sprite));
-__reflect(Dialog.prototype, "Dialog");
-// var mc1 = new egret.MovieClip(mcFactory.generateMovieClipData("loading"));
-var Loading = (function () {
-    function Loading() {
-    }
-    Loading.init = function () {
-        // 构建loading弹窗
-        var data = RES.getRes("loading_json");
-        var txtr = RES.getRes("loading_png");
-        var mcFactory = new egret.MovieClipDataFactory(data, txtr);
-        Loading.mc1 = new egret.MovieClip(mcFactory.generateMovieClipData("loading"));
-    };
-    Loading.showLoading = function (obj) {
-        obj.addChild(Loading.mc1);
-        obj.touchChildren = false;
-        Loading.mc1.x = (obj.width - Loading.mc1.width) / 2;
-        Loading.mc1.y = (obj.height - Loading.mc1.height) / 2;
-        Loading.mc1.gotoAndPlay(1, -1);
-    };
-    Loading.hidLoading = function (obj) {
-        obj.touchChildren = true;
-        obj.removeChild(Loading.mc1);
-    };
-    return Loading;
-}());
-__reflect(Loading.prototype, "Loading");
-var Login = (function (_super) {
-    __extends(Login, _super);
-    function Login() {
-        var _this = _super.call(this) || this;
-        _this.init();
-        return _this;
-    }
-    Login.prototype.init = function () {
-        // 创建场景
-        this.createScene();
-    };
-    Login.prototype.createScene = function () {
-        this.skinName = "resource/eui_skins/LoginSkin.exml";
-        var stage = egret.MainContext.instance.stage;
-        this.width = stage.stageWidth;
-        this.height = stage.stageHeight;
-        this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this);
-        this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this);
-    };
-    Login.prototype.onWxLogin = function () {
-        var _this = this;
-        var data = {
-            account: this.account.text,
-        };
-        Http.post(this, API.ApiAuthWxLogin, data).then(function (res) {
-            // unknown转any
-            var rsp = res;
-            _this.loadRsp(rsp);
-        });
-    };
-    Login.prototype.onTestLogin = function () {
-        var _this = this;
-        var data = {
-            account: this.account.text,
-        };
-        Http.post(this, API.ApiAuthTestLogin, data).then(function (res) {
-            // unknown转any
-            var rsp = res;
-            _this.loadRsp(rsp);
-        });
-    };
-    Login.prototype.loadRsp = function (rsp) {
-        Http.token = rsp.token;
-        // 登陆成功，通知事件
-        this.dispatchEventWith(Login.LoginSuccess, true, rsp);
-    };
-    return Login;
-}(eui.ItemRenderer));
-__reflect(Login.prototype, "Login");
-/**
- * 统一提示
- */
-var Msg = (function (_super) {
-    __extends(Msg, _super);
-    function Msg() {
-        return _super.call(this) || this;
-    }
-    Msg.init = function () {
-        Msg.shape = new egret.Shape();
-        Msg.showtext = new egret.TextField();
-        Msg.showtext.size = 14;
-        Msg.showtext.textColor = 0xffffff;
-    };
-    Msg.showMsg = function (obj, txt) {
-        Msg.shape.graphics.beginFill(0x000000, .6);
-        Msg.shape.graphics.drawRect(0, -100, obj.width, 100);
-        Msg.shape.graphics.endFill();
-        obj.addChild(Msg.shape);
-        egret.Tween.get(Msg.shape).to({ y: 100 }, 100, egret.Ease.bounceOut).call(function () {
-            setTimeout(function () {
-                obj.removeChild(Msg.shape);
-            }, 3000);
-        }, this);
-        Msg.showtext.text = txt;
-        Msg.showtext.x = obj.width / 2 - Msg.showtext.width / 2;
-        Msg.showtext.y = -100 / 2 - Msg.showtext.height / 2;
-        obj.addChild(Msg.showtext);
-        egret.Tween.get(Msg.showtext).to({ y: 100 / 2 - Msg.showtext.height / 2 }, 100, egret.Ease.bounceOut).call(function () {
-            setTimeout(function () {
-                obj.removeChild(Msg.showtext);
-            }, 3000);
-        }, this);
-    };
-    return Msg;
-}(egret.Sprite));
-__reflect(Msg.prototype, "Msg");
-/** * 滑动列表 * 使用虚拟布局、自定义项呈现器 * 不需要初始化item只需要添加皮肤 * */
-var Rank = (function (_super) {
-    __extends(Rank, _super);
-    function Rank() {
-        var _this = _super.call(this) || this;
-        _this.skinName = "resource/eui_skins/RankSkin.exml";
-        _this.initItemRenderer(RankItem);
-        _this.viewport = _this.dataList;
-        return _this;
-    }
-    /** * 通过SkinName 初始化item皮肤 * @param itemSkin item皮肤 */
-    Rank.prototype.initItemSkin = function (itemSkin) {
-        this.dataList.itemRendererSkinName = itemSkin;
-    };
-    /** * 通过itemRenderer 初始化item皮肤 *  @param itemRenderer 所有item都要继承 eui.ItemRenderer */
-    Rank.prototype.initItemRenderer = function (itemRenderer) {
-        this.dataList.itemRenderer = itemRenderer;
-    };
-    /** 进行数据绑定 */
-    Rank.prototype.bindData = function (data) {
-        var arrCollection = new eui.ArrayCollection(data);
-        this.dataList.dataProvider = arrCollection;
-    };
-    return Rank;
-}(eui.Scroller));
-__reflect(Rank.prototype, "Rank", ["eui.UIComponent", "egret.DisplayObject"]);
-var RankItem = (function (_super) {
-    __extends(RankItem, _super);
-    function RankItem() {
-        var _this = _super.call(this) || this;
-        _this.rank_ranknum = null;
-        _this.rank_score = null;
-        _this.rank_portrait = null;
-        _this.rank_nick = null;
-        _this.rank_rect = null;
-        _this.skinName = "resource/eui_skins/ItemSkin.exml";
-        return _this;
-    }
-    RankItem.prototype.createChildren = function () {
-        _super.prototype.createChildren.call(this);
-    };
-    RankItem.prototype.dataChanged = function () {
-        this.loadData();
-    };
-    RankItem.prototype.loadData = function () {
-        // this.rank_ranknum.text = this.data.index;
-        this.rank_ranknum.text = String(this.itemIndex + 1);
-        this.rank_score.text = this.data.score;
-        this.rank_portrait.source = RES.getRes(this.data.portrait);
-        this.rank_nick.text = this.data.nick;
-    };
-    RankItem.prototype.setRectColor = function (fillcolor) {
-        this.rank_rect.fillColor = fillcolor;
-        this.rank_rect.height = this.height;
-    };
-    RankItem.prototype.setData = function (ranknum, portrait, nick, score) {
-        this.rank_ranknum.text = String(ranknum);
-        this.rank_score.text = String(score);
-        this.rank_portrait.source = RES.getRes(portrait);
-        this.rank_nick.text = nick;
-    };
-    return RankItem;
-}(eui.ItemRenderer));
-__reflect(RankItem.prototype, "RankItem");
-/**
- * 皮肤切换窗口
- */
-var SkinDialog = (function (_super) {
-    __extends(SkinDialog, _super);
-    function SkinDialog() {
-        var _this = _super.call(this) || this;
-        _this._width = 300;
-        _this._height = 400;
-        _this.init();
-        return _this;
-    }
-    SkinDialog.prototype.init = function () {
-        var _this = this;
-        var shape = new egret.Shape();
-        shape.graphics.beginFill(0x000000, .8);
-        shape.graphics.drawRoundRect(0, 0, this._width, this._height, 10);
-        shape.graphics.endFill();
-        this.addChild(shape);
-        var closeBtn = new egret.Bitmap(RES.getRes('close_png'));
-        closeBtn.width = 25;
-        closeBtn.height = 25;
-        closeBtn.x = this._width - 13;
-        closeBtn.y = -13;
-        this.addChild(closeBtn);
-        closeBtn.touchEnabled = true;
-        closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.dispatchEventWith(SkinDialog.CLOSE_SKIN);
-        }, this);
-        var title = new egret.TextField();
-        title.textColor = 0xffffff;
-        title.size = 24;
-        title.text = '皮肤选择';
-        title.x = this._width / 2 - title.width / 2;
-        title.y = 20;
-        this.addChild(title);
-        var skinList = [{ text: '默认皮肤', value: 1 }, { text: '无限月读', value: 2 }];
-        skinList.forEach(function (item, index) {
-            var text = new egret.TextField();
-            text.textColor = 0xffffff;
-            text.size = 16;
-            text.y = 40 * index + 70;
-            text.x = 20;
-            text.text = item.text;
-            text.touchEnabled = true;
-            text.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                _this.dispatchEventWith(SkinDialog.CLOSE_SKIN);
-            }, _this);
-            _this.addChild(text);
-        });
-    };
-    SkinDialog.CLOSE_SKIN = 'closeskin';
-    return SkinDialog;
-}(egret.Sprite));
-__reflect(SkinDialog.prototype, "SkinDialog");
-var MGTabBar;
-(function (MGTabBar) {
-    var TabBarCell = (function (_super) {
-        __extends(TabBarCell, _super);
-        function TabBarCell() {
-            var _this = _super.call(this) || this;
-            _this.img_res = null;
-            _this.img_text = null;
-            _this.img_rect = null;
-            _this.skinName = "resource/eui_skins/TabbarCell.exml";
-            return _this;
-        }
-        TabBarCell.prototype.createChildren = function () {
-            _super.prototype.createChildren.call(this);
-        };
-        TabBarCell.prototype.dataChanged = function () {
-            this.loadData();
-        };
-        TabBarCell.prototype.loadData = function () {
-            var $dataModel = this.data;
-            var $selected = $dataModel.selected;
-            // console.log("index:" + this.itemIndex + ", select:", $selected)
-            this.img_text.text = $dataModel.img_text;
-            this.img_res.source = RES.getRes($dataModel.img_sel_res);
-            if ($selected) {
-                this.img_rect.fillColor = 0x878787;
-            }
-        };
-        return TabBarCell;
-    }(eui.ItemRenderer));
-    MGTabBar.TabBarCell = TabBarCell;
-    __reflect(TabBarCell.prototype, "MGTabBar.TabBarCell");
-})(MGTabBar || (MGTabBar = {}));
-/**
- * 用弧形遮罩制作不同的木桩形状，用于制作结束动画
- */
-var TimberMask = (function (_super) {
-    __extends(TimberMask, _super);
-    function TimberMask() {
-        var _this = _super.call(this) || this;
-        _this.ary = [];
-        return _this;
-    }
-    TimberMask.prototype.init = function (skin) {
-        var randomAry = [0, 360];
-        randomAry.push(Tools.generateRandom(10, 350));
-        randomAry.push(Tools.generateRandom(10, 350));
-        randomAry.push(Tools.generateRandom(10, 350));
-        randomAry.sort(function (a, b) {
-            return a - b;
-        });
-        for (var i = 0; i < randomAry.length - 1; i++) {
-            var r = 100;
-            var next = i + 1;
-            var startAngle = randomAry[i];
-            var endAngle = next > randomAry.length ? 360 : randomAry[next];
-            var m = new TimberMaskSprite();
-            m.createMask(r, startAngle, endAngle, skin);
-            this.addChild(m);
-            this.ary.push(m);
-        }
-    };
-    TimberMask.prototype.startAnimation = function () {
-        var _this = this;
-        var stage = egret.MainContext.instance.stage;
-        this.ary.forEach(function (item) {
-            item.rotation = Tools.generateRandom(30, 90);
-            item.x = item.x + Tools.generateRandom(30, 90);
-            item.y = item.y + Tools.generateRandom(30, 90);
-            egret.Tween.get(item).to({ rotation: Tools.generateRandom(30, 90), y: stage.stageHeight, x: Tools.generateRandom(-stage.stageWidth * 2, stage.stageWidth * 2) }, 1000).call(function () {
-                item.parent.removeChild(item);
-            }, _this);
-        });
-    };
-    return TimberMask;
-}(egret.Sprite));
-__reflect(TimberMask.prototype, "TimberMask");
-/**
- * 不同的木桩弧形遮罩
- */
-var TimberMaskSprite = (function (_super) {
-    __extends(TimberMaskSprite, _super);
-    function TimberMaskSprite() {
-        return _super.call(this) || this;
-    }
-    TimberMaskSprite.prototype.createMask = function (r, startAngle, endAngle, skin) {
-        var img = skin === 1 ? 'timber_png' : 'eye_png';
-        var t = new egret.Bitmap(RES.getRes(img));
-        t.width = r * 2;
-        t.height = r * 2;
-        this.addChild(t);
-        var m = new egret.Shape();
-        m.graphics.beginFill(0x000000);
-        m.graphics.moveTo(r, r);
-        m.graphics.lineTo(r * 2, r);
-        m.graphics.drawArc(r, r, r, startAngle * Math.PI / 180, endAngle * Math.PI / 180);
-        m.graphics.lineTo(r, r);
-        m.graphics.endFill();
-        this.addChild(m);
-        t.mask = m;
-    };
-    return TimberMaskSprite;
-}(egret.Sprite));
-__reflect(TimberMaskSprite.prototype, "TimberMaskSprite");
-/*
- * @Author: your name
- * @Date: 2019-12-23 12:12:04
- * @LastEditTime : 2019-12-27 17:36:53
- * @LastEditors  : Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \weagentclient\kunai\src\containers\data\Data.ts
- */
-var Data = (function (_super) {
-    __extends(Data, _super);
-    function Data() {
-        var _this = _super.call(this) || this;
-        // private loading: Loading = new Loading()
-        _this.data_yestarday_all = null; // 昨日全网收益
-        _this.data_history_all = null; // 历史全网收益
-        _this.data_today_adnum = null; // 今日实时看广告次数
-        _this.data_today_onlinenum = null; // 今日实时在线人数
-        _this.data_today_all = null; // 今日总收益
-        _this.init();
-        return _this;
-    }
-    Data.prototype.init = function () {
-        // 创建场景
-        this.createScene();
-        // 加载数据
-        this.loadData();
-    };
-    Data.prototype.createScene = function () {
-        this.skinName = "resource/eui_skins/DataSkin.exml";
-        var stage = egret.MainContext.instance.stage;
-        this.width = stage.stageWidth;
-        this.height = stage.stageHeight - 90;
-    };
-    Data.prototype.loadData = function () {
-        var _this = this;
-        Http.get(this, API.ApiDataEntrance).then(function (res) {
-            if (res == undefined) {
-                return;
-            }
-            // unknown转any
-            var rsp = res;
-            _this.data_yestarday_all.text = rsp.yestardayall;
-            _this.data_history_all.text = rsp.historyall;
-            _this.data_today_adnum.text = rsp.todayadnum;
-            _this.data_today_onlinenum.text = rsp.todayonlinenum;
-            _this.data_today_all.text = rsp.todayall;
-        });
-    };
-    return Data;
-}(eui.ItemRenderer));
-__reflect(Data.prototype, "Data");
-var Game = (function (_super) {
-    __extends(Game, _super);
-    function Game() {
-        var _this = _super.call(this) || this;
-        _this.init();
-        _this.start();
-        return _this;
-    }
-    Game.prototype.init = function () {
-        this.gameStartPanel = new GameStartPanel();
-        this.gamePlayingPanel = new GamePlayingPanel();
-        this.gameEndPanel = new GameEndPanel();
-        this.gameStartPanel.start();
-        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
-        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
-    };
-    Game.prototype.start = function () {
-        this.addChild(this.gameStartPanel);
-        this.gameStartPanel.start();
-        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
-        this.gameStartPanel.addEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
-    };
-    Game.prototype.gamePlaying1 = function () {
-        this.gameStartPanel.end();
-        this.removeChild(this.gameStartPanel);
-        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
-        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
-        this.addChild(this.gamePlayingPanel);
-        this.gamePlayingPanel.start(1);
-        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
-        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
-    };
-    Game.prototype.gamePlaying2 = function () {
-        this.gameStartPanel.end();
-        this.removeChild(this.gameStartPanel);
-        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_1, this.gamePlaying1, this);
-        this.gameStartPanel.removeEventListener(GameStartPanel.GAME_START_2, this.gamePlaying2, this);
-        this.addChild(this.gamePlayingPanel);
-        this.gamePlayingPanel.start(2);
-        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
-        this.gamePlayingPanel.addEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
-    };
-    Game.prototype.gameEnd = function () {
-        this.gamePlayingPanel.end();
-        this.removeChild(this.gamePlayingPanel);
-        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_END, this.gameEnd, this);
-        this.gamePlayingPanel.removeEventListener(GamePlayingPanel.GAME_RESTART, this.gameRestart, this);
-        this.start();
-    };
-    Game.prototype.gameRestart = function () {
-        console.log('game restart');
-    };
-    return Game;
-}(egret.Sprite));
-__reflect(Game.prototype, "Game");
-/**
- * 游戏结束画面，未用到
- */
-var GameEndPanel = (function (_super) {
-    __extends(GameEndPanel, _super);
-    function GameEndPanel() {
-        var _this = _super.call(this) || this;
-        _this.init();
-        return _this;
-    }
-    GameEndPanel.prototype.start = function () {
-        var _a = this, restartBtn = _a.restartBtn, onTouchTap = _a.onTouchTap;
-        restartBtn.touchEnabled = true;
-        restartBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
-    };
-    GameEndPanel.prototype.init = function () {
-        this.restartBtn = new egret.TextField();
-        this.restartBtn.text = '重新开始';
-        this.restartBtn.x = 450 / 2 - this.restartBtn.width;
-        this.restartBtn.y = 400;
-        this.addChild(this.restartBtn);
-    };
-    GameEndPanel.prototype.onTouchTap = function () {
-        this.dispatchEventWith(GameEndPanel.GAME_RESTART);
-    };
-    GameEndPanel.prototype.end = function () {
-        var _a = this, restartBtn = _a.restartBtn, onTouchTap = _a.onTouchTap;
-        restartBtn.$touchEnabled = false;
-        if (restartBtn.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
-            restartBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
-        }
-    };
-    GameEndPanel.GAME_RESTART = 'gamerestart';
-    return GameEndPanel;
-}(egret.Sprite));
-__reflect(GameEndPanel.prototype, "GameEndPanel");
 /*
  * @Author: your name
  * @Date: 2019-12-23 12:12:04
@@ -1705,144 +1876,6 @@ var API;
     API.ApiGameScoreUpdate = rootUrl + "/game/score/update";
     API.ApiGameScoreRank = rootUrl + "/game/score/rank";
 })(API || (API = {}));
-/**
- * 游戏开始界面
- */
-var GameStartPanel = (function (_super) {
-    __extends(GameStartPanel, _super);
-    function GameStartPanel() {
-        var _this = _super.call(this) || this;
-        _this.isdisplay = false;
-        _this.init();
-        return _this;
-    }
-    GameStartPanel.prototype.start = function () {
-        var _this = this;
-        var stage = egret.MainContext.instance.stage;
-        var _a = this, startBtn = _a.startBtn, onTouchTap = _a.onTouchTap, img = _a.img, logo = _a.logo, PK = _a.PK;
-        img.width = stage.stageWidth;
-        img.height = stage.stageHeight - 90;
-        logo.x = stage.stageWidth / 2 - logo.width / 2;
-        logo.y = -logo.height;
-        egret.Tween.get(logo).to({ y: 60 }, 500, egret.Ease.bounceOut);
-        startBtn.x = -startBtn.width;
-        startBtn.y = 400;
-        startBtn.touchEnabled = true;
-        startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.onTouchTap(1);
-        }, this);
-        egret.Tween.get(startBtn).to({ x: stage.stageWidth / 2 - startBtn.width / 2 }, 500, egret.Ease.bounceOut);
-    };
-    GameStartPanel.prototype.init = function () {
-        var _this = this;
-        var stage = egret.MainContext.instance.stage;
-        var img = new egret.Bitmap();
-        img.texture = RES.getRes('1_jpg');
-        img.x = 0;
-        img.y = 0;
-        img.alpha = .6;
-        this.img = img;
-        this.addChildAt(this.img, 0);
-        var logo = new egret.Bitmap();
-        logo.texture = RES.getRes('logo_png');
-        logo.width = 751 * .4;
-        logo.height = 599 * .4;
-        this.logo = logo;
-        this.addChild(this.logo);
-        this.startBtn = new Buttons();
-        this.addChild(this.startBtn);
-        this.startBtn.init(1, '开始游戏');
-        this.btnClose = new egret.Bitmap(RES.getRes('close_png'));
-        this.btnClose.width = 25;
-        this.btnClose.height = 25;
-        this.btnClose.x = stage.stageWidth * 4 / 5 + 30;
-        this.btnClose.y = 65;
-        this.btnClose.touchEnabled = true;
-        this.btnClose.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.friendsRank();
-            _this.removeChild(_this.btnClose);
-        }, this);
-    };
-    GameStartPanel.prototype.onTouchTap = function (mode) {
-        if (mode === void 0) { mode = 1; }
-        // mode1：简单
-        // mode2：疯狂
-        if (mode === 1) {
-            this.dispatchEventWith(GameStartPanel.GAME_START_1);
-        }
-        else if (mode === 2) {
-            this.dispatchEventWith(GameStartPanel.GAME_START_2);
-        }
-    };
-    GameStartPanel.prototype.end = function () {
-        var _a = this, startBtn = _a.startBtn, onTouchTap = _a.onTouchTap;
-        startBtn.$touchEnabled = false;
-        if (startBtn.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
-            startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
-        }
-    };
-    GameStartPanel.prototype.friendsRank = function () {
-        var platform = window.platform;
-        if (this.isdisplay) {
-            this.bitmap.parent && this.bitmap.parent.removeChild(this.bitmap);
-            this.rankingListMask.parent && this.rankingListMask.parent.removeChild(this.rankingListMask);
-            this.isdisplay = false;
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "close"
-            });
-        }
-        else {
-            //处理遮罩，避免开放数据域事件影响主域。
-            this.rankingListMask = new egret.Shape();
-            this.rankingListMask.graphics.beginFill(0x000000, 1);
-            this.rankingListMask.graphics.drawRect(0, 0, this.stage.width, this.stage.height);
-            this.rankingListMask.graphics.endFill();
-            this.rankingListMask.alpha = 0.5;
-            this.rankingListMask.touchEnabled = true;
-            this.addChild(this.rankingListMask);
-            //主要示例代码开始
-            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight - 90);
-            this.addChild(this.bitmap);
-            //简单实现，打开这关闭使用一个按钮。
-            this.addChild(this.btnClose);
-            //主域向子域发送自定义消息
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "open"
-            });
-            //主要示例代码结束
-            this.isdisplay = true;
-        }
-    };
-    GameStartPanel.prototype.showSkinDialog = function () {
-        var stage = egret.MainContext.instance.stage;
-        this.skinMask = new egret.Shape();
-        this.skinMask.graphics.beginFill(0x000000, .2);
-        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight - 90, 10);
-        this.skinMask.graphics.endFill();
-        this.skinMask.touchEnabled = true;
-        this.addChild(this.skinMask);
-        this.skinDialog = new SkinDialog();
-        this.addChild(this.skinDialog);
-        this.skinDialog.x = stage.stageWidth / 2 - this.skinDialog._width / 2;
-        this.skinDialog.y = (stage.stageHeight - 90) / 2 - this.skinDialog._height / 2;
-        this.skinDialog.addEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
-    };
-    GameStartPanel.prototype.hideSkinDialog = function () {
-        this.removeChild(this.skinMask);
-        this.removeChild(this.skinDialog);
-        this.skinDialog.removeEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
-    };
-    GameStartPanel.GAME_START_1 = 'gamestart1';
-    GameStartPanel.GAME_START_2 = 'gamestart2';
-    return GameStartPanel;
-}(egret.Sprite));
-__reflect(GameStartPanel.prototype, "GameStartPanel");
 var Logout = (function (_super) {
     __extends(Logout, _super);
     function Logout() {

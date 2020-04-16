@@ -718,44 +718,65 @@ var Login = (function (_super) {
     };
     Login.prototype.createWxbtn = function () {
         var that = this;
+        var wxbtn;
         wx.login({
             success: function (e) {
-                var wxbtn = wx.createUserInfoButton({
+                wxbtn = wx.createUserInfoButton({
                     type: "text",
-                    text: "111",
+                    text: "",
                     style: {
-                        left: this.left,
-                        top: this.top,
-                        width: this.width,
-                        height: this.height,
+                        left: 0,
+                        top: 0,
+                        width: 1000,
+                        height: 1000,
                         lineHeight: 0,
                         backgroundColor: "",
                         color: "#ffffff",
                     }
                 });
                 wxbtn.onTap(function (res) {
-                    if (res) {
-                        wxbtn.destroy();
-                        var data = {
-                            code: e.code,
-                            encrypteddata: res.encrypteddata,
-                            iv: res.iv,
-                        };
-                        Http.post(that, API.ApiAuthWxLogin, data).then(function (res) {
-                            // unknown转any
-                            var rsp = res;
-                            that.loadRsp(rsp);
+                    return __awaiter(this, void 0, void 0, function () {
+                        var data;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    if (that.startlogin) {
+                                        return [2 /*return*/];
+                                    }
+                                    that.startlogin = true;
+                                    if (!res) return [3 /*break*/, 2];
+                                    wxbtn.destroy();
+                                    data = {
+                                        code: e.code,
+                                        encrypteddata: res.encryptedData,
+                                        iv: res.iv,
+                                    };
+                                    return [4 /*yield*/, Http.post(that, API.ApiAuthWxLogin, data).then(function (res) {
+                                            // unknown转any
+                                            var rsp = res;
+                                            that.loadRsp(rsp);
+                                        }).catch(function () {
+                                            that.createWxbtn();
+                                        })];
+                                case 1:
+                                    _a.sent();
+                                    return [3 /*break*/, 3];
+                                case 2:
+                                    wx.showModal({
+                                        title: "温馨提示",
+                                        content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
+                                        showCancel: false,
+                                    });
+                                    that.createWxbtn();
+                                    _a.label = 3;
+                                case 3:
+                                    that.startlogin = false;
+                                    return [2 /*return*/];
+                            }
                         });
-                    }
-                    else {
-                        wx.showModal({
-                            title: "温馨提示",
-                            content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
-                            showCancel: false,
-                        });
-                    }
+                    });
                 });
-            }
+            },
         });
     };
     // private onWxLogin() {

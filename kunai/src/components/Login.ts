@@ -1,8 +1,8 @@
 class Login extends eui.ItemRenderer {
     public static LoginSuccess: string
-    private wxloginbtn: eui.Button
     private testloginbtn: eui.Button
     private account: eui.TextInput
+    private startlogin: boolean
 
     constructor() {
         super()
@@ -30,34 +30,42 @@ class Login extends eui.ItemRenderer {
 
     private createWxbtn() {
         let that = this
+        let wxbtn: any
 
         wx.login({
             success: function (e) {
-                const wxbtn = wx.createUserInfoButton({
+                wxbtn = wx.createUserInfoButton({
                     type: "text",
-                    text: "111",
+                    text: "",
                     style: {
-                        left: this.left,
-                        top: this.top,
-                        width: this.width,
-                        height: this.height,
+                        left: 0,
+                        top: 0,
+                        width: 1000,
+                        height: 1000,
                         lineHeight: 0,
                         backgroundColor: "",//透明
                         color: "#ffffff",
                     }
                 });
-                wxbtn.onTap(function (res) {
+                wxbtn.onTap(async function (res) {
+                    if (that.startlogin) {
+                        return
+                    }
+                    that.startlogin = true
+
                     if (res) {
                         wxbtn.destroy();
                         var data = {
                             code: e.code,
-                            encrypteddata: res.encrypteddata,
+                            encrypteddata: res.encryptedData,
                             iv: res.iv,
                         }
-                        Http.post(that, API.ApiAuthWxLogin, data).then((res) => {
+                        await Http.post(that, API.ApiAuthWxLogin, data).then((res) => {
                             // unknown转any
                             var rsp: any = res
                             that.loadRsp(rsp)
+                        }).catch(() => {
+                            that.createWxbtn()
                         })
                     }
                     else {
@@ -66,9 +74,11 @@ class Login extends eui.ItemRenderer {
                             content: "《XXX》是一款在线对战游戏，需要您的用户信息登录游戏。",
                             showCancel: false,
                         });
+                        that.createWxbtn()
                     }
+                    that.startlogin = false
                 });
-            }
+            },
         })
     }
 

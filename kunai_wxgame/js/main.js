@@ -50,7 +50,6 @@ var GameStartPanel = (function (_super) {
     __extends(GameStartPanel, _super);
     function GameStartPanel() {
         var _this = _super.call(this) || this;
-        _this.isdisplay = false;
         _this.init();
         return _this;
     }
@@ -82,7 +81,7 @@ var GameStartPanel = (function (_super) {
         this.img = img;
         this.addChildAt(this.img, 0);
         var logo = new egret.Bitmap();
-        logo.texture = RES.getRes('logo_png');
+        // logo.texture = RES.getRes('logo_png')
         logo.width = 751 * .4;
         logo.height = 599 * .4;
         this.logo = logo;
@@ -97,7 +96,6 @@ var GameStartPanel = (function (_super) {
         this.btnClose.y = 65;
         this.btnClose.touchEnabled = true;
         this.btnClose.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            _this.friendsRank();
             _this.removeChild(_this.btnClose);
         }, this);
     };
@@ -118,63 +116,6 @@ var GameStartPanel = (function (_super) {
         if (startBtn.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
             startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, onTouchTap, this);
         }
-    };
-    GameStartPanel.prototype.friendsRank = function () {
-        var platform = window.platform;
-        if (this.isdisplay) {
-            this.bitmap.parent && this.bitmap.parent.removeChild(this.bitmap);
-            this.rankingListMask.parent && this.rankingListMask.parent.removeChild(this.rankingListMask);
-            this.isdisplay = false;
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "close"
-            });
-        }
-        else {
-            //处理遮罩，避免开放数据域事件影响主域。
-            this.rankingListMask = new egret.Shape();
-            this.rankingListMask.graphics.beginFill(0x000000, 1);
-            this.rankingListMask.graphics.drawRect(0, 0, this.stage.width, this.stage.height);
-            this.rankingListMask.graphics.endFill();
-            this.rankingListMask.alpha = 0.5;
-            this.rankingListMask.touchEnabled = true;
-            this.addChild(this.rankingListMask);
-            //主要示例代码开始
-            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight - 90);
-            this.addChild(this.bitmap);
-            //简单实现，打开这关闭使用一个按钮。
-            this.addChild(this.btnClose);
-            //主域向子域发送自定义消息
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "open"
-            });
-            //主要示例代码结束
-            this.isdisplay = true;
-        }
-    };
-    GameStartPanel.prototype.showSkinDialog = function () {
-        var stage = egret.MainContext.instance.stage;
-        this.skinMask = new egret.Shape();
-        this.skinMask.graphics.beginFill(0x000000, .2);
-        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight - 90, 10);
-        this.skinMask.graphics.endFill();
-        this.skinMask.touchEnabled = true;
-        this.addChild(this.skinMask);
-        this.skinDialog = new SkinDialog();
-        this.addChild(this.skinDialog);
-        this.skinDialog.x = stage.stageWidth / 2 - this.skinDialog._width / 2;
-        this.skinDialog.y = (stage.stageHeight - 90) / 2 - this.skinDialog._height / 2;
-        this.skinDialog.addEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
-    };
-    GameStartPanel.prototype.hideSkinDialog = function () {
-        this.removeChild(this.skinMask);
-        this.removeChild(this.skinDialog);
-        this.skinDialog.removeEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this);
     };
     GameStartPanel.GAME_START_1 = 'gamestart1';
     GameStartPanel.GAME_START_2 = 'gamestart2';
@@ -378,7 +319,7 @@ var Main = (function (_super) {
                 case 3:
                     this.setup = new Setup();
                     this.viewStack.addChild(this.setup);
-                    this.setup.loadData(this.userinfo, this.clientinfo);
+                    this.setup.loadData(this.clientinfo);
                     break;
             }
         }
@@ -403,7 +344,7 @@ var Main = (function (_super) {
         }
     };
     Main.prototype.onLogin = function (evt) {
-        this.userinfo = evt.data.userinfo;
+        Main.userinfo = evt.data.userinfo;
         this.clientinfo = evt.data.clientinfo;
         // 登陆
         this.createTabbar();
@@ -601,10 +542,9 @@ var Dialog = (function (_super) {
                     });
                 }); }, this);
                 data = {
-                    nickName: '悠悠丶',
-                    avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKT3CKZgvyic14bBOYKpbaS2PvaS7t1ar4295xuV4w8xArEF8kuxWpzFicgADibw2c2XdWjasfzvDib5Q/132'
+                    nickName: Main.userinfo.nickname,
+                    avatarUrl: Main.userinfo.avatarurl
                 };
-                console.log(111, data);
                 that = this;
                 url = data.avatarUrl;
                 imgLoader = new egret.ImageLoader();
@@ -713,8 +653,14 @@ var Login = (function (_super) {
         var stage = egret.MainContext.instance.stage;
         this.width = stage.stageWidth;
         this.height = stage.stageHeight;
+        if (!debug) {
+            this.removeChild(this.testloginbtn);
+            this.removeChild(this.account);
+        }
+        else {
+            this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this);
+        }
         // this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this)
-        this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this);
     };
     Login.prototype.createWxbtn = function () {
         var that = this;
@@ -1292,22 +1238,12 @@ var GamePlayingPanel = (function (_super) {
                 this.addChild(this.bgimg);
                 skin = "1";
                 this.skin = parseInt(skin);
-                if (this.skin === 1) {
-                    this.bgimg.texture = RES.getRes('4_jpg');
-                    this.bgimg.alpha = .4;
-                    this.timber = this.createBitmapByName('timber_png');
-                    this.addChild(this.timber);
-                    this.timber.width = 200;
-                    this.timber.height = 200;
-                }
-                else if (this.skin === 2) {
-                    this.bgimg.texture = RES.getRes('2_jpg');
-                    this.bgimg.alpha = .7;
-                    this.timber = this.createBitmapByName('eye_png');
-                    this.addChild(this.timber);
-                    this.timber.width = 280;
-                    this.timber.height = 280;
-                }
+                this.bgimg.texture = RES.getRes('4_jpg');
+                this.bgimg.alpha = .4;
+                this.timber = this.createBitmapByName('timber_png');
+                this.addChild(this.timber);
+                this.timber.width = 200;
+                this.timber.height = 200;
                 this.timber.anchorOffsetX = this.timber.width / 2;
                 this.timber.anchorOffsetY = this.timber.height / 2;
                 this.timber.x = stageW / 2;
@@ -1876,6 +1812,7 @@ __reflect(GamePlayingPanel.prototype, "GamePlayingPanel");
  * @Description: In User Settings Edit
  * @FilePath: \weagentclient\kunai\src\api\api.ts
  */
+var debug = false;
 var version = "1.0.1";
 var rootUrl = "http://127.0.0.1:3003";
 var API;
@@ -2282,13 +2219,13 @@ var Setup = (function (_super) {
             _this.onLogout();
         }, this);
     };
-    Setup.prototype.loadData = function (userinfo, clientinfo) {
+    Setup.prototype.loadData = function (clientinfo) {
         var _this = this;
-        this.nickname.text = userinfo.nickname;
-        this.id.text = userinfo.id;
+        this.nickname.text = Main.userinfo.nickname;
+        this.id.text = Main.userinfo.id;
         // 加载头像
         var imgLoader = new egret.ImageLoader();
-        imgLoader.load(userinfo.avatarurl);
+        imgLoader.load(Main.userinfo.avatarurl);
         imgLoader.once(egret.Event.COMPLETE, function (e) {
             if (e.currentTarget.data) {
                 var texture = new egret.Texture();

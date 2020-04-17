@@ -7,6 +7,7 @@
  * @FilePath: \weagentclient\kunai\src\api\api.ts
  */
 
+const debug = false
 const version = "1.0.1"
 const rootUrl = "http://127.0.0.1:3003"
 

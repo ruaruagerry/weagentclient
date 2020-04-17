@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,kunai_png,timber_png,dou_png,logo_png,1_jpg,4_jpg,btn_bg_grey_png,btn_bg_purple_png,btn_bg_pink_png,btn_bg_brown_png,btn_bg_green_png,btn_bg_blue_png,pk_png,eye_png,2_jpg,like_png,close_png,wallet_png,setup_png,data_png,game_png,arrow_forward_png,realcheck_png,phone_png,settings_png,rank_png,rank_banner_png,rank_banner2_png,ad_png,back_png,loading_json,loading_png,wxlogin_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,kunai_png,timber_png,dou_png,1_jpg,4_jpg,btn_bg_grey_png,btn_bg_purple_png,btn_bg_pink_png,btn_bg_brown_png,btn_bg_green_png,btn_bg_blue_png,pk_png,eye_png,like_png,close_png,wallet_png,setup_png,data_png,game_png,arrow_forward_png,realcheck_png,phone_png,settings_png,rank_png,rank_banner_png,rank_banner2_png,ad_png,back_png,loading_json,loading_png,wxlogin_png,logo_png",
 			"name": "preload"
 		}
 	],
@@ -225,11 +225,6 @@
 			"url": "assets/eye.png",
 			"type": "image",
 			"name": "eye_png"
-		},
-		{
-			"url": "assets/2.jpg",
-			"type": "image",
-			"name": "2_jpg"
 		},
 		{
 			"url": "assets/like.png",

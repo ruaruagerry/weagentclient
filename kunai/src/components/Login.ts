@@ -24,8 +24,13 @@ class Login extends eui.ItemRenderer {
         this.width = stage.stageWidth
         this.height = stage.stageHeight
 
+        if (!debug) {
+            this.removeChild(this.testloginbtn)
+            this.removeChild(this.account)
+        } else {
+            this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this)
+        }
         // this.wxloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onWxLogin, this)
-        this.testloginbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTestLogin, this)
     }
 
     private createWxbtn() {

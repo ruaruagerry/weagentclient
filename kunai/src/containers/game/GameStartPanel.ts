@@ -47,7 +47,7 @@ class GameStartPanel extends egret.Sprite {
         this.addChildAt(this.img, 0)
 
         const logo = new egret.Bitmap()
-        logo.texture = RES.getRes('logo_png')
+        // logo.texture = RES.getRes('logo_png')
         logo.width = 751 * .4
         logo.height = 599 * .4
         this.logo = logo
@@ -64,7 +64,6 @@ class GameStartPanel extends egret.Sprite {
         this.btnClose.y = 65
         this.btnClose.touchEnabled = true
         this.btnClose.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-            this.friendsRank()
             this.removeChild(this.btnClose)
         }, this);
     }
@@ -87,71 +86,5 @@ class GameStartPanel extends egret.Sprite {
         }
     }
 
-    private bitmap: egret.Bitmap
-    private isdisplay = false
-    private rankingListMask: egret.Shape
     private btnClose: egret.Bitmap;
-
-    private friendsRank() {
-        let platform: any = window.platform;
-        if (this.isdisplay) {
-            this.bitmap.parent && this.bitmap.parent.removeChild(this.bitmap);
-            this.rankingListMask.parent && this.rankingListMask.parent.removeChild(this.rankingListMask);
-            this.isdisplay = false;
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "close"
-            });
-        } else {
-            //处理遮罩，避免开放数据域事件影响主域。
-            this.rankingListMask = new egret.Shape();
-            this.rankingListMask.graphics.beginFill(0x000000, 1);
-            this.rankingListMask.graphics.drawRect(0, 0, this.stage.width, this.stage.height);
-            this.rankingListMask.graphics.endFill();
-            this.rankingListMask.alpha = 0.5;
-            this.rankingListMask.touchEnabled = true;
-            this.addChild(this.rankingListMask);
-
-            //主要示例代码开始
-            this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight - 90);
-            this.addChild(this.bitmap);
-            //简单实现，打开这关闭使用一个按钮。
-            this.addChild(this.btnClose);
-            //主域向子域发送自定义消息
-            platform.openDataContext.postMessage({
-                isDisplay: this.isdisplay,
-                text: 'hello',
-                year: (new Date()).getFullYear(),
-                command: "open"
-            });
-            //主要示例代码结束
-            this.isdisplay = true;
-        }
-    }
-
-    private showSkinDialog() {
-        const { stage } = egret.MainContext.instance
-
-        this.skinMask = new egret.Shape()
-        this.skinMask.graphics.beginFill(0x000000, .2)
-        this.skinMask.graphics.drawRoundRect(0, 0, stage.stageWidth, stage.stageHeight - 90, 10)
-        this.skinMask.graphics.endFill()
-        this.skinMask.touchEnabled = true
-        this.addChild(this.skinMask)
-
-        this.skinDialog = new SkinDialog()
-        this.addChild(this.skinDialog)
-
-        this.skinDialog.x = stage.stageWidth / 2 - this.skinDialog._width / 2
-        this.skinDialog.y = (stage.stageHeight - 90) / 2 - this.skinDialog._height / 2
-        this.skinDialog.addEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this)
-    }
-
-    private hideSkinDialog() {
-        this.removeChild(this.skinMask)
-        this.removeChild(this.skinDialog)
-        this.skinDialog.removeEventListener(SkinDialog.CLOSE_SKIN, this.hideSkinDialog, this)
-    }
 }

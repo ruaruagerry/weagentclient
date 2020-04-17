@@ -39,7 +39,7 @@ class Main extends eui.UILayer {
     private game: Game = null
     private wallet: Wallet = null
     private setup: Setup = null
-    private userinfo: any
+    public static userinfo: any
     private clientinfo: any
 
     protected createChildren(): void {
@@ -190,7 +190,7 @@ class Main extends eui.UILayer {
                 case 3:
                     this.setup = new Setup()
                     this.viewStack.addChild(this.setup)
-                    this.setup.loadData(this.userinfo, this.clientinfo)
+                    this.setup.loadData(this.clientinfo)
                     break
             }
         }
@@ -222,7 +222,7 @@ class Main extends eui.UILayer {
     }
 
     private onLogin(evt: egret.Event) {
-        this.userinfo = evt.data.userinfo
+        Main.userinfo = evt.data.userinfo
         this.clientinfo = evt.data.clientinfo
         // 登陆
         this.createTabbar()

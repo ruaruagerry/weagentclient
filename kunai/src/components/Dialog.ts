@@ -109,10 +109,9 @@ class Dialog extends egret.Sprite {
         }, this)
 
         const data = {
-            nickName: '悠悠丶',
-            avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKT3CKZgvyic14bBOYKpbaS2PvaS7t1ar4295xuV4w8xArEF8kuxWpzFicgADibw2c2XdWjasfzvDib5Q/132'
+            nickName: Main.userinfo.nickname,
+            avatarUrl: Main.userinfo.avatarurl
         }
-        console.log(111, data)
         const that = this
         const url = data.avatarUrl
         const imgLoader = new egret.ImageLoader()

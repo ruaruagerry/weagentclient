@@ -55,12 +55,12 @@ class Setup extends eui.ItemRenderer {
         }, this)
     }
 
-    public loadData(userinfo: any, clientinfo: any) {
-        this.nickname.text = userinfo.nickname
-        this.id.text = userinfo.id
+    public loadData(clientinfo: any) {
+        this.nickname.text = Main.userinfo.nickname
+        this.id.text = Main.userinfo.id
         // 加载头像
         const imgLoader = new egret.ImageLoader()
-        imgLoader.load(userinfo.avatarurl)
+        imgLoader.load(Main.userinfo.avatarurl)
         imgLoader.once(egret.Event.COMPLETE, (e: egret.Event) => {
             if (e.currentTarget.data) {
                 const texture = new egret.Texture()
